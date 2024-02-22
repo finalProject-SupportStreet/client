@@ -33,6 +33,16 @@ const router = createBrowserRouter([
       
     ],
   },
+  // // path: "*" kann man hier als "alle anderen (ungültigen/nicht definierten) Pfaden" verstehen
+  // {
+  //   path: "*",
+  //   /* 
+  //   Ich gehe zuerst auf einen ungültigen Pfad "/anton", dann werde ich zu "/" weitergeleitet
+  //   ohne replace: Beide Schritte/Stationen werden im Browserverlauf gespeichert
+  //   mit replace: Der Schritt "/anton" wird nicht gespeichert, sondern durch den weitergeleiteten Schritt "/" ersetzt
+  //   */
+  //   element: <Navigate to="/" replace />
+  // }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
