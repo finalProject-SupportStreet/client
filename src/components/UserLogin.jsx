@@ -1,6 +1,7 @@
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
-import { buttonStyle, inputStyle } from "./UserRegister.jsx";
+
 import { postDate } from "./reuseable/fetchData.jsx";
+import { buttonStyle, inputStyle, labelStyle } from "./reuseable/styles/reuseableComponents.jsx";
 
 const UserLogin = () => {
   const [, setLoggedIn] = useOutletContext();
@@ -9,9 +10,9 @@ const UserLogin = () => {
     event.preventDefault();
     const el = event.target.elements;
     const body = {
-      // email: el.email.value,
+      email: el.email.value,
       password: el.password.value,
-      username: el.username.value,
+      // username: el.username.value,
     };
     // console.log(body);
     try {
@@ -30,7 +31,7 @@ const UserLogin = () => {
       onSubmit={login}
     >
       <div className="p-2 bg-slate-500/15 shadow-lg rounded w-full gap-2">
-        {/*  <label htmlFor="email" className="border-b-2">
+         <label htmlFor="email" className="border-b-2">
           E-Mail:{" "}
         </label>
         <input
@@ -38,18 +39,18 @@ const UserLogin = () => {
           name="email"
           id="email"
           className={inputStyle}
-        /> */}
-        <label htmlFor="username" className="border-b-2">
-          username:{" "}
+        />
+        {/* <label htmlFor="username" className={labelStyle}>
+          Username:{" "}
         </label>
         <input
           type="text"
           name="username"
           id="username"
           className={inputStyle}
-        />
+        /> */}
         <p className="text-red-500">This field is required</p>
-        <label htmlFor="password">Password: </label>
+        <label htmlFor="password" className={labelStyle}>Password: </label>
         <input
           type="password"
           name="password"

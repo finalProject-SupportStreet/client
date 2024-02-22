@@ -1,7 +1,9 @@
-// vlt. auslagern in extra datei
+/* // vlt. auslagern in extra datei
 export const inputStyle = "w-full border-2 rounded focus:outline-none text-black"
 
-export const buttonStyle = "bg-green-200  text-slate-700 p-2 rounded w-full dark:text-slate-600 mt-2  font-light hover:font-medium"
+export const buttonStyle = "bg-green-200  text-slate-700 p-2 rounded w-full dark:text-slate-600 mt-2  font-light hover:font-medium" */
+
+import { buttonStyle, inputStyle } from "./reuseable/styles/reuseableComponents.jsx";
 
 const UserRegister = () => {
   const submitHandler = async (event) => {
@@ -9,12 +11,17 @@ const UserRegister = () => {
     const el = event.target.elements;
     const body = {
       firstName: el.firstName.value,
-      lastName: el.lastName.value,
+      // lastName: el.lastName.value,
       email: el.email.value,
       password: el.password.value,
-      username: el.username.value,
+      confirmPassword: el.confirmPassword.value,
+
+      // username: el.username.value,
       plz: parseInt(el.plz.value),
+      street: el.street.value,
+      number: el.number.value
     };
+    console.log(body);
     const response = await fetch("http://localhost:5500/register", {
       method: "POST",
       headers: {
@@ -43,7 +50,29 @@ const UserRegister = () => {
             className={inputStyle}
           />
         </div>
-        <div className="pt-3">
+        <div>
+          <label htmlFor="street" className="border-b-2 ">
+            Street:
+          </label>
+          <input
+            type="text"
+            name="street"
+            id="street"
+            className={inputStyle}
+          />
+        </div>
+        <div>
+          <label htmlFor="number" className="border-b-2 ">
+            number:
+          </label>
+          <input
+            type="text"
+            name="number"
+            id="number"
+            className={inputStyle}
+          />
+        </div>
+        {/* <div className="pt-3">
           <label htmlFor="lastName" className="border-b-2 w-80">
             Last Name:
           </label>
@@ -53,8 +82,8 @@ const UserRegister = () => {
             id="lastName"
             className={inputStyle}
           />
-        </div>
-        <div className="pt-3">
+        </div> */}
+       {/*  <div className="pt-3">
           <label htmlFor="username" className="border-b-2 w-80">
             Username:
           </label>
@@ -64,7 +93,7 @@ const UserRegister = () => {
             id="username"
             className={inputStyle}
           />
-        </div>
+        </div> */}
         <div className="pt-3">
           <label htmlFor="plz" className="border-b-2 w-80">
             PLZ.:
@@ -106,6 +135,17 @@ const UserRegister = () => {
             type="password"
             name="password"
             id="password"
+            className= {inputStyle}
+          />
+        </div>
+        <div className="pt-3">
+          <label htmlFor="confirmPassword" className="border-b-2 w-80">
+          confirm Password:
+          </label>
+          <input
+            type="password"
+            name="confirmPassword"
+            id="confirmPassword"
             className= {inputStyle}
           />
         </div>

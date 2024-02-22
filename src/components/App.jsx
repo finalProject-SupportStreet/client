@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 
 import "../App.css";
+import MyDropdown from "./DropDown.jsx";
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [theme, setTheme] = useState(null);
+ /*  const [theme, setTheme] = useState(null); */
 
   // Beim erstmaligen Rendern der Seite wird beim Server geprüft, ob der User eingeloggt ist. D.h., ob ein gültiges Session-Cookie vorhanden ist
   
@@ -24,7 +25,7 @@ function App() {
     checkLogin();
   }, []);
 
-  // Set theme based on user's preference
+ /*  // Set theme based on user's preference
   useEffect(() => {
     if (
       localStorage.theme === "dark" ||
@@ -37,15 +38,15 @@ function App() {
     }
   }, []);
 
-  // Add or remove dark class from document based on theme
-  useEffect(() => {
+  // Add or remove dark class from document based on theme */
+  /* useEffect(() => {
     if (theme === "dark") {
       document.documentElement.classList.add("dark"); // Add dark class
       localStorage.theme = "dark"; // Whenever the user explicitly chooses dark mode
     } else {
       document.documentElement.classList.remove("dark"); // Remove dark class
       localStorage.theme = "light"; // Whenever the user explicitly chooses light mode
-    }
+    } */
 
     /*     if (theme === "light") {
       document.documentElement.classList.add("light"); // Add dark class
@@ -53,15 +54,17 @@ function App() {
     } else {
       document.documentElement.classList.remove("light"); // Remove dark class
       localStorage.theme = "dark"; // Whenever the user explicitly chooses light mode
-    } */
-  }, [theme]); // Add theme as dependency
+    } 
+  }, [theme]); */// Add theme as dependency
 
-  const handleThemeSwitch = () => {
+ /*  const handleThemeSwitch = () => {
     setTheme(theme === "dark" ? "light" : "dark");
     console.log(theme);
-  };
+  }; */
 
   localStorage.removeItem("theme"); // Whenever the user explicitly chooses to respect the OS preference
+
+  
 
   return (
     <div className="h-full relative px-0 box-content bg-slate-500 dark:bg-gray-900 text-slate-100  ">
@@ -72,13 +75,17 @@ function App() {
           <NavLink to="/register">Register</NavLink>
           <NavLink to="/login">Log In</NavLink>
           <NavLink to="/logout">Log Out</NavLink>
+          
         </nav>
-        <button
+          <MyDropdown>
+        {/* {<button
           className="bg-green-200 p-1 rounded-s-3xl text-gray-900 dark:text-slate-600"
           onClick={handleThemeSwitch}
-        >
-          {theme} mode
-        </button>
+          >
+            {theme} mode
+
+        </button>} */}
+          </MyDropdown>
       </section>
 
       <div className="h-screen flex items-center justify-center px-4">
