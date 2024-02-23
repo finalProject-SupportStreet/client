@@ -3,7 +3,7 @@ export const inputStyle = "w-full border-2 rounded focus:outline-none text-black
 
 export const buttonStyle = "bg-green-200  text-slate-700 p-2 rounded w-full dark:text-slate-600 mt-2  font-light hover:font-medium" */
 
-import { buttonStyle, inputStyle } from "./reuseable/styles/reuseableComponents.jsx";
+import { buttonStyle, inputStyle, labelStyle } from "./reuseable/styles/reuseableComponents.jsx";
 
 const UserRegister = () => {
   const submitHandler = async (event) => {
@@ -40,7 +40,7 @@ const UserRegister = () => {
     >
       <div className="p-3 bg-slate-500/15 shadow-lg rounded  ">
         <div>
-          <label htmlFor="firstName" className="border-b-2 ">
+          <label htmlFor="firstName" className={labelStyle}>
             First Name:
           </label>
           <input
@@ -51,7 +51,7 @@ const UserRegister = () => {
           />
         </div>
         <div>
-          <label htmlFor="street" className="border-b-2 ">
+          <label htmlFor="street" className={labelStyle}>
             Street:
           </label>
           <input
@@ -62,7 +62,7 @@ const UserRegister = () => {
           />
         </div>
         <div>
-          <label htmlFor="number" className="border-b-2 ">
+          <label htmlFor="number" className={labelStyle}>
             number:
           </label>
           <input
@@ -95,7 +95,7 @@ const UserRegister = () => {
           />
         </div> */}
         <div className="pt-3">
-          <label htmlFor="plz" className="border-b-2 w-80">
+          <label htmlFor="plz" className={labelStyle}>
             PLZ.:
           </label>
           <input
@@ -106,7 +106,7 @@ const UserRegister = () => {
           />
         </div>
         <div className="pt-3">
-          <label htmlFor="email" className="border-b-2 w-80">
+          <label htmlFor="email" className={labelStyle}>
             E-Mail:
           </label>
           <input
@@ -128,7 +128,7 @@ const UserRegister = () => {
           />
         </div> */}
         <div className="pt-3">
-          <label htmlFor="password" className="border-b-2 w-80">
+          <label htmlFor="password" className={labelStyle}>
             Password:
           </label>
           <input
@@ -139,7 +139,7 @@ const UserRegister = () => {
           />
         </div>
         <div className="pt-3">
-          <label htmlFor="confirmPassword" className="border-b-2 w-80">
+          <label htmlFor="confirmPassword" className={labelStyle}>
           confirm Password:
           </label>
           <input
