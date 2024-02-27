@@ -12,6 +12,8 @@ export const UserProvider = ({children}) => {
   const [frontendToken, setFrontendToken] = useState(token || null);
 
   function loadToken() {
+    const token2 = Cookies.get('token');
+    console.log("token2: ", token2);
     if(isLoggedIn) {
       return Cookies.get('token');
     } else {
