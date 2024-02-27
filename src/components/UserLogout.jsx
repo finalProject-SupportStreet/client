@@ -1,7 +1,9 @@
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from './context/userContext.jsx';
 
 const UserLogout = () => {
-  const [, setLoggedIn] = useOutletContext();
+  const { setIsLoggedIn } = useContext(UserContext);
   const navigate = useNavigate();
 
   const logout = async () => {
@@ -10,7 +12,7 @@ const UserLogout = () => {
       credentials: 'include',
     });
     console.log(response);
-    setLoggedIn(false);
+    setIsLoggedIn(false);
     navigate('/login');
   };
   return <button onClick={logout}>Log Out</button>;
