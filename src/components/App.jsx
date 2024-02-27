@@ -27,80 +27,64 @@ function App() {
     isLoggedIn ?? checkLogin();
   }, [isLoggedIn]);
 
- /*  // Set theme based on user's preference
-  useEffect(() => {
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      setTheme("dark"); // Check for dark mode preference
-    } else {
-      setTheme("light"); // Set to light mode if not in dark mode
-    }
-  }, []);
-
-  // Add or remove dark class from document based on theme */
-  /* useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark"); // Add dark class
-      localStorage.theme = "dark"; // Whenever the user explicitly chooses dark mode
-    } else {
-      document.documentElement.classList.remove("dark"); // Remove dark class
-      localStorage.theme = "light"; // Whenever the user explicitly chooses light mode
-    } */
-
-    /*     if (theme === "light") {
-      document.documentElement.classList.add("light"); // Add dark class
-      localStorage.theme = "light"; // Whenever the user explicitly chooses dark mode
-    } else {
-      document.documentElement.classList.remove("light"); // Remove dark class
-      localStorage.theme = "dark"; // Whenever the user explicitly chooses light mode
-    } 
-  }, [theme]); */// Add theme as dependency
-
- /*  const handleThemeSwitch = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-    console.log(theme);
-  }; */
-
-  localStorage.removeItem("theme"); // Whenever the user explicitly chooses to respect the OS preference
 
   
+  localStorage.removeItem("theme"); // Whenever the user explicitly chooses to respect the OS preference
+  
+  
 
-  return (
-    <div className="h-full relative px-0 box-content bg-slate-500 dark:bg-gray-900 text-slate-100  ">
-      <section className="h-fit w-full fixed flex justify-between items-center border-2 border-l-indigo-100 p-1">
-        <h1 className="underline flex px-3">Logo</h1>
-        <nav className="px-3  border-2 flex justify-center space-x-2 mobile:invisible desktop:visible">
-          <NavLink to="/">Home</NavLink>
-          { !isLoggedIn ? (
-            <>
+
+ // ToggleMenu
+ const [menuVisible, setMenuVisible] = useState(true);
+
+ function toggleMenu() {
+   setMenuVisible(!menuVisible);
+ }
+
+return (
+  <div className="h-full relative px-0 box-content bg-slate-100 text-slate-200 dark:bg-gray-900">
+ 
+      <h1 className="underline absolute py-2 px-2 text-slate-700">Logo</h1>
+      <nav className="border-slate-700 border-2 text-right">
+        <div className="mobile:mobileNav desktop:hidden">
+          <div>
+          {menuVisible ? (
+            // BurgerMenu
+            <button className="  text-slate-700 text-4xl font-bold opacity-70 hover:opacity-100 duration-300" onClick={toggleMenu}>
+              &#9776;
+            </button>
+          ) : (
+            // Close Icon
+            <button className=" text-slate-700 text-4xl font-bold opacity-70 hover:opacity-100" onClick={toggleMenu}>&times;
+            </button>
+          )}
+          </div>
+            
+          {!menuVisible && (
+            <div className="mobileNavLi">
+              <NavLink to="/">Home</NavLink>
               <NavLink to="/register">Register</NavLink>
               <NavLink to="/login">Log In</NavLink>
-            </>
-          ) : (
-            <NavLink to="/logout">Log Out</NavLink>
-          )
-          }
-          
-        </nav>
-          <MyDropdown />
-        {/* {<button
-          className="bg-green-200 p-1 rounded-s-3xl text-gray-900 dark:text-slate-600"
-          onClick={handleThemeSwitch}
-          >
-            {theme} mode
-
-        </button>} */}
-
-      </section>
-
-      <div className="h-screen flex items-center justify-center px-4">
-        <Outlet className="" />
-      </div>
+              <NavLink to="/logout">Log Out</NavLink>
+            </div>
+          )}
+            
+        </div>
+        <div className="desktop:desktopNav mobile:hidden">
+            <div className="desktopNavLi">
+              <NavLink to="/">Home</NavLink>
+              <NavLink to="/register">Register</NavLink>
+              <NavLink to="/login">Log In</NavLink>
+              <NavLink to="/logout">Log Out</NavLink>
+            </div>
+        </div>
+      </nav>
+    <div className="h-screen flex items-center justify-center px-4">
+      <Outlet />
     </div>
-  );
+  </div>
+);
 }
+
 
 export default App;
