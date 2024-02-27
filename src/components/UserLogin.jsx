@@ -1,10 +1,13 @@
-import { Link, useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { postDate } from "./reuseable/fetchData.jsx";
-import { buttonStyle, inputStyle, labelStyle, linkStyle } from "./reuseable/styles/reuseableComponents.jsx";
+import { buttonStyle, inputStyle, labelStyle } from "./reuseable/styles/reuseableComponents.jsx";
+import { useContext } from "react";
+import { UserContext } from "./context/userContext.jsx";
 
 const UserLogin = () => {
-  const [, setLoggedIn] = useOutletContext();
+
+  const { setIsLoggedIn } = useContext(UserContext);
   const navigate = useNavigate();
   const login = async (event) => {
     event.preventDefault();
@@ -17,8 +20,8 @@ const UserLogin = () => {
     // console.log(body);
     try {
       const data = await postDate("login",  body)
-      // console.log(data);
-      setLoggedIn(true);
+      console.log(data);
+      setIsLoggedIn(true);
       navigate("/")
     } catch (error) {
       navigate("/login")

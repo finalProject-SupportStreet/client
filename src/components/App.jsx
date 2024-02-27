@@ -1,13 +1,12 @@
-import { useState, useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 
 import "../App.css";
 import MyDropdown from "./DropDown.jsx";
-// import Options from "./OptionsMenu.jsx";
-
-
+import { UserContext } from "./context/userContext.jsx";
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  // const [loggedIn, setLoggedIn] = useState(false);
+  const {isLoggedIn, setIsLoggedIn} = useContext(UserContext);
  /*  const [theme, setTheme] = useState(null); */
 
   // Beim erstmaligen Rendern der Seite wird beim Server geprüft, ob der User eingeloggt ist. D.h., ob ein gültiges Session-Cookie vorhanden ist
@@ -22,11 +21,11 @@ function App() {
         }
       );
       if (response.ok) {
-        setLoggedIn(true);
+        setIsLoggedIn(true);
       }
     };
-    checkLogin();
-  }, []);
+    isLoggedIn ?? checkLogin();
+  }, [isLoggedIn]);
 
 
   
@@ -81,7 +80,7 @@ return (
         </div>
       </nav>
     <div className="h-screen flex items-center justify-center px-4">
-      <Outlet context={[loggedIn, setLoggedIn]} className="" />
+      <Outlet />
     </div>
   </div>
 );

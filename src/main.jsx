@@ -7,6 +7,8 @@ import Home from './components/Home.jsx';
 import UserRegister from './components/UserRegister.jsx';
 import UserLogin from './components/UserLogin.jsx';
 import UserLogout from './components/UserLogout.jsx';
+import Neighbours from './components/Neighbours.jsx';
+import { UserProvider } from './components/context/userContext.jsx';
 // import TodoApp from './components/ToDoApp.jsx';
 
 const router = createBrowserRouter([
@@ -30,6 +32,10 @@ const router = createBrowserRouter([
         path: 'logout',
         element: <UserLogout />,
       },
+      {
+        path: 'neighbours',
+        element: <Neighbours />
+      }
       
     ],
   },
@@ -46,7 +52,10 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
+  
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <UserProvider >
+      <RouterProvider router={router} />
+    </UserProvider>
   </React.StrictMode>
 );
