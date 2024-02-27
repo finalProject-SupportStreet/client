@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 
 import "../App.css";
 import MyDropdown from "./DropDown.jsx";
+import { UserContext } from "./context/userContext.jsx";
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  // const [loggedIn, setLoggedIn] = useState(false);
+  const {isLoggedIn, setIsLoggedIn} = useContext(UserContext);
  /*  const [theme, setTheme] = useState(null); */
 
   // Beim erstmaligen Rendern der Seite wird beim Server geprüft, ob der User eingeloggt ist. D.h., ob ein gültiges Session-Cookie vorhanden ist
@@ -19,11 +21,11 @@ function App() {
         }
       );
       if (response.ok) {
-        setLoggedIn(true);
+        setIsLoggedIn(true);
       }
     };
-    checkLogin();
-  }, []);
+    isLoggedIn ?? checkLogin();
+  }, [isLoggedIn]);
 
  /*  // Set theme based on user's preference
   useEffect(() => {
@@ -72,12 +74,18 @@ function App() {
         <h1 className="underline flex px-3">Logo</h1>
         <nav className="px-3  border-2 flex justify-center space-x-2 mobile:invisible desktop:visible">
           <NavLink to="/">Home</NavLink>
-          <NavLink to="/register">Register</NavLink>
-          <NavLink to="/login">Log In</NavLink>
-          <NavLink to="/logout">Log Out</NavLink>
+          { !isLoggedIn ? (
+            <>
+              <NavLink to="/register">Register</NavLink>
+              <NavLink to="/login">Log In</NavLink>
+            </>
+          ) : (
+            <NavLink to="/logout">Log Out</NavLink>
+          )
+          }
           
         </nav>
-          <MyDropdown>
+          <MyDropdown />
         {/* {<button
           className="bg-green-200 p-1 rounded-s-3xl text-gray-900 dark:text-slate-600"
           onClick={handleThemeSwitch}
@@ -85,11 +93,11 @@ function App() {
             {theme} mode
 
         </button>} */}
-          </MyDropdown>
+
       </section>
 
       <div className="h-screen flex items-center justify-center px-4">
-        <Outlet context={[loggedIn, setLoggedIn]} className="" />
+        <Outlet className="" />
       </div>
     </div>
   );
