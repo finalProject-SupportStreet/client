@@ -1,7 +1,7 @@
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
 
 import { postDate } from "./reuseable/fetchData.jsx";
-import { buttonStyle, inputStyle, labelStyle } from "./reuseable/styles/reuseableComponents.jsx";
+import { buttonStyle, inputStyle, labelStyle, linkStyle } from "./reuseable/styles/reuseableComponents.jsx";
 
 const UserLogin = () => {
   const [, setLoggedIn] = useOutletContext();
@@ -27,11 +27,11 @@ const UserLogin = () => {
   };
   return (
     <form
-      className="h-96 flex flex-col justify-center gap-2 bg-white dark:bg-slate-800 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl"
+      className="h-96 flex flex-col justify-center gap-3 bg-white dark:bg-slate-800 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl "
       onSubmit={login}
     >
       <div className="p-2 bg-slate-500/15 shadow-lg rounded w-full gap-2">
-         <label htmlFor="email" className="border-b-2">
+         <label htmlFor="email" className={labelStyle}>
           E-Mail:{" "}
         </label>
         <input
@@ -60,8 +60,10 @@ const UserLogin = () => {
       </div>
       {/*  <h3 class="text-slate-900 dark:text-white mt-5 text-base font-medium tracking-tight">Writes Upside-Down</h3> */}
       <button className={buttonStyle}>Login</button>
-      
-
+      <div className="text-center">
+      <a href="/register" className={linkStyle}>Forgot password?</a>
+      <a href="/register" className={linkStyle}>Sign up</a>
+      </div>
     </form>
   );
 };

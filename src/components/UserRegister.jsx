@@ -35,11 +35,11 @@ const UserRegister = () => {
   };
   return (
     <form 
-      className="h-96 flex flex-col justify-center gap-2 bg-white dark:bg-slate-800    ring-slate-900/5  "
+      className="h-fit flex flex-col justify-center gap-3 bg-white dark:bg-slate-800 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl "
       onSubmit={submitHandler}
     >
-      <div className="p-3 bg-slate-500/15 shadow-lg rounded  ">
-        <div>
+      <div className="p-2 bg-slate-500/15 shadow-lg rounded w-full gap-2">
+        <div >
           <label htmlFor="firstName" className={labelStyle}>
             First Name:
           </label>
@@ -50,7 +50,7 @@ const UserRegister = () => {
             className={inputStyle}
           />
         </div>
-        <div>
+        <div className="pt-3">
           <label htmlFor="street" className={labelStyle}>
             Street:
           </label>
@@ -61,7 +61,7 @@ const UserRegister = () => {
             className={inputStyle}
           />
         </div>
-        <div>
+        <div className="pt-3">
           <label htmlFor="number" className={labelStyle}>
             number:
           </label>
