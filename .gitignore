@@ -7,7 +7,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-**/plz5stellig.geojson
+public/plz5stellig.geojson
 node_modules
 dist
 dist-ssr
