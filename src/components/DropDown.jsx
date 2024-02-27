@@ -71,9 +71,9 @@ function MyDropdown() {
           {({ active }) => (
             <a
               className={`${active && "bg-blue-500"}`}
-              href="/account-settings"
+              href="/logout"
             >
-              Documentation
+              Logout
             </a>
           )}
         </Menu.Item>
