@@ -26,24 +26,40 @@ const GeoCodeConverter = ({ onCoordinatesChange, onZipcodeChange }) => {
   const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
-    const fetchUserData = async () => {
+
+    const getUserData = async () => {
+
       try {
-        //TODO -> über dynamische Id auf eingeloggten user zugreifen 
-        const response = await fetch('http://localhost:5500/neighbours/XYZ'); 
-        const data = await response.json();
-        if (!data) {
-          const error = new Error('Couldn`t fetch user');
+        const savedUser = localStorage.getItem('userData'); 
+        const parsedUser = await JSON.parse(savedUser)
+        if(!parsedUser) { // Prüfung wahrscheinlich unnötig
+          const error = new Error('No userData in localStorage');
           throw error;
         }
-        setZipcode(data[0].address[0].zip);
-        setStreet(data[0].address[0].street);
-        setNumber(data[0].address[0].number);
-        setLoading(false); 
+        //! savedUser wird zu oft JSON.stringified ... WO?!?
+        console.log("parsedUser in GeoConverter: ", savedUser)
+
+        setZipcode(parsedUser.address[0].zip);
+        setStreet(parsedUser.address[0].street);
+        setNumber(parsedUser.address[0].number);
+        setLoading(false);
+
+        // //TODO -> über dynamische Id auf eingeloggten user zugreifen 
+        // const response = await fetch('http://localhost:5500/neighbours/XYZ'); 
+        // const data = await response.json();
+        // if (!data) {
+        //   const error = new Error('Couldn`t fetch user');
+        //   throw error;
+        // }
+        // setZipcode(data[0].address[0].zip);
+        // setStreet(data[0].address[0].street);
+        // setNumber(data[0].address[0].number);
+        // setLoading(false); 
       } catch (err) {
         console.log(err);
       }
     };
-    fetchUserData();
+    getUserData();
   }, []);
 
   const fetchCoordinates = async () => {
