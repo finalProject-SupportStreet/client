@@ -14,26 +14,23 @@ export const UserContext = createContext();
  Komponenten im Projekt verfügbar 
 */
 
+const savedUser = localStorage.getItem("userData");
 
-const savedUser = localStorage.getItem('userData'); 
-
-export const UserProvider = ({children}) => {
-  
+export const UserProvider = ({ children }) => {
   const [userData, setUserData] = useState(savedUser || null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-
-  console.log(userData)
-
-
   useEffect(() => {
-    localStorage.setItem('userData', JSON.stringify(userData));
+    localStorage.setItem("userData", JSON.stringify(userData));
   }, [userData]);
 
-  
+  console.log({ userData });
+
   return (
-    <UserContext.Provider value={{isLoggedIn, setIsLoggedIn, userData, setUserData}} >
+    <UserContext.Provider
+      value={{ isLoggedIn, setIsLoggedIn, userData, setUserData }}
+    >
       {children}
-    </UserContext.Provider >
-  )
+    </UserContext.Provider>
+  );
 };
