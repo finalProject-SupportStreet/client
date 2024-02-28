@@ -16,10 +16,13 @@ const UserRegister = () => {
       password: el.password.value,
       confirmPassword: el.confirmPassword.value,
 
-      // username: el.username.value,
-      plz: parseInt(el.plz.value),
-      street: el.street.value,
-      number: el.number.value
+      address: [
+        {
+          zip: parseInt(el.zip.value),
+          street: el.street.value,
+          number: el.number.value
+        }
+      ]
     };
     console.log(body);
     const response = await fetch("http://localhost:5500/register", {
@@ -95,13 +98,13 @@ const UserRegister = () => {
           />
         </div> */}
         <div className="pt-3">
-          <label htmlFor="plz" className={labelStyle}>
+          <label htmlFor="zip" className={labelStyle}>
             PLZ.:
           </label>
           <input
             type="text"
-            name="plz"
-            id="plz"
+            name="zip"
+            id="zip"
             className={inputStyle}
           />
         </div>
