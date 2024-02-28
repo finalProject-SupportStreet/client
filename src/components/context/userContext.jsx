@@ -1,27 +1,38 @@
-import { createContext, useState } from "react";
-import Cookies from 'js-cookie';
-
+import { createContext, useEffect, useState } from "react";
 
 export const UserContext = createContext();
 
+/* WAS HIER PASSIERT:
+ 1) checke ob user bereits eingeloggt (localStorage.getItem)
+ 2) wenn eingeloggt (savedUser vorhanden) -> Initialwert = userData
+ 3) wenn nicht, Initialwert = null
+ 4) in UserLogin.jsx werden userdaten beim Login gesetzt (setUserData)
+ 5) useEffect speichert userDaten nur dann in localStorage, WENN  
+    userData geändert wurde (zB. erster Login || neuer User Login || Login nachdem Cookie abgelaufen ist (30 Tage))
+
+ ALLG: userDaten und Login-Status werden über useContext() für alle 
+ Komponenten im Projekt verfügbar 
+*/
+
+
+const savedUser = localStorage.getItem('userData'); 
 
 export const UserProvider = ({children}) => {
   
+  const [userData, setUserData] = useState(savedUser || null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const token = loadToken();
-  const [frontendToken, setFrontendToken] = useState(token || null);
 
-  function loadToken() {
-    if(isLoggedIn) {
-      return Cookies.get('token');
-    } else {
-      return null
-    }
-  }
-    console.log(token, frontendToken);
+
+  console.log(userData)
+
+
+  useEffect(() => {
+    localStorage.setItem('userData', JSON.stringify(userData));
+  }, [userData]);
+
   
   return (
-    <UserContext.Provider value={{isLoggedIn, setIsLoggedIn}} >
+    <UserContext.Provider value={{isLoggedIn, setIsLoggedIn, userData, setUserData}} >
       {children}
     </UserContext.Provider >
   )
