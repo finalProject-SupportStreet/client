@@ -1,13 +1,15 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useContext } from 'react';
 import { MapContainer, TileLayer, Marker, Circle, GeoJSON, ScaleControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import GeoCodeConverter from './GeoCodeConverter.jsx';
+import { UserContext } from './context/userContext.jsx';
 
 
 const Map = () => {
 
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
+  const {latitude, setLatitude, longitude, setLongitude} = useContext(UserContext);
+  // const [latitude, setLatitude] = useState(null);
+  // const [longitude, setLongitude] = useState(null);
   const [radius, setRadius] = useState(250);
   const [zipcode, setZipcode] = useState('');
   const [allZipcodeGeoJson, setAllZipcodeGeoJson] = useState(null);
@@ -47,43 +49,47 @@ const Map = () => {
   }, [allZipcodeGeoJson, zipcode]);
 
   return (
-    <div>
-      <h1>Map with Radius Search</h1>
+    <div className= ' flex justify-center items-center' >
+      <div className='w-full md:w-1/2 h-3/10'>
+        {/* <h1 className='text-center mb-4'>Map with Radius Search</h1> */}
 
-      <GeoCodeConverter onCoordinatesChange={handleCoordinatesChange} onZipcodeChange={setZipcode} />
+        <GeoCodeConverter onCoordinatesChange={handleCoordinatesChange} onZipcodeChange={setZipcode} />
 
-      {/* Ternary: wenn Geo-Daten true --> render Karte  */}
-      {latitude && longitude && (
-        <div>
+        {/* Ternary: wenn Geo-Daten true --> render Karte  */}
+        {latitude && longitude && (
           <div>
-            <label>Select Radius:</label>
-            <select value={radius} onChange={handleRadiusChange}>
-              <option value={100}>100m</option>
-              <option value={250}>250m</option>
-              <option value={500}>500m</option>
-            </select>
+            <div className='mb-4'>
+              <label>Select Radius:</label>
+              <select value={radius} onChange={handleRadiusChange}>
+                <option value={100}>100m</option>
+                <option value={250}>250m</option>
+                <option value={500}>500m</option>
+              </select>
+            </div>
+            <div className=''>
+              {/* //TODO: Soll height der map variabel oder fix sein? */}
+              <MapContainer center={[latitude, longitude]} zoom={15} style={{ height: '40vh' }}>
+
+                <TileLayer
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                />
+
+                {/* Umkreissuche  */}
+                <Marker position={[latitude, longitude]} />
+                <Circle center={[latitude, longitude]} radius={radius} color="red" fillColor="#f03" fillOpacity={0.2} />
+
+                {/* Maßstab */}
+                <ScaleControl position="bottomright" />
+
+                {memoizedZipcodeGeoJSON}
+
+
+              </MapContainer>
+            </div>
           </div>
-
-          <MapContainer center={[latitude, longitude]} zoom={15} style={{ height: '800px' }}>
-
-            <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            />
-
-            {/* Umkreissuche  */}
-            <Marker position={[latitude, longitude]} />
-            <Circle center={[latitude, longitude]} radius={radius} color="red" fillColor="#f03" fillOpacity={0.2} />
-
-            {/* Maßstab */}
-            <ScaleControl position="bottomright" />
-
-            {memoizedZipcodeGeoJSON}
-
-
-          </MapContainer>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

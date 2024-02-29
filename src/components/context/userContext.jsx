@@ -4,7 +4,7 @@ export const UserContext = createContext();
 
 /* WAS HIER PASSIERT:
  1) checke ob user bereits eingeloggt (localStorage.getItem)
- 2) wenn eingeloggt (savedUser vorhanden) -> Initialwert = userData
+ 2) wenn eingeloggt (savedUser vorhanden) -> Initialwert = savedUser
  3) wenn nicht, Initialwert = null
  4) in UserLogin.jsx werden userdaten beim Login gesetzt (setUserData)
  5) useEffect speichert userDaten nur dann in localStorage, WENN  
@@ -22,9 +22,11 @@ export const UserProvider = ({children}) => {
   
   const [userData, setUserData] = useState(savedUser || null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
 
 
-  console.log("userData in userContext --> ", userData)
+  console.log("userData in userContext --> ", userData);
 
 
   useEffect(() => {
@@ -35,7 +37,7 @@ export const UserProvider = ({children}) => {
 
   
   return (
-    <UserContext.Provider value={{isLoggedIn, setIsLoggedIn, userData, setUserData}} >
+    <UserContext.Provider value={{isLoggedIn, setIsLoggedIn, userData, setUserData, latitude, setLatitude, longitude, setLongitude}} >
       {children}
     </UserContext.Provider >
   )

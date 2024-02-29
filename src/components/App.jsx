@@ -11,12 +11,10 @@ function App() {
   return (
     <>
       <Nav />
-      <div className="h-screen flex items-center justify-center px-4">
+      <div className="h-screen flex items-center justify-center px-4 w-full">
         <Outlet />
       </div>
     </>
   );
 }
-
-
 export default App;

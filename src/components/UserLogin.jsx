@@ -20,13 +20,12 @@ const UserLogin = () => {
     // console.log(body);
     try {
       const data = await postDate("login",  body)
-      setUserData(data.user)
+      setUserData(data.user);
       setIsLoggedIn(true);
       navigate("/")
     } catch (error) {
       navigate("/login")
     }
-
   };
   return (
     <form

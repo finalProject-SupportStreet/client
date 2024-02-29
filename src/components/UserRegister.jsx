@@ -9,33 +9,71 @@ const UserRegister = () => {
   const submitHandler = async (event) => {
     event.preventDefault();
     const el = event.target.elements;
-    const body = {
-      firstName: el.firstName.value,
-      lastName: el.lastName.value,
-      email: el.email.value,
-      password: el.password.value,
-      confirmPassword: el.confirmPassword.value,
-
-      address: [
-        {
-          zip: el.zip.value,
-          street: el.street.value,
-          number: el.number.value
-        }
-      ]
+    const address = {
+      street: el.street.value,
+      number: el.number.value,
+      zip: el.zip.value,
     };
-    console.log(body);
-    const response = await fetch("http://localhost:5500/register", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-    const data = await response.json();
-    console.log(data);
-    event.target.reset();
+
+    // Call getGeoCodeData with the address synchronously
+    const geoCodeData = await getGeoCodeData(address);
+
+    console.log("GEO CODE DATA [0]: -> ", geoCodeData[0])
+    // Check if geoCodeData is valid
+    if (geoCodeData) {
+      // Prepare the body with geoCodeData
+      const body = {
+        firstName: el.firstName.value,
+        lastName: el.lastName.value,
+        email: el.email.value,
+        password: el.password.value,
+        confirmPassword: el.confirmPassword.value,
+        address: [address], // Add address to the body
+        geoCode: [geoCodeData[0], geoCodeData[1]], // Add geoCodeData to the body
+      };
+
+      // Send the registration data to the server
+      const response = await fetch("http://localhost:5500/register", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+
+      // Process the response
+      const data = await response.json();
+      console.log(data);
+      event.target.reset();
+    }
   };
+
+  // Define the getGeoCodeData function
+  const getGeoCodeData = async (address) => {
+    try {
+      const queryString = `${address.number}+${address.street},+${address.zip}`;
+      const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${queryString}`);
+      const data = await response.json();
+
+      // Check if valid data is returned
+      if (data && data.length > 0) {
+        // Extract latitude and longitude
+        const latitude = parseFloat(data[0].lat);
+        const longitude = parseFloat(data[0].lon);
+        console.log("latitude:", latitude, "longitude:", longitude );
+        //! BUG: Daten korrekt, aber kommen nicht im localStorage (bzw. db?) an...
+        return [latitude, longitude];
+      } else {
+        console.error('No geocode data found.');
+        return null;
+      }
+    } catch (error) {
+      console.error('Error during geocoding:', error);
+      return null;
+    }
+  };
+
+
   return (
     <form 
       className="h-fit flex flex-col justify-center gap-3 bg-white dark:bg-slate-800 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl "
