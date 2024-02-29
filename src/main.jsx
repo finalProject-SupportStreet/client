@@ -3,13 +3,14 @@ import ReactDOM from 'react-dom/client';
 import App from './components/App.jsx';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Home from './components/Home.jsx';
-import UserRegister from './components/UserRegister.jsx';
-import UserLogin from './components/UserLogin.jsx';
-import UserLogout from './components/UserLogout.jsx';
+import Home from './components/mainComponents/Home.jsx';
+import UserRegister from './components/profile/UserRegister.jsx';
+import UserLogin from './components/profile/UserLogin.jsx';
+import UserLogout from './components/profile/UserLogout.jsx';
 import Neighbours from './components/Neighbours.jsx';
 import { UserProvider } from './components/context/userContext.jsx';
-// import TodoApp from './components/ToDoApp.jsx';
+import { ThemeProvider } from './components/context/ThemeContext.jsx';
+
 
 const router = createBrowserRouter([
   {
@@ -39,23 +40,16 @@ const router = createBrowserRouter([
       
     ],
   },
-  // // path: "*" kann man hier als "alle anderen (ungültigen/nicht definierten) Pfaden" verstehen
-  // {
-  //   path: "*",
-  //   /* 
-  //   Ich gehe zuerst auf einen ungültigen Pfad "/anton", dann werde ich zu "/" weitergeleitet
-  //   ohne replace: Beide Schritte/Stationen werden im Browserverlauf gespeichert
-  //   mit replace: Der Schritt "/anton" wird nicht gespeichert, sondern durch den weitergeleiteten Schritt "/" ersetzt
-  //   */
-  //   element: <Navigate to="/" replace />
-  // }
+  
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   
   <React.StrictMode>
+    <ThemeProvider>
     <UserProvider >
       <RouterProvider router={router} />
     </UserProvider>
+    </ThemeProvider>
   </React.StrictMode>
 );

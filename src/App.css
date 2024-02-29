@@ -7,18 +7,24 @@
    justify-content: space-between;
    
 } */
+.darkThemeColor{
+    background-color: #334155;
+    color:#e5e7eb ;
+}
+.lightThemeColor{
+    background-color: #e5e7eb;
+    color: #334155;
+}
 .mobileNav{
     width: 100%;
-    height: fit-content;
-    color: tomato;
+    height: auto;
     display: flex;
     justify-content: center;
-    /* padding: 1rem; */
-    
 }
 .mobileNavLi a{
     background-color: #334155;
     
+    color: #e2e8f0;
     list-style: none;
     display: flex;
     flex-direction: column;

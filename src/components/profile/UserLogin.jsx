@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 
-import { postDate } from "./reuseable/fetchData.jsx";
-import { buttonStyle, inputStyle, labelStyle } from "./reuseable/styles/reuseableComponents.jsx";
+import { postDate } from "../reuseable/fetchData.jsx";
+import { buttonStyle, inputStyle, labelStyle, linkStyle } from "../reuseable/styles/reuseableComponents.jsx";
 import { useContext } from "react";
-import { UserContext } from "./context/userContext.jsx";
+import { UserContext } from "../context/userContext.jsx";
 
 const UserLogin = () => {
 
