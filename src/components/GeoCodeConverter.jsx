@@ -30,18 +30,18 @@ const GeoCodeConverter = ({ onCoordinatesChange, onZipcodeChange }) => {
     const getUserData = async () => {
 
       try {
-        const savedUser = localStorage.getItem('userData'); 
-        const parsedUser = await JSON.parse(savedUser)
-        if(!parsedUser) { // Prüfung wahrscheinlich unnötig
+        const savedUser = JSON.parse(localStorage.getItem('userData')); 
+        // const parsedUser = await JSON.parse(savedUser)
+        if(!savedUser) { // Prüfung wahrscheinlich unnötig
           const error = new Error('No userData in localStorage');
           throw error;
         }
         //! savedUser wird zu oft JSON.stringified ... WO?!?
         console.log("parsedUser in GeoConverter: ", savedUser)
 
-        setZipcode(parsedUser.address[0].zip);
-        setStreet(parsedUser.address[0].street);
-        setNumber(parsedUser.address[0].number);
+        setZipcode(savedUser.address[0].zip);
+        setStreet(savedUser.address[0].street);
+        setNumber(savedUser.address[0].number);
         setLoading(false);
 
         // //TODO -> über dynamische Id auf eingeloggten user zugreifen 

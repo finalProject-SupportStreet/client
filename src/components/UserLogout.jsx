@@ -13,6 +13,8 @@ const UserLogout = () => {
     });
     console.log(response);
     setIsLoggedIn(false);
+    //! Daten evtl doch im Storage behalten?
+    localStorage.removeItem("userData"); 
     navigate('/login');
   };
   return <button onClick={logout}>Log Out</button>;

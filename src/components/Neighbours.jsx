@@ -5,6 +5,7 @@ const Neighbours = () => {
   return (
     <>
       <div>
+        <h1>Du und deine Nachbarn: </h1>
         <Map />
       </div>
     </>

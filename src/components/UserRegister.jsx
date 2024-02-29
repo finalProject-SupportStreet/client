@@ -11,14 +11,14 @@ const UserRegister = () => {
     const el = event.target.elements;
     const body = {
       firstName: el.firstName.value,
-      // lastName: el.lastName.value,
+      lastName: el.lastName.value,
       email: el.email.value,
       password: el.password.value,
       confirmPassword: el.confirmPassword.value,
 
       address: [
         {
-          zip: parseInt(el.zip.value),
+          zip: el.zip.value,
           street: el.street.value,
           number: el.number.value
         }
@@ -44,7 +44,7 @@ const UserRegister = () => {
       <div className="p-2 bg-slate-500/15 shadow-lg rounded w-full gap-2">
         <div >
           <label htmlFor="firstName" className={labelStyle}>
-            First Name:
+            Vorname:
           </label>
           <input
             type="text"
@@ -54,8 +54,19 @@ const UserRegister = () => {
           />
         </div>
         <div className="pt-3">
+          <label htmlFor="lastName" className={labelStyle}>
+            Nachname:
+          </label>
+          <input
+            type="text"
+            name="lastName"
+            id="lastName"
+            className={inputStyle}
+          />
+        </div>
+        <div className="pt-3">
           <label htmlFor="street" className={labelStyle}>
-            Street:
+            Straße:
           </label>
           <input
             type="text"
@@ -66,7 +77,7 @@ const UserRegister = () => {
         </div>
         <div className="pt-3">
           <label htmlFor="number" className={labelStyle}>
-            number:
+            Haus-Nr:
           </label>
           <input
             type="text"
@@ -75,17 +86,7 @@ const UserRegister = () => {
             className={inputStyle}
           />
         </div>
-        {/* <div className="pt-3">
-          <label htmlFor="lastName" className="border-b-2 w-80">
-            Last Name:
-          </label>
-          <input
-            type="text"
-            name="lastName"
-            id="lastName"
-            className={inputStyle}
-          />
-        </div> */}
+
        {/*  <div className="pt-3">
           <label htmlFor="username" className="border-b-2 w-80">
             Username:
@@ -99,7 +100,7 @@ const UserRegister = () => {
         </div> */}
         <div className="pt-3">
           <label htmlFor="zip" className={labelStyle}>
-            PLZ.:
+            PLZ:
           </label>
           <input
             type="text"
@@ -132,7 +133,7 @@ const UserRegister = () => {
         </div> */}
         <div className="pt-3">
           <label htmlFor="password" className={labelStyle}>
-            Password:
+            Passwort:
           </label>
           <input
             type="password"
@@ -143,7 +144,7 @@ const UserRegister = () => {
         </div>
         <div className="pt-3">
           <label htmlFor="confirmPassword" className={labelStyle}>
-          confirm Password:
+          Passwort bestätigen:
           </label>
           <input
             type="password"
@@ -154,7 +155,7 @@ const UserRegister = () => {
         </div>
       </div>
       <button className= {buttonStyle}>
-        Submit
+        Abschicken
       </button>
     </form>
   );
