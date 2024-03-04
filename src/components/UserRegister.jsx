@@ -6,6 +6,7 @@ export const buttonStyle = "bg-green-200  text-slate-700 p-2 rounded w-full dark
 import { buttonStyle, inputStyle, labelStyle } from "./reuseable/styles/reuseableComponents.jsx";
 
 const UserRegister = () => {
+
   const submitHandler = async (event) => {
     event.preventDefault();
     const el = event.target.elements;
@@ -19,17 +20,16 @@ const UserRegister = () => {
     const geoCodeData = await getGeoCodeData(address);
 
     console.log("GEO CODE DATA [0]: -> ", geoCodeData[0])
-    // Check if geoCodeData is valid
+
     if (geoCodeData) {
-      // Prepare the body with geoCodeData
       const body = {
         firstName: el.firstName.value,
         lastName: el.lastName.value,
         email: el.email.value,
         password: el.password.value,
         confirmPassword: el.confirmPassword.value,
-        address: [address], // Add address to the body
-        geoCode: [geoCodeData[0], geoCodeData[1]], // Add geoCodeData to the body
+        address: [address], 
+        geoCode: [geoCodeData[0], geoCodeData[1]]
       };
 
       // Send the registration data to the server
@@ -55,14 +55,14 @@ const UserRegister = () => {
       const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${queryString}`);
       const data = await response.json();
 
-      // Check if valid data is returned
+
       if (data && data.length > 0) {
-        // Extract latitude and longitude
         const latitude = parseFloat(data[0].lat);
         const longitude = parseFloat(data[0].lon);
-        console.log("latitude:", latitude, "longitude:", longitude );
-        //! BUG: Daten korrekt, aber kommen nicht im localStorage (bzw. db?) an...
+        // console.log("latitude:", latitude, "longitude:", longitude );
+
         return [latitude, longitude];
+
       } else {
         console.error('No geocode data found.');
         return null;

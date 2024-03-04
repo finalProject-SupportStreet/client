@@ -30,12 +30,11 @@ const GeoCodeConverter = ({ onCoordinatesChange, onZipcodeChange }) => {
       try {
         const savedUser = JSON.parse(localStorage.getItem('userData')); 
 
-        if(!savedUser) { // Prüfung wahrscheinlich unnötig
+        if(!savedUser) { 
           const error = new Error('No userData in localStorage');
           throw error;
         }
-        //! savedUser wird zu oft JSON.stringified ... WO?!?
-        console.log("parsedUser in GeoConverter: ", savedUser)
+        // console.log("parsedUser in GeoConverter: ", savedUser)
 
         setZipcode(savedUser.address[0].zip);
         setStreet(savedUser.address[0].street);

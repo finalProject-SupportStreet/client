@@ -9,6 +9,7 @@ const UserLogin = () => {
 
   const { setIsLoggedIn, setUserData } = useContext(UserContext);
   const navigate = useNavigate();
+
   const login = async (event) => {
     event.preventDefault();
     const el = event.target.elements;
@@ -24,7 +25,7 @@ const UserLogin = () => {
       setIsLoggedIn(true);
       navigate("/")
     } catch (error) {
-      navigate("/login")
+      navigate("/login");
     }
   };
   return (

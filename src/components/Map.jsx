@@ -1,18 +1,48 @@
-import { useState, useEffect, useMemo, useContext } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { MapContainer, TileLayer, Marker, Circle, GeoJSON, ScaleControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import GeoCodeConverter from './GeoCodeConverter.jsx';
-import { UserContext } from './context/userContext.jsx';
+// import { UserContext } from './context/userContext.jsx';
 
 
 const Map = () => {
 
-  const {latitude, setLatitude, longitude, setLongitude} = useContext(UserContext);
-  // const [latitude, setLatitude] = useState(null);
-  // const [longitude, setLongitude] = useState(null);
+
+  const userData = JSON.parse(localStorage.getItem('userData'));
+  
+
+  const postGeoData = async () => {
+
+    const body = {
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      zip: userData.address[0].zip,
+      latitude: userData.geoCode[0],
+      longitude: userData.geoCode[1],
+  };  
+
+  const response = await fetch("http://localhost:5500/neighbours", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify(body),
+  });
+
+  const data = await response.json();
+  // console.log("data in map (posted to db):", data); 
+};
+postGeoData();
+
+
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
   const [radius, setRadius] = useState(250);
   const [zipcode, setZipcode] = useState('');
   const [allZipcodeGeoJson, setAllZipcodeGeoJson] = useState(null);
+
+
 
   // Fetche GeoJSON  für alle PLZ
   useEffect(() => {
@@ -29,14 +59,17 @@ const Map = () => {
       .catch((error) => console.error('Error fetching GeoJSON:', error));
   }, []);
 
+
   const handleCoordinatesChange = (lat, lon) => {
     setLatitude(lat);
     setLongitude(lon);
   };
 
+
   const handleRadiusChange = (event) => {
     setRadius(parseInt(event.target.value));
   };
+
 
   const memoizedZipcodeGeoJSON = useMemo(() => {
 
@@ -47,6 +80,7 @@ const Map = () => {
     return <GeoJSON key={zipcode} data={{ type: 'FeatureCollection', features: filteredData }} style={() => ({ color: 'blue' })} />;
 
   }, [allZipcodeGeoJson, zipcode]);
+
 
   return (
     <div className= ' flex justify-center items-center' >

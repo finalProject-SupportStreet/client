@@ -22,11 +22,10 @@ export const UserProvider = ({children}) => {
   
   const [userData, setUserData] = useState(savedUser || null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
 
 
-  console.log("userData in userContext --> ", userData);
+
+  // console.log("userData in userContext --> ", userData);
 
 
   useEffect(() => {
@@ -37,7 +36,7 @@ export const UserProvider = ({children}) => {
 
   
   return (
-    <UserContext.Provider value={{isLoggedIn, setIsLoggedIn, userData, setUserData, latitude, setLatitude, longitude, setLongitude}} >
+    <UserContext.Provider value={{isLoggedIn, setIsLoggedIn, userData, setUserData}} >
       {children}
     </UserContext.Provider >
   )
