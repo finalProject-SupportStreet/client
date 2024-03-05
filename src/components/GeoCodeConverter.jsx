@@ -1,8 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
 import 'leaflet/dist/leaflet.css';
-// import { MapContainer, TileLayer, Marker, Circle, GeoJSON } from 'react-leaflet';
-// import { loadConfigFromFile } from 'vite';
-
 
 /* WAS HIER PASSIERT:
   1) die Komponente konvertiert die Addresse in Geo-Daten
@@ -20,6 +17,7 @@ import 'leaflet/dist/leaflet.css';
 
 const GeoCodeConverter = ({ onCoordinatesChange, onZipcodeChange }) => {
 
+
   const [zipcode, setZipcode] = useState('');
   const [street, setStreet] = useState('');
   const [number, setNumber] = useState('');
@@ -30,31 +28,21 @@ const GeoCodeConverter = ({ onCoordinatesChange, onZipcodeChange }) => {
     const getUserData = async () => {
 
       try {
-        const savedUser = localStorage.getItem('userData'); 
-        const parsedUser = await JSON.parse(savedUser)
-        if(!parsedUser) { // Prüfung wahrscheinlich unnötig
+
+        const savedUser = JSON.parse(localStorage.getItem('userData')); 
+
+        if(!savedUser) { 
           const error = new Error('No userData in localStorage');
           throw error;
         }
-        //! savedUser wird zu oft JSON.stringified ... WO?!?
-        console.log("parsedUser in GeoConverter: ", savedUser)
+        // console.log("parsedUser in GeoConverter: ", savedUser)
 
-        setZipcode(parsedUser.address[0].zip);
-        setStreet(parsedUser.address[0].street);
-        setNumber(parsedUser.address[0].number);
+        setZipcode(savedUser.address[0].zip);
+        setStreet(savedUser.address[0].street);
+        setNumber(savedUser.address[0].number);
         setLoading(false);
 
-        // //TODO -> über dynamische Id auf eingeloggten user zugreifen 
-        // const response = await fetch('http://localhost:5500/neighbours/XYZ'); 
-        // const data = await response.json();
-        // if (!data) {
-        //   const error = new Error('Couldn`t fetch user');
-        //   throw error;
-        // }
-        // setZipcode(data[0].address[0].zip);
-        // setStreet(data[0].address[0].street);
-        // setNumber(data[0].address[0].number);
-        // setLoading(false); 
+
       } catch (err) {
         console.log(err);
       }
