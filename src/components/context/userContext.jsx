@@ -10,11 +10,13 @@ export const UserContext = createContext();
  5) useEffect speichert userDaten nur dann in localStorage, WENN  
     userData geändert wurde (zB. erster Login || neuer User Login || Login nachdem Cookie abgelaufen ist (30 Tage))
 
+
  ALLG: 
  - userDaten und Login-Status werden über useContext() für alle 
    Komponenten im Projekt verfügbar 
  - children sind alle Komponenten/Features im Projekt
 */
+
 
 
 export const UserProvider = ({children}) => {
@@ -32,7 +34,7 @@ export const UserProvider = ({children}) => {
     if(userData !== null) {
       localStorage.setItem('userData', JSON.stringify(userData));
     }
-  }, [userData]);
+    }, [userData]);
 
   
   return (
