@@ -5,7 +5,7 @@ import { GroupsContext } from "./context/groupsContext.jsx";
 
 const UserLogout = () => {
   const { setIsLoggedIn } = useContext(UserContext);
-  const { groupsData, setGroupsData } = useContext(GroupsContext);
+  const { groupsData } = useContext(GroupsContext);
   const navigate = useNavigate();
 
   const logout = async () => {
