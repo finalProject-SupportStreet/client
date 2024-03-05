@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 
-export const UserContext = createContext();
+export const GroupsContext = createContext();
 
 /* WAS HIER PASSIERT:
  1) checke ob user bereits eingeloggt (localStorage.getItem)
@@ -17,28 +17,28 @@ export const UserContext = createContext();
  - children sind alle Komponenten/Features im Projekt
 */
 
-export const UserProvider = ({ children }) => {
+export const GroupsProvider = ({ children }) => {
   // Beim Laden aus dem localStorage die Daten parsen
-  const savedUser = JSON.parse(localStorage.getItem("userData"));
+  const savedGroups = JSON.parse(localStorage.getItem("groupsData"));
 
-  const [userData, setUserData] = useState(savedUser || null);
+  const [groupsData, setGroupsData] = useState(savedGroups || null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  console.log("userData in userContext:", userData);
+  console.log("groupData in userContext:", groupsData);
 
   useEffect(() => {
-    if (userData !== null) {
-      localStorage.setItem("userData", JSON.stringify(userData));
+    if (groupsData !== null) {
+      localStorage.setItem("groupData", JSON.stringify(groupsData));
     }
-  }, [userData]);
+  }, [groupsData]);
 
-  console.log({ userData });
+  console.log({ groupsData });
 
   return (
-    <UserContext.Provider
-      value={{ isLoggedIn, setIsLoggedIn, userData, setUserData }}
+    <GroupsContext.Provider
+      value={{ isLoggedIn, setIsLoggedIn, groupsData, setGroupsData }}
     >
       {children}
-    </UserContext.Provider>
+    </GroupsContext.Provider>
   );
 };

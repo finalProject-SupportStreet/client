@@ -3,7 +3,11 @@ export const inputStyle = "w-full border-2 rounded focus:outline-none text-black
 
 export const buttonStyle = "bg-green-200  text-slate-700 p-2 rounded w-full dark:text-slate-600 mt-2  font-light hover:font-medium" */
 
-import { buttonStyle, inputStyle, labelStyle } from "./reuseable/styles/reuseableComponents.jsx";
+import {
+  buttonStyle,
+  inputStyle,
+  labelStyle,
+} from "./reuseable/styles/reuseableComponents.jsx";
 
 const UserRegister = () => {
   const submitHandler = async (event) => {
@@ -18,11 +22,11 @@ const UserRegister = () => {
 
       address: [
         {
-          zip: parseInt(el.zip.value),
+          zip: el.zip.value,
           street: el.street.value,
-          number: el.number.value
-        }
-      ]
+          number: el.number.value,
+        },
+      ],
     };
     console.log(body);
     const response = await fetch("http://localhost:5500/register", {
@@ -37,12 +41,12 @@ const UserRegister = () => {
     event.target.reset();
   };
   return (
-    <form 
+    <form
       className="h-fit flex flex-col justify-center gap-3 bg-white dark:bg-slate-800 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl "
       onSubmit={submitHandler}
     >
       <div className="p-2 bg-slate-500/15 shadow-lg rounded w-full gap-2">
-        <div >
+        <div>
           <label htmlFor="firstName" className={labelStyle}>
             First Name:
           </label>
@@ -57,23 +61,13 @@ const UserRegister = () => {
           <label htmlFor="street" className={labelStyle}>
             Street:
           </label>
-          <input
-            type="text"
-            name="street"
-            id="street"
-            className={inputStyle}
-          />
+          <input type="text" name="street" id="street" className={inputStyle} />
         </div>
         <div className="pt-3">
           <label htmlFor="number" className={labelStyle}>
             number:
           </label>
-          <input
-            type="text"
-            name="number"
-            id="number"
-            className={inputStyle}
-          />
+          <input type="text" name="number" id="number" className={inputStyle} />
         </div>
         {/* <div className="pt-3">
           <label htmlFor="lastName" className="border-b-2 w-80">
@@ -86,7 +80,7 @@ const UserRegister = () => {
             className={inputStyle}
           />
         </div> */}
-       {/*  <div className="pt-3">
+        {/*  <div className="pt-3">
           <label htmlFor="username" className="border-b-2 w-80">
             Username:
           </label>
@@ -101,25 +95,15 @@ const UserRegister = () => {
           <label htmlFor="zip" className={labelStyle}>
             PLZ.:
           </label>
-          <input
-            type="text"
-            name="zip"
-            id="zip"
-            className={inputStyle}
-          />
+          <input type="text" name="zip" id="zip" className={inputStyle} />
         </div>
         <div className="pt-3">
           <label htmlFor="email" className={labelStyle}>
             E-Mail:
           </label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            className={inputStyle}
-          />
+          <input type="email" name="email" id="email" className={inputStyle} />
         </div>
-       {/*  <div className="w-full">
+        {/*  <div className="w-full">
           <label htmlFor="email" className="border-b-2">
             E-Mail:
           </label>
@@ -138,24 +122,22 @@ const UserRegister = () => {
             type="password"
             name="password"
             id="password"
-            className= {inputStyle}
+            className={inputStyle}
           />
         </div>
         <div className="pt-3">
           <label htmlFor="confirmPassword" className={labelStyle}>
-          confirm Password:
+            confirm Password:
           </label>
           <input
             type="password"
             name="confirmPassword"
             id="confirmPassword"
-            className= {inputStyle}
+            className={inputStyle}
           />
         </div>
       </div>
-      <button className= {buttonStyle}>
-        Submit
-      </button>
+      <button className={buttonStyle}>Submit</button>
     </form>
   );
 };
