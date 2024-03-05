@@ -1,8 +1,8 @@
 import {  Outlet } from "react-router-dom";
 
-import "../App.css";
-import Nav from "./Nav.jsx";
-import { useTheme } from "./context/ThemeContext.jsx";
+import "./App.css";
+import Navbar from "./components/mainComponents/Navbar.jsx";
+import { useTheme } from "./components/context/ThemeContext.jsx";
 function App() {
   const { darkMode, toggleDarkMode } = useTheme();
 
