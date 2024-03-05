@@ -5,16 +5,19 @@ import { buttonStyle } from '../reuseable/styles/reuseableComponents.jsx';
 
 const UserLogout = () => {
   const { setIsLoggedIn } = useContext(UserContext);
+  const { groupsData } = useContext(GroupsContext);
   const navigate = useNavigate();
 
   const logout = async () => {
-    const response = await fetch('http://localhost:5500/logout', {
-      method: 'POST',
-      credentials: 'include',
+    const response = await fetch("http://localhost:5500/logout", {
+      method: "POST",
+      credentials: "include",
     });
     console.log(response);
     setIsLoggedIn(false);
-    navigate('/login');
+    localStorage.clear();
+    console.log("Logout LOG groupsData Context", groupsData);
+    navigate("/logout");
   };
   return <button onClick={logout} className={buttonStyle}>Log Out</button>;
 };

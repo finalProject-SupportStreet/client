@@ -6,9 +6,9 @@ import { useContext } from "react";
 import { UserContext } from "../context/userContext.jsx";
 
 const UserLogin = () => {
-
-  const { setIsLoggedIn } = useContext(UserContext);
+  const { setIsLoggedIn, setUserData } = useContext(UserContext);
   const navigate = useNavigate();
+
   const login = async (event) => {
     event.preventDefault();
     const el = event.target.elements;
@@ -20,13 +20,13 @@ const UserLogin = () => {
     // console.log(body);
     try {
       const data = await postDate("login",  body)
-      console.log(data);
-      setIsLoggedIn(true);
-      navigate("/")
-    } catch (error) {
-      navigate("/login")
-    }
+      setUserData(data.user);
 
+      setIsLoggedIn(true);
+      navigate("/");
+    } catch (error) {
+      navigate("/login");
+    }
   };
   return (
     <form
@@ -37,12 +37,7 @@ const UserLogin = () => {
          <label htmlFor="email" className={labelStyle}>
           E-Mail:{" "}
         </label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          className={inputStyle}
-        />
+        <input type="email" name="email" id="email" className={inputStyle} />
         {/* <label htmlFor="username" className={labelStyle}>
           Username:{" "}
         </label>
@@ -53,7 +48,9 @@ const UserLogin = () => {
           className={inputStyle}
         /> */}
         <p className="text-red-500">This field is required</p>
-        <label htmlFor="password" className={labelStyle}>Password: </label>
+        <label htmlFor="password" className={labelStyle}>
+          Password:{" "}
+        </label>
         <input
           type="password"
           name="password"
