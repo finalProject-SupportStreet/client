@@ -1,7 +1,7 @@
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { UserContext } from "./context/userContext.jsx";
-import { GroupsContext } from "./context/groupsContext.jsx";
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/userContext.jsx';
+import { buttonStyle } from '../reuseable/styles/reuseableComponents.jsx';
 
 const UserLogout = () => {
   const { setIsLoggedIn } = useContext(UserContext);
@@ -19,7 +19,7 @@ const UserLogout = () => {
     console.log("Logout LOG groupsData Context", groupsData);
     navigate("/logout");
   };
-  return <button onClick={logout}>Log Out</button>;
+  return <button onClick={logout} className={buttonStyle}>Log Out</button>;
 };
 
 export default UserLogout;

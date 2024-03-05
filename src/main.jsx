@@ -3,17 +3,18 @@ import ReactDOM from "react-dom/client";
 import App from "./components/App.jsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./components/Home.jsx";
-import UserRegister from "./components/UserRegister.jsx";
-import UserLogin from "./components/UserLogin.jsx";
-import UserLogout from "./components/UserLogout.jsx";
+import Home from "./components/mainComponents/Home.jsx";
+import UserRegister from "./components/profile/UserRegister.jsx";
+import UserLogin from "./components/profile/UserLogin.jsx";
+import UserLogout from "./components/profile/UserLogout.jsx";
 import Neighbours from "./components/Neighbours.jsx";
+
 import { UserProvider } from "./components/context/userContext.jsx";
+import { ThemeProvider } from "./components/context/ThemeContext.jsx";
+import Profile from "./components/profile/Profile.jsx";
 import GroupForm from "./components/group/groupForm.jsx";
 import GroupOverview from "./components/group/GroupOverview.jsx";
 import { GroupsProvider } from "./components/context/groupsContext.jsx";
-// import StyleExample from "./components/group/StyleExample.jsx";
-// import TodoApp from './components/ToDoApp.jsx';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,12 @@ const router = createBrowserRouter([
         path: "logout",
         element: <UserLogout />,
       },
+
+      {
+        path: "Profile",
+        element: <Profile />,
+      },
+
       {
         path: "neighbours",
         element: <Neighbours />,
@@ -68,10 +75,12 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <UserProvider>
-      <GroupsProvider>
-        <RouterProvider router={router} />
-      </GroupsProvider>
-    </UserProvider>
+    <ThemeProvider>
+      <UserProvider>
+        <GroupsProvider>
+          <RouterProvider router={router} />
+        </GroupsProvider>
+      </UserProvider>
+    </ThemeProvider>
   </React.StrictMode>
 );

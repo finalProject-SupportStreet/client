@@ -3,11 +3,7 @@ export const inputStyle = "w-full border-2 rounded focus:outline-none text-black
 
 export const buttonStyle = "bg-green-200  text-slate-700 p-2 rounded w-full dark:text-slate-600 mt-2  font-light hover:font-medium" */
 
-import {
-  buttonStyle,
-  inputStyle,
-  labelStyle,
-} from "./reuseable/styles/reuseableComponents.jsx";
+import { buttonStyle, inputStyle, labelStyle } from "../reuseable/styles/reuseableComponents.jsx";
 
 const UserRegister = () => {
 
@@ -89,7 +85,7 @@ const UserRegister = () => {
   };
 
   return (
-    <form
+    <form 
       className="h-fit flex flex-col justify-center gap-3 bg-white dark:bg-slate-800 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl "
       onSubmit={submitHandler}
     >
