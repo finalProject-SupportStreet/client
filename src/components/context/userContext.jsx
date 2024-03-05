@@ -31,6 +31,10 @@ export const UserProvider = ({ children }) => {
     }
   }, [userData]);
 
+  useEffect(() => {
+
+  },[isLoggedIn])
+  
   console.log({ userData });
 
   return (

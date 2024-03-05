@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/userContext.jsx';
 import { buttonStyle } from '../reuseable/styles/reuseableComponents.jsx';
+import { GroupsContext } from '../context/groupsContext.jsx';
 
 const UserLogout = () => {
   const { setIsLoggedIn } = useContext(UserContext);

@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./components/App.jsx";
+import App from "./App.jsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./components/mainComponents/Home.jsx";
@@ -24,6 +24,13 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "dashboard",
+        element:[
+          <h1>Dashboard</h1>
+    ],
+    
       },
       {
         path: "register",
