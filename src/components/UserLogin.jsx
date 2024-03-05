@@ -13,6 +13,7 @@ import { UserContext } from "./context/userContext.jsx";
 const UserLogin = () => {
   const { setIsLoggedIn, setUserData } = useContext(UserContext);
   const navigate = useNavigate();
+
   const login = async (event) => {
     event.preventDefault();
     const el = event.target.elements;
@@ -23,11 +24,9 @@ const UserLogin = () => {
     };
     // console.log(body);
     try {
-      const data = await postDate("login", body);
-      console.log("data in UserLogin.jsx: ", data);
+      const data = await postDate("login",  body)
       setUserData(data.user);
 
-      console.log("data.user in UserLogin.jsx: ", data.user);
       setIsLoggedIn(true);
       navigate("/");
     } catch (error) {

@@ -15,9 +15,11 @@ const UserLogout = () => {
     });
     console.log(response);
     setIsLoggedIn(false);
+
     localStorage.clear();
     console.log("Logout LOG groupsData Context", groupsData);
     navigate("/logout");
+
   };
   return <button onClick={logout}>Log Out</button>;
 };
