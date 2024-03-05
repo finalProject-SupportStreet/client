@@ -109,7 +109,7 @@ const GroupOverview = () => {
 
           {/* VORLAGE: MUSS ANGEPASST WERDEN! */}
           <span>Deine Gruppen</span>
-          <ul className="overflow-y-scroll h-full">
+          <ul className="h-full">
             {groupsData &&
               groupsData.map((group) => (
                 <GroupCard key={group.title} group={group} />

@@ -7,7 +7,7 @@ const Home = () => {
 
   return (
   <>
-  <p>Hallo! Du bist {!isloggedIn ? "" : "nicht"} eingeloggt.</p>
+  <p>Hallo! Du bist {isloggedIn ? "" : "nicht"} eingeloggt.</p>
   {/* <Options>Test</Options> */}
   </>
   )
