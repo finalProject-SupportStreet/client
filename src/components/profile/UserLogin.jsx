@@ -23,7 +23,7 @@ const UserLogin = () => {
       setUserData(data.user);
 
       setIsLoggedIn(true);
-      navigate("/");
+      navigate("/dashboard");
     } catch (error) {
       navigate("/login");
     }

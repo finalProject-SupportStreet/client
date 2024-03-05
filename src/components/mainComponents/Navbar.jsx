@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext.jsx";
 import { UserContext } from "../context/userContext.jsx";
-import "../../../src/App.css";
 import { DropDownProfile } from "./DropDownProfile.jsx";
 
 function Navbar() {
@@ -60,6 +59,7 @@ function Navbar() {
               &times;
             </button>
           )}
+        <DropDownProfile />
         </div>
 
         {!menuVisible && (
@@ -82,10 +82,11 @@ function Navbar() {
             >
               {darkMode ? "☀️" : "🌙"}
             </button>
+
           </div>
         )}
       </div>
-      <div className="desktop:desktopNav mobile:hidden h-">
+      <div className="desktop:desktopNav mobile:hidden ">
         <div className="desktopNavLi">
           <h1 className="underline absolute py-2 px-2 text-slate-700">Logo</h1>
           <NavLink to="/">Home</NavLink>

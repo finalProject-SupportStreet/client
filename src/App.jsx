@@ -1,9 +1,8 @@
-import { useEffect, useContext, useState } from "react";
 import {  Outlet } from "react-router-dom";
 
-import "../App.css";
-import Navbar from "./mainComponents/Navbar.jsx";
-import { useTheme } from "./context/ThemeContext.jsx";
+import "./App.css";
+import Navbar from "./components/mainComponents/Navbar.jsx";
+import { useTheme } from "./components/context/ThemeContext.jsx";
 function App() {
   const { darkMode, toggleDarkMode } = useTheme();
 
@@ -20,7 +19,7 @@ function App() {
 return (
   <div>
       
-      <Nav></Nav>
+      <Navbar />
     <div className={`h-screen flex items-center justify-center px-4 w-full ${darkMode ? 'dark darkThemeColor' : ''}`}>
     
       <Outlet />
