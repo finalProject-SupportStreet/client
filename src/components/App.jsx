@@ -8,7 +8,6 @@ import "../App.css";
 // import { UserContext } from "./context/userContext.jsx";
 
 function App() {
-
   return (
     <>
       <Nav />

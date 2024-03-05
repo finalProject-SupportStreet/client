@@ -5,7 +5,7 @@ import { GroupsContext } from "./context/groupsContext.jsx";
 
 const UserLogout = () => {
   const { setIsLoggedIn } = useContext(UserContext);
-  const { groupsData, setGroupsData } = useContext(GroupsContext);
+  const { groupsData } = useContext(GroupsContext);
   const navigate = useNavigate();
 
   const logout = async () => {
@@ -15,11 +15,9 @@ const UserLogout = () => {
     });
     console.log(response);
     setIsLoggedIn(false);
-
     localStorage.clear();
     console.log("Logout LOG groupsData Context", groupsData);
     navigate("/logout");
-
   };
   return <button onClick={logout}>Log Out</button>;
 };

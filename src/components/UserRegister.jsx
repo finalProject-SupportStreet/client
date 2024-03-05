@@ -10,7 +10,6 @@ import {
 } from "./reuseable/styles/reuseableComponents.jsx";
 
 const UserRegister = () => {
-
   const submitHandler = async (event) => {
     event.preventDefault();
     const el = event.target.elements;
@@ -29,13 +28,12 @@ const UserRegister = () => {
           number: el.number.value,
         },
       ],
-
     };
 
     // Call getGeoCodeData with the address synchronously
     const geoCodeData = await getGeoCodeData(address);
 
-    console.log("GEO CODE DATA [0]: -> ", geoCodeData[0])
+    console.log("GEO CODE DATA [0]: -> ", geoCodeData[0]);
 
     if (geoCodeData) {
       const body = {
@@ -44,8 +42,8 @@ const UserRegister = () => {
         email: el.email.value,
         password: el.password.value,
         confirmPassword: el.confirmPassword.value,
-        address: [address], 
-        geoCode: [geoCodeData[0], geoCodeData[1]]
+        address: [address],
+        geoCode: [geoCodeData[0], geoCodeData[1]],
       };
 
       // Send the registration data to the server
@@ -68,9 +66,10 @@ const UserRegister = () => {
   const getGeoCodeData = async (address) => {
     try {
       const queryString = `${address.number}+${address.street},+${address.zip}`;
-      const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${queryString}`);
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&q=${queryString}`
+      );
       const data = await response.json();
-
 
       if (data && data.length > 0) {
         const latitude = parseFloat(data[0].lat);
@@ -78,17 +77,15 @@ const UserRegister = () => {
         // console.log("latitude:", latitude, "longitude:", longitude );
 
         return [latitude, longitude];
-
       } else {
-        console.error('No geocode data found.');
+        console.error("No geocode data found.");
         return null;
       }
     } catch (error) {
-      console.error('Error during geocoding:', error);
+      console.error("Error during geocoding:", error);
       return null;
     }
   };
-
 
   return (
     <form
@@ -131,7 +128,7 @@ const UserRegister = () => {
           <input type="text" name="number" id="number" className={inputStyle} />
         </div>
 
-
+        <div>
           <label htmlFor="username" className="border-b-2 w-80">
             Username:
           </label>
@@ -141,7 +138,7 @@ const UserRegister = () => {
             id="username"
             className={inputStyle}
           />
-        </div> */}
+        </div>
         <div className="pt-3">
           <label htmlFor="zip" className={labelStyle}>
             PLZ:
@@ -154,17 +151,6 @@ const UserRegister = () => {
           </label>
           <input type="email" name="email" id="email" className={inputStyle} />
         </div>
-        {/*  <div className="w-full">
-          <label htmlFor="email" className="border-b-2">
-            E-Mail:
-          </label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            className=" border-2 rounded focus:outline-none text-black"
-          />
-        </div> */}
         <div className="pt-3">
           <label htmlFor="password" className={labelStyle}>
             Passwort:
@@ -178,7 +164,7 @@ const UserRegister = () => {
         </div>
         <div className="pt-3">
           <label htmlFor="confirmPassword" className={labelStyle}>
-          Passwort bestätigen:
+            Passwort bestätigen:
           </label>
           <input
             type="password"
@@ -189,10 +175,7 @@ const UserRegister = () => {
         </div>
       </div>
 
-      <button className= {buttonStyle}>
-        Abschicken
-      </button>
-
+      <button className={buttonStyle}>Abschicken</button>
     </form>
   );
 };

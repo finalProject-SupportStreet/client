@@ -17,16 +17,13 @@ export const UserContext = createContext();
  - children sind alle Komponenten/Features im Projekt
 */
 
-export const UserProvider = ({children}) => {
+export const UserProvider = ({ children }) => {
+  const savedUser = JSON.parse(localStorage.getItem("userData"));
 
-  const savedUser = JSON.parse(localStorage.getItem('userData')); 
-
-  
   const [userData, setUserData] = useState(savedUser || null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // console.log("userData in userContext --> ", userData);
-
 
   useEffect(() => {
     if (userData !== null) {
