@@ -8,8 +8,10 @@ import UserRegister from './components/profile/UserRegister.jsx';
 import UserLogin from './components/profile/UserLogin.jsx';
 import UserLogout from './components/profile/UserLogout.jsx';
 import Neighbours from './components/Neighbours.jsx';
+
 import { UserProvider } from './components/context/userContext.jsx';
 import { ThemeProvider } from './components/context/ThemeContext.jsx';
+import Profile from './components/profile/Profile.jsx';
 
 
 const router = createBrowserRouter([
@@ -36,8 +38,11 @@ const router = createBrowserRouter([
       {
         path: 'neighbours',
         element: <Neighbours />
+      },
+      {
+        path: 'Profile',
+        element: <Profile />
       }
-      
     ],
   },
   

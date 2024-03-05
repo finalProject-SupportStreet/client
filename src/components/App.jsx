@@ -19,7 +19,7 @@ function App() {
 {/* <div className={`h-full  px-0 box-content ${darkMode ? 'dark' : ''}`}> */}
 return (
   <div>
-      <h1 className="underline absolute py-2 px-2 text-slate-700">Logo</h1>
+      
       <Navbar ></Navbar>
     <div className={`h-screen flex items-center justify-center px-4 w-full ${darkMode ? 'dark darkThemeColor' : ''}`}>
     
