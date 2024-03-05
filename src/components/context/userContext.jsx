@@ -20,14 +20,18 @@ export const UserContext = createContext();
 
 
 export const UserProvider = ({children}) => {
+
   const savedUser = JSON.parse(localStorage.getItem('userData')); 
+
   
   const [userData, setUserData] = useState(savedUser || null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 
 
+
   // console.log("userData in userContext --> ", userData);
+
 
 
   useEffect(() => {

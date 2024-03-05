@@ -28,6 +28,7 @@ const GeoCodeConverter = ({ onCoordinatesChange, onZipcodeChange }) => {
     const getUserData = async () => {
 
       try {
+
         const savedUser = JSON.parse(localStorage.getItem('userData')); 
 
         if(!savedUser) { 
@@ -40,6 +41,7 @@ const GeoCodeConverter = ({ onCoordinatesChange, onZipcodeChange }) => {
         setStreet(savedUser.address[0].street);
         setNumber(savedUser.address[0].number);
         setLoading(false);
+
 
       } catch (err) {
         console.log(err);
