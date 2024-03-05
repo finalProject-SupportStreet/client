@@ -45,7 +45,7 @@ const NearbyNeighbours = () => {
 
 
   const divStyle = {
-    border: '1px solid black',
+    border: '1px solid darkblue',
     backgroundColor: 'lightblue',
     padding: '1rem',
     marginTop: '1rem'
@@ -53,7 +53,7 @@ const NearbyNeighbours = () => {
   const liStyle = {
     padding: '1rem',
     margin: '0.4rem 0 0.4rem 0',
-    border: '3px solid black',
+    border: '3px solid darkblue',
     borderRadius: '8px'
   };
 
