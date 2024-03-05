@@ -10,6 +10,7 @@ import {
 } from "./reuseable/styles/reuseableComponents.jsx";
 
 const UserRegister = () => {
+
   const submitHandler = async (event) => {
     event.preventDefault();
     const el = event.target.elements;
@@ -31,9 +32,9 @@ const UserRegister = () => {
     };
 
     // Call getGeoCodeData with the address synchronously
-    const geoCodeData = await getGeoCodeData(address);
+    const geoCodeData = await getGeoCodeData(body.address);
 
-    console.log("GEO CODE DATA [0]: -> ", geoCodeData[0]);
+    //console.log("GEO CODE DATA [0]: -> ", geoCodeData[0]);
 
     if (geoCodeData) {
       const body = {
@@ -42,8 +43,8 @@ const UserRegister = () => {
         email: el.email.value,
         password: el.password.value,
         confirmPassword: el.confirmPassword.value,
-        address: [address],
-        geoCode: [geoCodeData[0], geoCodeData[1]],
+        address: [body.address],
+        geoCode: [geoCodeData[0], geoCodeData[1]]
       };
 
       // Send the registration data to the server
