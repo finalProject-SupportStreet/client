@@ -36,7 +36,7 @@ function Navbar() {
   }
   return (
     <nav
-      className={`fixed w-full top-0 right-0 px-2 py-2  ${
+      className={`fixed h-12 w-full top-0 right-0 px-2 py-2  ${
         darkMode ? "bg-gray-700 text-white py-2 " : "bg-white text-gray-900"
       }`}
     >
