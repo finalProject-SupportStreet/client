@@ -17,19 +17,19 @@ export const DropDownProfile = () => {
 
 useEffect(() => {
   window.addEventListener("click", (e) => {
-    if(e.target.className.contains("btn-profile") === true){
+    if(e.target.classList.contains("btn-profile") === true){
       console.log("btn profile click");
       setHideProfile(false);
-    } else if(!e.target.className.contains("btn-profile")) {
+    } else if(!e.target.classList.contains("btn-profile")) {
       if (imgRef.current !== null ){
-        if(e.target.className?.toString() !== imgRef.current?.className?.toString()){
+        if(e.target.classList?.toString() !== imgRef.current?.classList?.toString()){
           setHideProfile(true);
         } else {
           setHideProfile(false);
         }
       }
       if (profileRef.current !== null ){
-        if(e.target.className.toString() !== profileRef.current.className.toString()){
+        if(e.target.classList.toString() !== profileRef.current.classList.toString()){
           setHideProfile(true);
         } else {
           setHideProfile(false);
