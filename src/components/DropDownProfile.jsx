@@ -14,33 +14,37 @@ export const DropDownProfile = () => {
     setHideProfile((prev) => !prev);
   };
 
-useEffect(() => {
-  window.addEventListener("click", (e) => {
-    if(e.target.classList.contains("btn-profile") === true){
-      console.log("btn profile click");
-      setHideProfile(false);
-    } else if(!e.target.classList.contains("btn-profile")) {
-      if (imgRef.current !== null ){
-        if(e.target.classList?.toString() !== imgRef.current?.classList?.toString()){
-          setHideProfile(true);
-        } else {
-          setHideProfile(false);
+  useEffect(() => {
+    window.addEventListener("click", (e) => {
+      if (e.target.classList.contains("btn-profile") === true) {
+        console.log("btn profile click");
+        setHideProfile(false);
+      } else if (!e.target.classList.contains("btn-profile")) {
+        if (imgRef.current !== null) {
+          if (
+            e.target.classList?.toString() !==
+            imgRef.current?.classList?.toString()
+          ) {
+            setHideProfile(true);
+          } else {
+            setHideProfile(false);
+          }
+        }
+        if (profileRef.current !== null) {
+          if (
+            e.target.classList.toString() !==
+            profileRef.current.classList.toString()
+          ) {
+            setHideProfile(true);
+          } else {
+            setHideProfile(false);
+          }
         }
       }
-      if (profileRef.current !== null ){
-        if(e.target.classList.toString() !== profileRef.current.classList.toString()){
-          setHideProfile(true);
-        } else {
-          setHideProfile(false);
-        }
-      }
-    }
-  });
-}, [profileRef, imgRef])
+    });
+  }, [profileRef, imgRef]);
 
-
-
-  return  (
+  return (
     <div className="btn-profile" onClick={handleDrop}>
       <button ref={imgRef} onClick={handleDrop} className="btn-profile">
         <svg
@@ -61,18 +65,20 @@ useEffect(() => {
         </svg>
       </button>
 
-  { hideProfile ? (
-        <div className="absolute w-fit top-4 right-14 lightThemeColor dark:darkThemeColor">
+      {hideProfile ? (
+        <div className="absolute w-fit top-4 right-14 lightThemeColor dark:darkThemeColor"></div>
+      ) : (
+        <div className="flex flex-col dropDownProfile" ref={profileRef}>
+          <ul className="flex flex-col gap-4">
+            <NavLink to="/profile">Profile</NavLink>
+            <li>Settings</li>
+            <NavLink to="/logout">Logout</NavLink>
+            <li className="hide-profile" onClick={() => setHideProfile(true)}>
+              Close Dropdown
+            </li>
+          </ul>
+        </div>
+      )}
     </div>
-  ) : (
-    <div className="flex flex-col dropDownProfile" ref={profileRef}>
-      <ul className="flex flex-col gap-4">
-        <NavLink to="/profile">Profile</NavLink>
-        <li>Settings</li>
-        <NavLink to="/logout">Logout</NavLink>
-        <li className="hide-profile" onClick={()=>setHideProfile(true)}>Close Dropdown</li>
-      </ul>
-    </div>
-  )}
-  </div>
-)};
+  );
+};
