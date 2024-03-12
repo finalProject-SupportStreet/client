@@ -1,10 +1,14 @@
 import { Outlet } from "react-router-dom";
 
-import "./App.css";
-import Navbar from "./components/mainComponents/Navbar.jsx";
-import { useTheme } from "./components/context/ThemeContext.jsx";
+import "../App.css";
+
+import { useTheme } from "./context/ThemeContext.jsx";
+import Navbar from "./mainComponents/Navbar.jsx";
+
 function App() {
-  const { darkMode, toggleDarkMode } = useTheme();
+  const { darkMode /* toggleDarkMode */ } = useTheme();
+
+  /*   localStorage.removeItem("theme"); // Whenever the user explicitly chooses to respect the OS preference */
 
   /*   localStorage.removeItem("theme"); // Whenever the user explicitly chooses to respect the OS preference */
 
@@ -14,19 +18,13 @@ function App() {
   return (
     <div>
       <Navbar />
-<<<<<<< HEAD
-    <div className={`h-full flex items-center justify-center px-4 w-full ${darkMode ? 'dark darkThemeColor' : ''}`}>
-    
-      <Outlet />
-=======
       <div
-        className={`flex items-center justify-center px-4 w-full ${
+        className={`h-screen flex items-center justify-center px-4 w-full ${
           darkMode ? "dark darkThemeColor" : ""
         }`}
       >
         <Outlet />
       </div>
->>>>>>> dev
     </div>
   );
 }

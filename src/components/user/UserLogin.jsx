@@ -1,7 +1,12 @@
 import { useNavigate } from "react-router-dom";
 
 import { postDate } from "../reuseable/fetchData.jsx";
-import { buttonStyle, inputStyle, labelStyle, linkStyle } from "../reuseable/styles/reuseableComponents.jsx";
+import {
+  buttonStyle,
+  inputStyle,
+  labelStyle,
+  linkStyle,
+} from "../reuseable/styles/reuseableComponents.jsx";
 import { useContext } from "react";
 import { UserContext } from "../context/userContext.jsx";
 
@@ -15,11 +20,11 @@ const UserLogin = () => {
     const body = {
       email: el.email.value,
       password: el.password.value,
-      // username: el.username.value,
     };
-    // console.log(body);
+    console.log(body);
     try {
-      const data = await postDate("login",  body)
+      const data = await postDate("login", body);
+      console.log({ data });
       setUserData(data.user);
 
       setIsLoggedIn(true);
@@ -34,7 +39,7 @@ const UserLogin = () => {
       onSubmit={login}
     >
       <div className="p-2 bg-slate-500/15 shadow-lg rounded w-full gap-2">
-         <label htmlFor="email" className={labelStyle}>
+        <label htmlFor="email" className={labelStyle}>
           E-Mail:{" "}
         </label>
         <input type="email" name="email" id="email" className={inputStyle} />
@@ -61,8 +66,12 @@ const UserLogin = () => {
       {/*  <h3 class="text-slate-900 dark:text-white mt-5 text-base font-medium tracking-tight">Writes Upside-Down</h3> */}
       <button className={buttonStyle}>Login</button>
       <div className="text-center">
-      <a href="/register" className={linkStyle}>Forgot password?</a>
-      <a href="/register" className={linkStyle}>Sign up</a>
+        <a href="/register" className={linkStyle}>
+          Forgot password?
+        </a>
+        <a href="/register" className={linkStyle}>
+          Sign up
+        </a>
       </div>
     </form>
   );

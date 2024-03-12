@@ -3,17 +3,20 @@ export const inputStyle = "w-full border-2 rounded focus:outline-none text-black
 
 export const buttonStyle = "bg-green-200  text-slate-700 p-2 rounded w-full dark:text-slate-600 mt-2  font-light hover:font-medium" */
 
-import { buttonStyle, inputStyle, labelStyle } from "../reuseable/styles/reuseableComponents.jsx";
+import {
+  buttonStyle,
+  inputStyle,
+  labelStyle,
+} from "../reuseable/styles/reuseableComponents.jsx";
 
 const UserRegister = () => {
-
   const submitHandler = async (event) => {
     event.preventDefault();
     const el = event.target.elements;
 
     const body = {
       firstName: el.firstName.value,
-      // lastName: el.lastName.value,
+      lastName: el.lastName.value,
       email: el.email.value,
       password: el.password.value,
       confirmPassword: el.confirmPassword.value,
@@ -26,22 +29,20 @@ const UserRegister = () => {
         },
       ],
     };
-
     // Call getGeoCodeData with the address synchronously
     const geoCodeData = await getGeoCodeData(body.address);
 
-    //console.log("GEO CODE DATA [0]: -> ", geoCodeData[0]);
-
     if (geoCodeData) {
-      const body = {
-        firstName: el.firstName.value,
-        lastName: el.lastName.value,
-        email: el.email.value,
-        password: el.password.value,
-        confirmPassword: el.confirmPassword.value,
-        address: [body.address],
-        geoCode: [geoCodeData[0], geoCodeData[1]]
-      };
+      body.geoCode = [geoCodeData[0], geoCodeData[1]];
+      // const body = {
+      //   firstName: el.firstName.value,
+      //   lastName: el.lastName.value,
+      //   email: el.email.value,
+      //   password: el.password.value,
+      //   confirmPassword: el.confirmPassword.value,
+      //   address: [body.address],
+      //   geoCode: [geoCodeData[0], geoCodeData[1]],
+      // };
 
       // Send the registration data to the server
       const response = await fetch("http://localhost:5500/register", {
@@ -54,7 +55,7 @@ const UserRegister = () => {
 
       // Process the response
       const data = await response.json();
-      console.log(data);
+      console.log({ data });
       event.target.reset();
     }
   };
@@ -62,7 +63,7 @@ const UserRegister = () => {
   // Define the getGeoCodeData function
   const getGeoCodeData = async (address) => {
     try {
-      const queryString = `${address[0].number}+${address[0].street}+${address[0].zip}`
+      const queryString = `${address[0].number}+${address[0].street}+${address[0].zip}`;
       const response = await fetch(
         `https://nominatim.openstreetmap.org/search?format=json&q=${queryString}`
       );
@@ -85,7 +86,7 @@ const UserRegister = () => {
   };
 
   return (
-    <form 
+    <form
       className="h-fit flex flex-col justify-center gap-3 bg-white dark:bg-slate-800 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl "
       onSubmit={submitHandler}
     >
