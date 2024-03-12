@@ -62,7 +62,7 @@ const UserRegister = () => {
   // Define the getGeoCodeData function
   const getGeoCodeData = async (address) => {
     try {
-      const queryString = `${address.number}+${address.street},+${address.zip}`;
+      const queryString = `${address[0].number}+${address[0].street}+${address[0].zip}`
       const response = await fetch(
         `https://nominatim.openstreetmap.org/search?format=json&q=${queryString}`
       );
