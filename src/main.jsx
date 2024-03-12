@@ -15,6 +15,8 @@ import Profile from "./components/profile/Profile.jsx";
 import GroupForm from "./components/group/groupForm.jsx";
 import GroupOverview from "./components/group/GroupOverview.jsx";
 import { GroupsProvider } from "./components/context/groupsContext.jsx";
+import Market from "./components/market/Market.jsx";
+import MarketForm from "./components/market/MarketForm.jsx";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +30,7 @@ const router = createBrowserRouter([
       {
         path: "dashboard",
         element:[
-          <h1>Dashboard</h1>
+          <h1 key={Math.random()}>Dashboard</h1>
     ],
     
       },
@@ -62,6 +64,14 @@ const router = createBrowserRouter([
         path: "groups",
         element: <GroupOverview />,
       },
+      {
+        path: "marketForm",
+        element: <MarketForm />
+      },
+      {
+        path: "market",
+        element: < Market />
+      }
       /*   {
         path: "style",
         element: <StyleExample />,

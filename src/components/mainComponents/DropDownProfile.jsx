@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "../../../src/App.css";
 
@@ -16,19 +16,19 @@ export const DropDownProfile = () => {
 
 useEffect(() => {
   window.addEventListener("click", (e) => {
-    if(e.target.classList.contains("btn-profile") === true){
+    if(e.target.className.contains("btn-profile") === true){
       console.log("btn profile click");
       setHideProfile(false);
-    } else if(!e.target.classList.contains("btn-profile")) {
+    } else if(!e.target.className.contains("btn-profile")) {
       if (imgRef.current !== null ){
-        if(e.target.classList?.toString() !== imgRef.current?.classList?.toString()){
+        if(e.target.className?.toString() !== imgRef.current?.className?.toString()){
           setHideProfile(true);
         } else {
           setHideProfile(false);
         }
       }
       if (profileRef.current !== null ){
-        if(e.target.classList.toString() !== profileRef.current.classList.toString()){
+        if(e.target.className.toString() !== profileRef.current.className.toString()){
           setHideProfile(true);
         } else {
           setHideProfile(false);
