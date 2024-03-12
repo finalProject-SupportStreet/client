@@ -18,9 +18,10 @@ const UserLogout = () => {
     setIsLoggedIn(false);
     localStorage.clear();
     console.log("Logout LOG groupsData Context", groupsData);
-    navigate("/logout");
+    navigate("/login");
   };
-  return <button onClick={logout} className={buttonStyle}>Log Out</button>;
+  logout()
+  /* return <button onClick={logout} className={buttonStyle}>Log Out</button>; */
 };
 
 export default UserLogout;

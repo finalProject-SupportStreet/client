@@ -14,6 +14,11 @@ function App() {
   return (
     <div>
       <Navbar />
+<<<<<<< HEAD
+    <div className={`h-full flex items-center justify-center px-4 w-full ${darkMode ? 'dark darkThemeColor' : ''}`}>
+    
+      <Outlet />
+=======
       <div
         className={`flex items-center justify-center px-4 w-full ${
           darkMode ? "dark darkThemeColor" : ""
@@ -21,6 +26,7 @@ function App() {
       >
         <Outlet />
       </div>
+>>>>>>> dev
     </div>
   );
 }
