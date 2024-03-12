@@ -1,6 +1,7 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "../../../src/App.css";
+import UserLogout from "../user/UserLogout.jsx";
 
 export const DropDownProfile = () => {
   const [hideProfile, setHideProfile] = useState(true);
@@ -69,8 +70,9 @@ useEffect(() => {
       <ul className="flex flex-col gap-4">
         <NavLink to="/profile">Profile</NavLink>
         <li>Settings</li>
-        <NavLink to="/logout">Logout</NavLink>
-        <li className="hide-profile" onClick={()=>setHideProfile(true)}>Close Dropdown</li>
+        <NavLink to="/logout"  onClick={UserLogout} >Logout</NavLink>
+       {/*  <li className="hide-profile" onClick={()=>setHideProfile(true)}>Close Dropdown</li> */}
+       {/*  <button onClick={UserLogout} className={buttonStyle}>Log Out</button> */}
       </ul>
     </div>
   )}
