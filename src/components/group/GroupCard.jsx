@@ -4,7 +4,7 @@ import { UserContext } from "../context/userContext.jsx";
 
 const GroupCard = ({ group }) => {
   const { title, text, image, privateGroup, members } = group;
-  const { userData, setUserData } = useContext(UserContext);
+  const { userData } = useContext(UserContext);
   // const { adress, groups } = userGroupData;
 
   /******************************************************

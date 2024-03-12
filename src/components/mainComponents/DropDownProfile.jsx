@@ -1,8 +1,7 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "../../../src/App.css";
 import UserLogout from "../user/UserLogout.jsx";
-import { buttonStyle } from "../reuseable/styles/reuseableComponents.jsx";
 
 export const DropDownProfile = () => {
   const [hideProfile, setHideProfile] = useState(true);
