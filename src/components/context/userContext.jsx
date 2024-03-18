@@ -23,18 +23,15 @@ export const UserProvider = ({ children }) => {
   const [userData, setUserData] = useState(savedUser || null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // console.log("userData in userContext --> ", userData);
-
   useEffect(() => {
+    console.log("useEffect löst aus");
     if (userData !== null) {
       localStorage.setItem("userData", JSON.stringify(userData));
     }
   }, [userData]);
 
-  useEffect(() => {
+  useEffect(() => {}, [isLoggedIn]);
 
-  },[isLoggedIn])
-  
   console.log({ userData });
 
   return (

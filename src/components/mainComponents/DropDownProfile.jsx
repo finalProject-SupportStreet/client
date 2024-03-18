@@ -1,8 +1,8 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "../../../src/App.css";
 import UserLogout from "../user/UserLogout.jsx";
-import { buttonStyle } from "../reuseable/styles/reuseableComponents.jsx";
+// import { buttonStyle } from "../reuseable/styles/reuseableComponents.jsx";
 
 export const DropDownProfile = () => {
   const [hideProfile, setHideProfile] = useState(true);
@@ -16,33 +16,29 @@ export const DropDownProfile = () => {
     setHideProfile((prev) => !prev);
   };
 
-useEffect(() => {
-  window.addEventListener("click", (e) => {
-    if(e.target.classList.contains("btn-profile") === true){
-      console.log("btn profile click");
-      setHideProfile(false);
-    } else if(!e.target.classList.contains("btn-profile")) {
-      if (imgRef.current !== null ){
-        if(e.target.classList?.toString() !== imgRef.current?.classList?.toString()){
-          setHideProfile(true);
-        } else {
-          setHideProfile(false);
-        }
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      // Überprüfe, ob der Klick innerhalb des Profilbereichs erfolgt ist
+      if (
+        profileRef.current &&
+        !profileRef.current.contains(e.target) &&
+        imgRef.current &&
+        !imgRef.current.contains(e.target)
+      ) {
+        // Wenn außerhalb geklickt wurde, verstecke das Profil-Dropdown
+        setHideProfile(true);
       }
-      if (profileRef.current !== null ){
-        if(e.target.classList.toString() !== profileRef.current.classList.toString()){
-          setHideProfile(true);
-        } else {
-          setHideProfile(false);
-        }
-      }
-    }
-  });
-}, [profileRef, imgRef])
+    };
 
+    window.addEventListener("click", handleClickOutside);
 
+    // Cleanup-Funktion, um den Event-Listener zu entfernen
+    return () => {
+      window.removeEventListener("click", handleClickOutside);
+    };
+  }, []); // Abhängigkeiten array ist leer, da wir nur beim Mounten/Unmounten handeln wollen
 
-  return  (
+  return (
     <div className="btn-profile" onClick={handleDrop}>
       <button ref={imgRef} onClick={handleDrop} className="btn-profile">
         <svg
@@ -62,20 +58,22 @@ useEffect(() => {
           />
         </svg>
       </button>
-  
-  { hideProfile ? (
-        <div className="absolute w-fit top-4 right-14 lightThemeColor dark:darkThemeColor">
+
+      {hideProfile ? (
+        <div className="absolute w-fit top-4 right-14 lightThemeColor dark:darkThemeColor"></div>
+      ) : (
+        <div className="flex flex-col dropDownProfile" ref={profileRef}>
+          <ul className="flex flex-col gap-4">
+            <NavLink to="/profile">Profile</NavLink>
+            <li>Settings</li>
+            <NavLink to="/logout" onClick={UserLogout}>
+              Logout
+            </NavLink>
+            {/*  <li className="hide-profile" onClick={()=>setHideProfile(true)}>Close Dropdown</li> */}
+            {/*  <button onClick={UserLogout} className={buttonStyle}>Log Out</button> */}
+          </ul>
+        </div>
+      )}
     </div>
-  ) : (
-    <div className="flex flex-col dropDownProfile" ref={profileRef}>
-      <ul className="flex flex-col gap-4">
-        <NavLink to="/profile">Profile</NavLink>
-        <li>Settings</li>
-        <NavLink to="/logout"  onClick={UserLogout} >Logout</NavLink>
-       {/*  <li className="hide-profile" onClick={()=>setHideProfile(true)}>Close Dropdown</li> */}
-       {/*  <button onClick={UserLogout} className={buttonStyle}>Log Out</button> */}
-      </ul>
-    </div>
-  )}
-  </div>
-)};
+  );
+};

@@ -8,13 +8,14 @@ import UserRegister from "./components/user/UserRegister.jsx";
 import UserLogin from "./components/user/UserLogin.jsx";
 import UserLogout from "./components/user/UserLogout.jsx";
 import Neighbours from "./components/Neighbours.jsx";
-
+import StyleExample from "../src/components/group/StyleExample.jsx";
 import { UserProvider } from "./components/context/userContext.jsx";
 import { ThemeProvider } from "./components/context/ThemeContext.jsx";
 import Profile from "./components/user/Profile.jsx";
 import GroupForm from "./components/group/groupForm.jsx";
 import GroupOverview from "./components/group/GroupOverview.jsx";
 import { GroupsProvider } from "./components/context/groupsContext.jsx";
+import GroupComponent from "./components/group/GroupComponent.jsx";
 
 const router = createBrowserRouter([
   {
@@ -27,10 +28,7 @@ const router = createBrowserRouter([
       },
       {
         path: "dashboard",
-        element:[
-          <h1>Dashboard</h1>
-    ],
-    
+        element: [<h1>Dashboard</h1>],
       },
       {
         path: "register",
@@ -62,22 +60,16 @@ const router = createBrowserRouter([
         path: "groups",
         element: <GroupOverview />,
       },
-      /*   {
-        path: "style",
+      {
+        path: "groupsCompo/:groupId",
+        element: <GroupComponent />,
+      },
+      {
+        path: "styles",
         element: <StyleExample />,
-      }, */
+      },
     ],
   },
-  // // path: "*" kann man hier als "alle anderen (ungültigen/nicht definierten) Pfaden" verstehen
-  // {
-  //   path: "*",
-  //   /*
-  //   Ich gehe zuerst auf einen ungültigen Pfad "/anton", dann werde ich zu "/" weitergeleitet
-  //   ohne replace: Beide Schritte/Stationen werden im Browserverlauf gespeichert
-  //   mit replace: Der Schritt "/anton" wird nicht gespeichert, sondern durch den weitergeleiteten Schritt "/" ersetzt
-  //   */
-  //   element: <Navigate to="/" replace />
-  // }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
