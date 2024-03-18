@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/userContext.jsx";
+import { Link } from "react-router-dom";
 
 const Market = () => {
   const { userData } = useContext(UserContext);
@@ -157,7 +158,7 @@ const Market = () => {
             </ul>
 
             <aside className="pr-3">
-              <a href="http://localhost:5173/marketform">
+              <Link to="/marketform">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -170,7 +171,7 @@ const Market = () => {
                     clipRule="evenodd"
                   />
                 </svg>
-              </a>
+              </Link>
             </aside>
           </div>
         </div>

@@ -3,7 +3,7 @@ import MitteilungForm from "./MitteilungForm.jsx";
 import MarketForm from "./MarketForm.jsx";
 
 const CreatePost = ({ closeModal }) => {
-  const [showForm, setShowForm] = useState(false);
+  // const [showForm, setShowForm] = useState(false);
   const [formType, setFormType] = useState(null);
 
   return (

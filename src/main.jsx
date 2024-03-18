@@ -16,6 +16,9 @@ import GroupForm from "./components/group/groupForm.jsx";
 import GroupOverview from "./components/group/GroupOverview.jsx";
 import { GroupsProvider } from "./components/context/groupsContext.jsx";
 import GroupComponent from "./components/group/GroupComponent.jsx";
+import Market from "./components/Market/Market.jsx";
+import Dashboard from "./components/Dashboard.jsx";
+// import MarketTest from "./components/Market/MarketTest.jsx";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +31,7 @@ const router = createBrowserRouter([
       },
       {
         path: "dashboard",
-        element: [<h1>Dashboard</h1>],
+        element: <Dashboard />,
       },
       {
         path: "register",
@@ -63,6 +66,10 @@ const router = createBrowserRouter([
       {
         path: "groupsCompo/:groupId",
         element: <GroupComponent />,
+      },
+      {
+        path: "market",
+        element: <Market />,
       },
       {
         path: "styles",

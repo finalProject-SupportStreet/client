@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { GroupsContext } from "../context/groupsContext.jsx";
-import { UserContext } from "../context/userContext.jsx";
+// import { UserContext } from "../context/userContext.jsx";
 import { useContext, useState } from "react";
 import groupPlaceholderImg from "../assets/groupPlaceholder.jpg";
 import CreatePost from "../mainComponents/createPost-Components/CreatePost.jsx";
@@ -9,9 +9,9 @@ import { Modal } from "../mainComponents/createPost-Components/Modal.jsx";
 const GroupComponent = () => {
   const { groupId } = useParams();
   const [showDetails, setShowDetails] = useState(false);
-  const { groupsData, setGroupsData } = useContext(GroupsContext);
+  const { groupsData } = useContext(GroupsContext);
   console.log(groupsData);
-  const { userData, setUserData } = useContext(UserContext);
+  // const { userData, setUserData } = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const group = groupsData.find((group) => group._id === groupId);
