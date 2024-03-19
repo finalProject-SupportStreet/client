@@ -1,9 +1,17 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/userContext.jsx";
+import { useNavigate } from "react-router-dom";
 
 const GroupForm = () => {
   const { userData, setUserData } = useContext(UserContext);
   const [errorMessage, setErrorMessage] = useState("");
+  const [uploadImg, setUploadImg] = useState("");
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    formData.image = uploadImg;
+  }, [uploadImg]);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -16,12 +24,12 @@ const GroupForm = () => {
   const handleChange = (e) => {
     setErrorMessage("");
     const { name, value, type, checked, files } = e.target;
-    const newValue =
+    let newValue =
       type === "checkbox" ? checked : type === "file" ? files[0] : value;
 
     setFormData((prevData) => ({
       ...prevData,
-      [name]: newValue,
+      [name]: newValue, // Keine Notwendigkeit, den Wert in ein Array zu verpacken
     }));
   };
 
@@ -33,13 +41,19 @@ const GroupForm = () => {
   };
 
   //! Hier fehlt noch die Logik für das Bild-Upload
-  const handleImageUpload = () => {
-    // Hier  Bild-Upload-Logik hinzufügen
-    console.log("Bild hochgeladen");
+  const handleImageUpload = (e) => {
+    const image = e.target.files[0];
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setUploadImg(reader.result);
+    };
+    reader.readAsDataURL(image);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("FormData GroupFom", formData);
     try {
       const response = await fetch("http://localhost:5500/createGroup", {
         method: "POST",
@@ -61,6 +75,7 @@ const GroupForm = () => {
         const errorMessage = await response.json();
         setErrorMessage(errorMessage.message);
       }
+      navigate("/groups");
     } catch (error) {
       console.error("Error sending data to server:", error);
       setErrorMessage("Gruppenname bereits vergeben.");
@@ -68,9 +83,11 @@ const GroupForm = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-slate-500/15 rounded-lg shadow-md">
+
+    <div className="max-w-md mx-auto mt-12 p-6 bg-slate-500/15 rounded-lg shadow-md">
+
       <h2 className="text-xl font-bold mb-4 text-gray-800">
-        Erstelle eine neue Gruppe
+        Erstelle eine neue Gruppe 🏘️
       </h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
@@ -147,7 +164,7 @@ const GroupForm = () => {
           <select
             id="tags"
             name="tags"
-            value={formData.tags.length > 0 ? formData.tags[0] : ""}
+            value={formData.tags} // Stellt sicher, dass formData.tags als String behandelt wird
             onChange={handleChange}
             className="mt-1 block text-gray-800 w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
           >

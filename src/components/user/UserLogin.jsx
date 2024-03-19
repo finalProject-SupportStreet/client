@@ -23,7 +23,7 @@ const UserLogin = () => {
     };
     console.log(body);
     try {
-      const data = await postDate("login", body);
+      const data = await postDate("login", body); // postDate ist ausgelagerter Fetch
       console.log({ data });
       setUserData(data.user);
 
