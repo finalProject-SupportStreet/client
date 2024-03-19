@@ -1,39 +1,40 @@
 import { useContext } from "react";
 import groupPlaceholderImg from "../assets/groupPlaceholder.jpg";
 import { UserContext } from "../context/userContext.jsx";
+import { Link } from "react-router-dom";
 
 const GroupCard = ({ group }) => {
-  const { title, text, image, privateGroup, members } = group;
-  const { userData } = useContext(UserContext);
-  // const { adress, groups } = userGroupData;
+
+  const { title, text, image, privateGroup, members, mods, admins } = group;
+  const { userData, setUserData } = useContext(UserContext);
+  const userId = userData._id;
+
 
   /******************************************************
    *    Berechnung Anzahl der Gruppenmitglieder
    ******************************************************/
   const countGroupMembers = () => {
-    if (!members || members.length === 0) {
-      // Wenn keine Mitglieder vorhanden sind, gib 1 zurück (nur der Administrator)
-      return 1;
-    } else {
-      // Ansonsten zähle die Anzahl der Mitglieder, Moderatoren und Administratoren
-      const numMembers = members.filter(
-        (member) => member.role === "member"
-      ).length;
-      const numMods = members.filter(
-        (member) => member.role === "moderator"
-      ).length;
-      const numAdmins = members.filter(
-        (member) => member.role === "admin"
-      ).length;
-      return numMembers + numMods + numAdmins;
-    }
+    // Zähle Länge jedes Arrays
+    const numMembers = members ? members.length : 0;
+    const numMods = mods ? mods.length : 0;
+    const numAdmins = admins ? admins.length : 0;
+
+    // Berechne die Gesamtzahl der Gruppenmitglieder
+    const total = numMembers + numMods + numAdmins;
+
+    return total;
   };
 
   /******************************************************
    *    überprüfung ob User mitglied der Gruppe ist
    ******************************************************/
-  //! Muss noch programiert werden
-  const isMember = () => {};
+  const isMember = () => {
+    const isMember = Array.isArray(members) && members.includes(userId);
+    const isMod = Array.isArray(mods) && mods.includes(userId);
+    const isAdmin = Array.isArray(admins) && admins.includes(userId);
+
+    return isMember || isMod || isAdmin;
+  };
 
   /******************************************************
    *    Wenn kein bild hinterlegt wurde -> Platzhalter nutzen
@@ -70,7 +71,6 @@ const GroupCard = ({ group }) => {
           credentials: "include",
         }
       );
-      console.log("response LOG GRUPPE BEITRETEN BTN", response);
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -78,13 +78,8 @@ const GroupCard = ({ group }) => {
       }
 
       const responseData = await response.json();
-      if (responseData.success) {
-        console.log(responseData.message);
-      } else {
-        throw new Error(responseData.message);
-      }
-
-      console.log(userData);
+      console.log("Updated User in gruppe beitreten button ", responseData);
+      setUserData(responseData);
     } catch (error) {
       console.error("Error joining group:", error);
     }
@@ -94,9 +89,10 @@ const GroupCard = ({ group }) => {
     <li key={title} className="border border-black mt-4 p-2 flex">
       {/* Linke Seite */}
       <div className="flex-none w-4/10 mr-4">
-        <a href="#">
+        <Link to={`/groupsCompo/${group._id}`}>
           <img src={groupImage()} alt="Group Image" className="h-24 w-24" />
-        </a>
+        </Link>
+
         <div className="flex items-center mt-2">
           <span className="flex items-center">
             <svg
@@ -121,7 +117,9 @@ const GroupCard = ({ group }) => {
 
       {/* Mittlere Spalte */}
       <div className="flex-grow mr-4">
-        <h2 className="text-lg font-bold mt-2 mb-4">{title}</h2>
+        <Link to={`/groupsCompo/${group._id}`}>
+          <h2 className="text-lg font-bold mt-2 mb-4">{title}</h2>
+        </Link>
         <p>{text}</p>
       </div>
 

@@ -1,7 +1,5 @@
 
 export const postDate = async (path, data) => {
-  console.log(path);
-
   const response = await fetch(`http://localhost:5500/${path}`, {
     method: "POST",
     headers: {
