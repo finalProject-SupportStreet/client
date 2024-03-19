@@ -12,6 +12,7 @@ function Navbar() {
   const [menuVisible, setMenuVisible] = useState(true);
 
   useEffect(() => {
+
     const checkLoggedIn = () => {
       const userCookie = document.cookie
         .split("; ")
@@ -23,6 +24,7 @@ function Navbar() {
       }
     };
     checkLoggedIn();
+
   }, [setIsLoggedIn]);
 
   function toggleMenu() {
@@ -127,11 +129,13 @@ function Navbar() {
           )}
           <DropDownProfile />
           <button
+
             className="dark:text-4xl top-3 right-3 fixed font-bold opacity-70 hover:opacity-100 duration-300"
             onClick={toggleDarkMode}
           >
             {darkMode ? "☀️" : "🌙"}
           </button>
+
         </div>
       </div>
     </nav>

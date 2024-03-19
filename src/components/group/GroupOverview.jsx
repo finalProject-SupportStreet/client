@@ -108,21 +108,21 @@ const GroupOverview = () => {
   return (
     <>
       <div className="mt-12">
-        <div className="min-w-420px">
-          <div className="groupBar bg-stone-400 mt-2 border border-black">
-            <header className="p-5">
-              <h2 className="text-3xl">Gruppen</h2>
-            </header>
-            <div className="groupHeaderBar flex justify-between items-center border border-black p-2">
-              <ul className="border-black flex justify-between w-80">
-                {searchInputVisible ? (
+      <div className="min-w-420px">
+        <div className="groupBar bg-stone-400 mt-2 border border-black">
+          <header className="p-5">
+            <h2 className="text-3xl">Gruppen</h2>
+          </header>
+          <div className="groupHeaderBar flex justify-between items-center border border-black p-2">
+            <ul className="border-black flex justify-between w-80">
+              {searchInputVisible ? (
                   <Searchbar
                     toggleSearchInput={toggleSearchInput}
                     searchValue={searchValue}
                     setSearchValue={setSearchValue}
                     handleSearch={handleSearch}
                   />
-                ) : (
+              ) : (
                   <SearchBtnUnclick toggleSearchInput={toggleSearchInput} />
                 )}
                 {!searchInputVisible && (
@@ -152,6 +152,7 @@ const GroupOverview = () => {
                     )}
                   </>
                 )}
+
                 {!dropDFilterIsOpen && (
                   <li className="flex items-center">
                     <svg
@@ -173,28 +174,31 @@ const GroupOverview = () => {
                 )}
               </ul>
 
-              <aside className="pr-3">
-                <a href="http://localhost:5173/groupsForm">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="w-8 h-8"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </a>
-              </aside>
-            </div>
+
+            <aside className="pr-3">
+              <a href="http://localhost:5173/marketform">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-8 h-8"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </a>
+            </aside>
           </div>
+        </div>
+
 
           {/* RENDERING DER CARDS */}
           {searchResults.length > 0 ? (
             // Suchergebnisse vorhanden
+
             <>
               <span>gefundene Suchergebnisse</span>
               <button
@@ -248,8 +252,9 @@ const GroupOverview = () => {
               </ul>
             </>
           )}
-        </div>
       </div>
+
+    </div>
     </>
   );
 };

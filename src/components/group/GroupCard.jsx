@@ -4,9 +4,11 @@ import { UserContext } from "../context/userContext.jsx";
 import { Link } from "react-router-dom";
 
 const GroupCard = ({ group }) => {
+
   const { title, text, image, privateGroup, members, mods, admins } = group;
   const { userData, setUserData } = useContext(UserContext);
   const userId = userData._id;
+
 
   /******************************************************
    *    Berechnung Anzahl der Gruppenmitglieder
