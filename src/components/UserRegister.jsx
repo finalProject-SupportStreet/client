@@ -7,7 +7,7 @@ import {
   buttonStyle,
   inputStyle,
   labelStyle,
-} from "../reuseable/styles/reuseableComponents.jsx";
+} from "./reuseable/styles/reuseableComponents.jsx";
 
 const UserRegister = () => {
   const submitHandler = async (event) => {
@@ -29,20 +29,22 @@ const UserRegister = () => {
         },
       ],
     };
+
     // Call getGeoCodeData with the address synchronously
     const geoCodeData = await getGeoCodeData(body.address);
 
+    console.log("GEO CODE DATA [0]: -> ", geoCodeData[0]);
+
     if (geoCodeData) {
-      body.geoCode = [geoCodeData[0], geoCodeData[1]];
-      // const body = {
-      //   firstName: el.firstName.value,
-      //   lastName: el.lastName.value,
-      //   email: el.email.value,
-      //   password: el.password.value,
-      //   confirmPassword: el.confirmPassword.value,
-      //   address: [body.address],
-      //   geoCode: [geoCodeData[0], geoCodeData[1]],
-      // };
+      const body = {
+        firstName: el.firstName.value,
+        lastName: el.lastName.value,
+        email: el.email.value,
+        password: el.password.value,
+        confirmPassword: el.confirmPassword.value,
+        address: [body.address],
+        geoCode: [geoCodeData[0], geoCodeData[1]],
+      };
 
       // Send the registration data to the server
       const response = await fetch("http://localhost:5500/register", {
@@ -55,7 +57,7 @@ const UserRegister = () => {
 
       // Process the response
       const data = await response.json();
-      console.log({ data });
+      console.log(data);
       event.target.reset();
     }
   };
@@ -126,6 +128,17 @@ const UserRegister = () => {
           <input type="text" name="number" id="number" className={inputStyle} />
         </div>
 
+        {/* <div>
+          <label htmlFor="username" className="border-b-2 w-80">
+            Username:
+          </label>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            className={inputStyle}
+          />
+        </div> */}
         <div className="pt-3">
           <label htmlFor="zip" className={labelStyle}>
             PLZ:
