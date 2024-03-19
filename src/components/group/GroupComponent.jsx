@@ -10,16 +10,25 @@ const GroupComponent = () => {
   const { groupId } = useParams();
   const [showDetails, setShowDetails] = useState(false);
   const { groupsData } = useContext(GroupsContext);
-  console.log(groupsData);
+
   // const { userData, setUserData } = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const group = groupsData.find((group) => group._id === groupId);
-  console.log("membertest GoupCompo", group);
+  const {
+    /* title, text, admins, mods, members, privateGroup, comments,  */ image,
+  } = group;
   /******************************************************
    *    img
    ******************************************************/
   // ! Cloudenary Anbindung fehlt noch
+  const groupImg = () => {
+    if (image === "") {
+      return groupPlaceholderImg;
+    } else {
+      return image;
+    }
+  };
 
   /******************************************************
    *    Details ein und ausblenden
@@ -80,7 +89,7 @@ const GroupComponent = () => {
           <div className="border-solid border p-2 flex flex-col">
             <h3 className="border-solid border p-2 mb-2">{group.title}</h3>
             <img
-              src={groupPlaceholderImg}
+              src={groupImg()}
               alt="Gruppenbild"
               className="border-solid border p-2 mb-4"
             />
