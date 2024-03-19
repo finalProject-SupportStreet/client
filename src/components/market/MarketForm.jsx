@@ -3,6 +3,8 @@ import { UserContext } from "../context/userContext.jsx";
 import CurrencyInput from 'react-currency-input-field';
 
 import { useNavigate } from 'react-router-dom';
+import { postDate } from "../reuseable/fetchData.jsx";
+
 
 
 const MarketForm = () => {
@@ -74,51 +76,44 @@ const MarketForm = () => {
   const handleSubmit = async (e) => {
 
     e.preventDefault();
-    // Check ob alle relevanten Felder ausgefüllt sind
-    // wenn unvollständig -> return, damit der Handler kein unvollständiges Formular sendet
-    //! bug -> wenn mehrere Felder fehlen, wird nur oberstes angezeigt
-    if(!formData.title) {
-      setErrorTitle('Bitte gib einen Artikel ein')
-      return
-    }
-    if(!formData.description) {
-      setErrorDescription('Bitte gib eine Beschreibung ein')
-      return
-    }
- //* dfjsffffffffffffffdGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-    if(!priceInput) {
-      setErrorOfferType('Bitte wähle einen Angebotstyp');
-      return
-    }
-
-    if(!formData.tags) {
-      setErrorTags('Bitte gib eine Kategorie an')
-      return
-    }
-
-    if(priceInput === 'Verkaufen' || priceInput === 'Vermieten') {
-      if(!formData.price) {
-        setErrorPrice('Bitte gib einen Preis an')
+    
+    try {
+      // Check ob alle relevanten Felder ausgefüllt sind
+      // wenn unvollständig -> return, damit der Handler kein unvollständiges Formular sendet
+      //! bug -> wenn mehrere Felder fehlen, wird nur oberstes angezeigt
+      if(!formData.title) {
+        setErrorTitle('Bitte gib einen Artikel ein')
         return
       }
-    }
+      if(!formData.description) {
+        setErrorDescription('Bitte gib eine Beschreibung ein')
+        return
+      }
+  
+      if(!priceInput) {
+        setErrorOfferType('Bitte wähle einen Angebotstyp');
+        return
+      }
+  
+      if(!formData.tags) {
+        setErrorTags('Bitte gib eine Kategorie an')
+        return
+      }
+  
+      if(priceInput === 'Verkaufen' || priceInput === 'Vermieten') {
+        if(!formData.price) {
+          setErrorPrice('Bitte gib einen Preis an')
+          return
+        }
+      }
 
-    try {
-      const response = await fetch('http://localhost:5500/createMarketItem', {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
-
-
-      const data = await response.json();
+      const data = await postDate('createMarketItem', formData);
+      
       console.log('data in MarketForm`s handleSubmit:', data);
 
       // User.marketItems und LocalStorage aktualisieren (frontend)
-      setUserData({...userData, marketItems: [...userData.marketItems, formData] });
+      setUserData({...userData, marketItems: [{...userData.marketItems}, formData] });
+
 
       navigate('/market');
 
@@ -130,8 +125,6 @@ const MarketForm = () => {
   const handleDivSelector = (input) => {
     setDivSelector((prevSelect) => prevSelect === input ? null : input);
   };
-
-
 
   return (
 

@@ -126,17 +126,6 @@ const UserRegister = () => {
           <input type="text" name="number" id="number" className={inputStyle} />
         </div>
 
-        <div>
-          <label htmlFor="username" className="border-b-2 w-80">
-            Username:
-          </label>
-          <input
-            type="text"
-            name="username"
-            id="username"
-            className={inputStyle}
-          />
-        </div>
         <div className="pt-3">
           <label htmlFor="zip" className={labelStyle}>
             PLZ:
