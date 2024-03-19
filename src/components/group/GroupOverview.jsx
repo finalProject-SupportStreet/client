@@ -4,6 +4,7 @@ import GroupCard from "./GroupCard.jsx";
 import { GroupsContext } from "../context/groupsContext.jsx";
 import Searchbar from "./Searchbar.jsx";
 import SearchBtnUnclick from "./SearchBtnUnclick.jsx";
+import GroupFilter from "./GroupFilter.jsx";
 
 const GroupOverview = () => {
   const { userData } = useContext(UserContext);
@@ -12,8 +13,10 @@ const GroupOverview = () => {
   const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [dropDFilterIsOpen, setDropDFilterIsOpen] = useState(false);
+  const [selectedTag, setSelectedTag] = useState("");
 
   console.log("Userdata Groups in overwiev:", userData.groups);
+
   /******************************************************
    *    Groupsfetch und daten in den Context laden
    ******************************************************/
@@ -85,6 +88,23 @@ const GroupOverview = () => {
     setDropDFilterIsOpen(!dropDFilterIsOpen);
   };
 
+  // Handler-Funktion für die Auswahl im Dropdown-Menü
+  const handleFilterChange = (event) => {
+    console.log("Filter Log", event.target.value);
+    setSelectedTag(event.target.value);
+  };
+
+  useEffect(() => {
+    console.log("Aktualisierter selectedTag: ", selectedTag);
+  }, [selectedTag]);
+
+  // Filtere gruppenliste nach Tag
+  let filteredGroups = groupsData;
+  if (selectedTag) {
+    filteredGroups = groupsData.filter((group) => group.tags === selectedTag);
+    console.log(filteredGroups);
+  }
+
   return (
     <>
       <div className="mt-12">
@@ -125,79 +145,35 @@ const GroupOverview = () => {
                       Filter
                     </li>
                     {dropDFilterIsOpen && (
-                      <select
-                        id="tags"
-                        name="tags"
-                        className="mt-1 block text-gray-800 w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                      >
-                        <option value="" disabled>
-                          Wähle eine Kategorie aus...
-                        </option>
-                        <option value="Kennlern/Stammtisch">
-                          Kennlern/Stammtisch
-                        </option>
-                        <option value="Bildung/Erfahrung">
-                          Bildung/Erfahrung
-                        </option>
-                        <option value="Kunst, Kultur & Musik">
-                          Kunst, Kultur & Musik
-                        </option>
-                        <option value="Märkte & Flohmärkte">
-                          Märkte & Flohmärkte
-                        </option>
-                        <option value="Computer, Internet & Technik">
-                          Computer, Internet & Technik
-                        </option>
-                        <option value="Familien & Kinder">
-                          Familien & Kinder
-                        </option>
-                        <option value="Essen & Trinken">Essen & Trinken</option>
-                        <option value="Feste & Feiern">Feste & Feiern</option>
-                        <option value="Lokales Engagement">
-                          Lokales Engagement
-                        </option>
-                        <option value="Gestalten & Heimwerken">
-                          Gestalten & Heimwerken
-                        </option>
-                        <option value="Gesundheit / Wellness">
-                          Gesundheit / Wellness
-                        </option>
-                        <option value="Sport & Bewegung">
-                          Sport & Bewegung
-                        </option>
-                        <option value="Umwelt & Nachhaltigkeit">
-                          Umwelt & Nachhaltigkeit
-                        </option>
-                        <option value="Teilen, Tauschen, Reparieren">
-                          Teilen, Tauschen, Reparieren
-                        </option>
-                        <option value="Viertel verschönern">
-                          Viertel verschönern
-                        </option>
-                        <option value="Ausflüge">Ausflüge</option>
-                        <option value="Sonstiges">Sonstiges</option>
-                      </select>
+                      <GroupFilter
+                        selectedTag={selectedTag}
+                        onChange={handleFilterChange}
+                      />
                     )}
-                    <li className="flex items-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-6 h-6"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M3 4.5h14.25M3 9h9.75M3 13.5h9.75m4.5-4.5v12m0 0-3.75-3.75M17.25 21 21 17.25"
-                        />
-                      </svg>
-                      Sortieren
-                    </li>
                   </>
                 )}
-            </ul>
+
+                {!dropDFilterIsOpen && (
+                  <li className="flex items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M3 4.5h14.25M3 9h9.75M3 13.5h9.75m4.5-4.5v12m0 0-3.75-3.75M17.25 21 21 17.25"
+                      />
+                    </svg>
+                    Sortieren
+                  </li>
+                )}
+              </ul>
+
 
             <aside className="pr-3">
               <a href="http://localhost:5173/marketform">
@@ -218,8 +194,11 @@ const GroupOverview = () => {
           </div>
         </div>
 
-        {/* VORLAGE: MUSS ANGEPASST WERDEN! */}
-        {searchResults[0] ? (
+
+          {/* RENDERING DER CARDS */}
+          {searchResults.length > 0 ? (
+            // Suchergebnisse vorhanden
+
             <>
               <span>gefundene Suchergebnisse</span>
               <button
@@ -234,7 +213,20 @@ const GroupOverview = () => {
                 ))}
               </ul>
             </>
+          ) : selectedTag ? (
+            // Filter ist aktiv, zeige gefilterte Gruppen
+            <>
+              {/* Gefilterte Gruppen basierend auf selectedTag anzeigen */}
+              <ul className="h-auto">
+                {groupsData
+                  .filter((group) => group.tags.includes(selectedTag))
+                  .map((group, index) => (
+                    <GroupCard key={index} group={group} />
+                  ))}
+              </ul>
+            </>
           ) : (
+            // Standardansicht ohne Filter und Suche
             <>
               <span>Deine Gruppen</span>
               <ul className="h-auto">
@@ -247,9 +239,16 @@ const GroupOverview = () => {
               <span>Andere Gruppen</span>
               <ul className="h-auto">
                 {groupsData &&
-                  groupsData.map((group, index) => (
-                    <GroupCard key={index} group={group} />
-                  ))}
+                  groupsData
+                    .filter(
+                      (groupData) =>
+                        !userData.groups.some(
+                          (userGroup) => userGroup._id === groupData._id
+                        )
+                    )
+                    .map((group, index) => (
+                      <GroupCard key={group._id} group={group} />
+                    ))}
               </ul>
             </>
           )}

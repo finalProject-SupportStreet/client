@@ -12,22 +12,19 @@ function Navbar() {
   const [menuVisible, setMenuVisible] = useState(true);
 
   useEffect(() => {
-    // Login-Check aus LS holen ? Damit sich useEffect updated
-    const checkLogin = async () => {
-      const response = await fetch(
-        "http://localhost:4000/users/check-logged-in",
-        {
-          method: "POST",
-          credentials: "include",
-        }
-      );
-      // response -> immer undefined
-      if (response.ok) {
-        // wird nie ausgelöst, wenn dann egal für react weil bereits beim login -> true
+
+    const checkLoggedIn = () => {
+      const userCookie = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("userToken="));
+      if (userCookie) {
         setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
       }
     };
-    checkLogin();
+    checkLoggedIn();
+
   }, [setIsLoggedIn]);
 
   function toggleMenu() {
@@ -132,11 +129,13 @@ function Navbar() {
           )}
           <DropDownProfile />
           <button
-              className="dark:text-4xl top-3 right-3 fixed font-bold opacity-70 hover:opacity-100 duration-300"
-              onClick={toggleDarkMode}
-            >
-              {darkMode ? "☀️" : "🌙"}
-            </button>
+
+            className="dark:text-4xl top-3 right-3 fixed font-bold opacity-70 hover:opacity-100 duration-300"
+            onClick={toggleDarkMode}
+          >
+            {darkMode ? "☀️" : "🌙"}
+          </button>
+
         </div>
       </div>
     </nav>

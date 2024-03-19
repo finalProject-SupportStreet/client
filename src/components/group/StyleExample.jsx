@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { UserContext } from "../context/userContext.jsx";
-// import "./styleExample.css";
+import "./styleExample.css";
 
 const StyleExample = () => {
   const { userData, setUserData } = useContext(UserContext);
@@ -69,7 +69,7 @@ const StyleExample = () => {
   };
 
   return (
-    <section className="style-test">
+    <section className="style-test w-auto">
       <div className="color"></div>
       <div className="color"></div>
       <div className="color"></div>
