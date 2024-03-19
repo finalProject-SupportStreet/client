@@ -10,32 +10,46 @@ const Market = () => {
 
   const [marketItems, setMarketItems] = useState([]);
 
+  
+
   useEffect(() => {
     const getMarketItems = async () => {
-      console.log("--------------USERDATA ADDRESS ZIP--------------------");
-      console.log(userData.address[0].zip);
-      console.log("-----------------------------------------");
-
-      const response = await fetch(
-        `http://localhost:5500/getMarketItemByZip/${userData.address[0].zip}`,
-        {
-          credentials: "include",
+      try {
+        console.log("--------------USERDATA ADDRESS ZIP--------------------");
+        console.log(userData.address[0].zip);
+        console.log("-----------------------------------------");
+  
+        const response = await fetch(
+          `http://localhost:5500/getMarketItemByZip/${userData.address[0].zip}`,
+          {
+            credentials: "include",
+          }
+        );
+        console.log("-----------------------------------------");
+        console.log("response -> ", response);
+  
+        if (!response.ok) {
+          throw new Error('Failed to fetch market items');
         }
-      );
-      console.log("-----------------------------------------");
-      console.log("response -> ", response);
-
-      const data = await response.json();
-
-      console.log("---------------DATA--------------------");
-      console.log(data);
-      setMarketItems(data);
+  
+        const data = await response.json();
+  
+        console.log("---------------DATA--------------------");
+        console.log(data);
+        setMarketItems(data);
+      } catch (err) {
+        console.log('Error fetching market items:', err);
+      }
     };
+  
     getMarketItems();
   }, []);
+  
 
   useEffect(() => {
-    console.log("marketItems in Market.jsx:", marketItems);
+    console.log("marketItems beim speichern in localStorage:", marketItems);
+    const marketData = JSON.stringify(marketItems)
+    localStorage.setItem('marketData', marketData);
   }, [marketItems]);
 
 
