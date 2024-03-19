@@ -1,108 +1,84 @@
+
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/userContext.jsx";
-import GroupCard from "./GroupCard.jsx";
-import { GroupsContext } from "../context/groupsContext.jsx";
-import Searchbar from "./Searchbar.jsx";
-import SearchBtnUnclick from "./SearchBtnUnclick.jsx";
 
-const GroupOverview = () => {
+const Market = () => {
   const { userData } = useContext(UserContext);
-  const { groupsData, setGroupsData } = useContext(GroupsContext);
-  const [searchInputVisible, setSearchInputVisible] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [dropDFilterIsOpen, setDropDFilterIsOpen] = useState(false);
 
-  console.log("Userdata Groups in overwiev:", userData.groups);
-  /******************************************************
-   *    Groupsfetch und daten in den Context laden
-   ******************************************************/
-  //^ am ende mal schauen ob der GruppenContext notwendig ist
+
+  console.log('FЯ!ΞdℇM4ภภ')
+
+
+  const [marketItems, setMarketItems] = useState([]);
+
+  
 
   useEffect(() => {
-    const fetchGroupsData = async () => {
+    const getMarketItems = async () => {
       try {
-        const response = await fetch("http://localhost:5500/getAllGroups");
+        console.log("--------------USERDATA ADDRESS ZIP--------------------");
+        console.log(userData.address[0].zip);
+        console.log("-----------------------------------------");
+  
+        const response = await fetch(
+          `http://localhost:5500/getMarketItemByZip/${userData.address[0].zip}`,
+          {
+            credentials: "include",
+          }
+        );
+        console.log("-----------------------------------------");
+        console.log("response -> ", response);
+  
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error('Failed to fetch market items');
         }
+  
         const data = await response.json();
-        setGroupsData(data);
-      } catch (error) {
-        console.error("Error fetching group data:", error);
+  
+        console.log("---------------DATA--------------------");
+        console.log(data);
+        setMarketItems(data);
+      } catch (err) {
+        console.log('Error fetching market items:', err);
       }
     };
-
-    fetchGroupsData();
+  
+    getMarketItems();
   }, []);
-
-  /******************************************************
-   *    SuchFunktion
-   ******************************************************/
+  
 
   useEffect(() => {
-    console.log(searchResults);
-  }, [searchResults]);
+    console.log("marketItems beim speichern in localStorage:", marketItems);
+    const marketData = JSON.stringify(marketItems)
+    localStorage.setItem('marketData', marketData);
+  }, [marketItems]);
 
-  // Funktion zum Umschalten der Sichtbarkeit des Suchfelds
-  const toggleSearchInput = () => {
-    setSearchInputVisible(!searchInputVisible);
-  };
 
-  // Funktion zum Ausführen der Suche
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch(
-        `http://localhost:5500/getSearchGroups/${searchValue}`,
-        {
-          credentials: "include",
-        }
-      );
+  const showPriceSpaces = (num) => {
+    let strNumber = num.toString();
 
-      const responseData = await response.json(); // in JSON umgewandeln
+    return strNumber.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  }
 
-      //! Error Message durch Userverständliche MSG ersetzten
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
 
-      setSearchResults(responseData); // Suchergebnisse basierend auf den JSON-Daten setzten
-
-      console.log("SEARCH-FETCH (searchResults) ERGEBNIS: ", searchResults);
-    } catch (error) {
-      console.error("Error searching groups:", error);
-    }
-    // Sichtbarkeit des Suchfelds zurück setzen
-    setSearchInputVisible(false);
-    setSearchValue("");
-  };
-
-  /******************************************************
-   *    FilterFunktion
-   ******************************************************/
-  const toggleDropdown = () => {
-    setDropDFilterIsOpen(!dropDFilterIsOpen);
-  };
-
+  // if(marketItems.length !== 0) {
   return (
-    <>
-      <div className="mt-12">
+    <div className="mt-12">
       <div className="min-w-420px">
         <div className="groupBar bg-stone-400 mt-2 border border-black">
           <header className="p-5">
-            <h2 className="text-3xl">Gruppen</h2>
+            <h2 className="text-3xl">Marktplatz</h2>
           </header>
           <div className="groupHeaderBar flex justify-between items-center border border-black p-2">
             <ul className="border-black flex justify-between w-80">
-              {searchInputVisible ? (
+              {/* {searchInputVisible ? (
                   <Searchbar
                     toggleSearchInput={toggleSearchInput}
                     searchValue={searchValue}
                     setSearchValue={setSearchValue}
                     handleSearch={handleSearch}
-                  />
-              ) : (
+                  /> */}
+              {/* ) : (
                   <SearchBtnUnclick toggleSearchInput={toggleSearchInput} />
                 )}
                 {!searchInputVisible && (
@@ -196,7 +172,7 @@ const GroupOverview = () => {
                       Sortieren
                     </li>
                   </>
-                )}
+                )} */}
             </ul>
 
             <aside className="pr-3">
@@ -219,7 +195,7 @@ const GroupOverview = () => {
         </div>
 
         {/* VORLAGE: MUSS ANGEPASST WERDEN! */}
-        {searchResults[0] ? (
+        {/* {searchResults[0] ? (
             <>
               <span>gefundene Suchergebnisse</span>
               <button
@@ -236,7 +212,7 @@ const GroupOverview = () => {
             </>
           ) : (
             <>
-              <span>Deine Gruppen</span>
+              <span>Deine Angebote</span>
               <ul className="h-auto">
                 {userData.groups &&
                   userData.groups.map((group, index) => (
@@ -244,7 +220,7 @@ const GroupOverview = () => {
                   ))}
               </ul>
 
-              <span>Andere Gruppen</span>
+              <span>Andere Angebote</span>
               <ul className="h-auto">
                 {groupsData &&
                   groupsData.map((group, index) => (
@@ -252,12 +228,40 @@ const GroupOverview = () => {
                   ))}
               </ul>
             </>
-          )}
+          )} */}
       </div>
+      <div className="flex flex-col">
+        <div className="mt-14 text-blue-500 underline underline-offset-2">
+          WILLKOMMEN AUF DEM MARKTPLATZ
+        </div>
 
+        {marketItems.map((item, i) => (
+          <div
+            key={i}
+            className="w-1/2 m-1 p-2 flex flex-col justify-center align-center border-2 border-indigo-200 hover:border-indigo-500  hover:bg-sky-100 transition ease-in-out delay-50 "
+          >
+            <p className="m-2 text-xl underline">Angebot: {item.title}</p>
+            <p className="m-2">Beschreibung: {item.description}</p>
+
+            <img className="w-full" src={`${item.image}`} alt="pic not found"  />
+
+            {/* wenn es keinen Preis gibt -> 'gratis' rendern */}
+            {item.price ? (
+              <p className="m-2 text-xl text-red-500">{showPriceSpaces(item.price)}€</p>
+            ) : (
+              <p className="m-2 text-xl text-green-600">Gratis</p>
+            )}
+            <div className="m-2">Kategorie:   
+              <span className="p-1.5 border-2 border-sky-600 rounded-full bg-sky-200 ">{item.offerType}</span>
+            </div>
+            <p className="m-2">Id des Erstellers: {item.creator}</p>
+
+          </div>
+        ))}
+      </div>
     </div>
-    </>
   );
+  // }
 };
+export default Market;
 
-export default GroupOverview;
