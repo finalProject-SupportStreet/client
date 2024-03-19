@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { postDate } from "../reuseable/fetchData.jsx";
 
 
+
 const MarketForm = () => {
 
   const navigate = useNavigate();
@@ -113,6 +114,7 @@ const MarketForm = () => {
       // User.marketItems und LocalStorage aktualisieren (frontend)
       setUserData({...userData, marketItems: [{...userData.marketItems}, formData] });
 
+
       navigate('/market');
 
     } catch (error) {
@@ -123,7 +125,6 @@ const MarketForm = () => {
   const handleDivSelector = (input) => {
     setDivSelector((prevSelect) => prevSelect === input ? null : input);
   };
-
 
   return (
 
