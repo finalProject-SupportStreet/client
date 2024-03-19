@@ -3,8 +3,9 @@ import { GroupsContext } from "../context/groupsContext.jsx";
 // import { UserContext } from "../context/userContext.jsx";
 import { useContext, useState } from "react";
 import groupPlaceholderImg from "../assets/groupPlaceholder.jpg";
-import CreatePost from "../mainComponents/createPost-Components/CreatePost.jsx";
+// import CreatePost from "../mainComponents/createPost-Components/CreatePost.jsx";
 import { Modal } from "../mainComponents/createPost-Components/Modal.jsx";
+import CreateGroupPost from "./CreateGroupPost.jsx";
 
 const GroupComponent = () => {
   const { groupId } = useParams();
@@ -18,6 +19,7 @@ const GroupComponent = () => {
   const {
     /* title, text, admins, mods, members, privateGroup, comments,  */ image,
   } = group;
+
   /******************************************************
    *    img
    ******************************************************/
@@ -145,7 +147,7 @@ const GroupComponent = () => {
         </section>
         {isModalOpen && (
           <Modal onClose={closeModal}>
-            <CreatePost closeModal={closeModal} />
+            <CreateGroupPost closeModal={closeModal} />
           </Modal>
         )}
       </div>

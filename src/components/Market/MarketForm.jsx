@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../context/userContext.jsx";
+import { UserContext } from "../context/userContext.jsx";
 import CurrencyInput from "react-currency-input-field";
 
 import { useNavigate } from "react-router-dom";
-import { postDate } from "../../reuseable/fetchData.jsx";
+import { postDate } from "../reuseable/fetchData.jsx";
 
 const MarketForm = () => {
   const navigate = useNavigate();

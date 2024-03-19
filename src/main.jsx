@@ -18,6 +18,7 @@ import { GroupsProvider } from "./components/context/groupsContext.jsx";
 import GroupComponent from "./components/group/GroupComponent.jsx";
 import Market from "./components/Market/Market.jsx";
 import Dashboard from "./components/Dashboard.jsx";
+import MarketForm from "./components/Market/MarketForm.jsx";
 // import MarketTest from "./components/Market/MarketTest.jsx";
 
 const router = createBrowserRouter([
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
       {
         path: "market",
         element: <Market />,
+      },
+      {
+        path: "marketform",
+        element: <MarketForm />,
       },
       {
         path: "styles",
