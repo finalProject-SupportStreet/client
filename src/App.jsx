@@ -15,7 +15,7 @@ function App() {
     <div>
       <Navbar />
       <div
-        className={`flex items-center justify-center px-4 w-full ${
+        className={`h-screen flex items-center justify-center px-4 w-full ${
           darkMode ? "dark darkThemeColor" : ""
         }`}
       >

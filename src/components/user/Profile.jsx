@@ -1,103 +1,118 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   buttonStyle,
   inputStyle,
   labelStyle,
 } from "../reuseable/styles/reuseableComponents.jsx";
+import { UserContext } from "../context/userContext.jsx";
 
 const UpdateProfile = () => {
-  // get userData from  localStorage and convert it to JSON object
-  // try{
-  //   const userData = JSON.parse(localStorage.getItem("userData"));
-  //   console.log(userData);
-  //   /* if(!userInfo){
-  //     window.location.href="/login"
-  //   }else{
-  //     let id=userInfo._id;
-  //   }  */
-  //   }catch(err) {console
-  //     .log(err);}
-
-  // const [firstName, setFirstName] = useState(userData ? userData.first_name : '');
-  // const [lastName, setLastName] = useState(userData? userData.last_name: '');
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log('update profile', firstName, lastName);
-  //   fetch(`http://localhost:50
-  //   00/api/users/${id
-  //     }`, {
-  //       method:'PUT' ,
-  //       headers:{
-  //         'Content-Type':'application/json'
-  //       },
-  //       body:JSON.stringify({
-  //         first_name:firstName,
-  //         last_name:lastName
-  //       })
-  //     }).then((res)=> res.json())
-  //       .then((data)=>{
-  //         alert('profile updated successfully!')
-  //         window.location.reload()
-  //       });
-  // };
-
-  // Method_2
-  const userData = JSON.parse(localStorage.getItem("userData"));
-  console.log(userData);
-
-  // State to store form data
-  const [formData, setFormData] = useState({
-    firstName: "",
-    email: "",
-    // Add other fields as needed
-  });
-
-  // Function to handle form field changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  const { userData, setUserData } = useContext(UserContext);
 
   // Function to handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    fetch(`http://localhost:5500/edit/:id?${userData._id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({
-        firstName: firstName,
-        // last_name:lastName
-        email: email
-      }),
-    }).then((res) => res.json());
-    console.log("update profile", firstName, email)
-    .then((data) => {
-      alert("profile updated successfully!");
+    const formData = new FormData(e.target);
+    const formDataProps = Object.fromEntries(formData);
+    // console.log(formDataProps);
+    const updatedData = {};
+    for (let nameAttr in formDataProps) {
+      // console.log(nameAttr);
+      if (formDataProps[nameAttr] !== "") {
+        updatedData[nameAttr] = formDataProps[nameAttr];
+      }
+    }
+
+    console.log("updatedData:", updatedData);
+
+    try {
+      const res = await fetch(
+        `http://localhost:5500/edit/${userData._id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            ...updatedData,
+          }),
+        }
+      );
+      const data = await res.json();
+      setUserData(data.user);
+      alert("Profile updated successfully!");
       window.location.reload();
-    });
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  console.log("Groups:",userData.groups);
 
   return (
     <div className="update-profile">
-      <h2 className="pb-6">Update {userData.firstName} Profile</h2>
-      <form onSubmit={handleSubmit}>
+      <div className="flex flex-col border-2 ">
+        <img
+          src="../avatar-icon.jpg"
+          alt=""
+          className="h-40 pb-2 object-contain"
+        />
+        <div className="relative bottom-8 left-20">
+          <button className="p-1 rounded-2xl border-2 bg-slate-50">+</button>
+          <h2 className="border-2 right-20 top-2 relative text-center">
+            {" "}
+            {userData.firstName}{" "}
+          </h2>
+        </div>
+      </div>
+
+      <form onSubmit={(e) => handleSubmit(e)}>
+        <textarea
+          name="aboutMe"
+          id="aboutMe"
+          // value={userData.groups}
+
+          cols="23"
+          rows="5"
+          placeholder= {userData.aboutMe ? userData.aboutMe : "Hier kannst du dich mit deinen eigenen Worten vorstellen."}       
+          
+          className={inputStyle}
+        ></textarea>
         <div>
-          <label htmlFor="name" className={labelStyle}>
+          <label htmlFor="groups">Groups:</label>
+          <select
+            multiple
+            value={userData.groups}
+            // onChange={handleSelectChange}
+            id="groups"
+            name="groups"
+          >
+            
+            {userData.groups}
+          </select>
+        </div>
+        <div>
+          <label htmlFor="firstName" className={labelStyle}>
             firstName:
           </label>
           <input
             type="text"
-            id="name"
-            name="name"
+            id="firstName"
+            name="firstName"
             placeholder={userData.firstName}
-            value={formData.name}
-            onChange={handleChange}
+            className={inputStyle}
+          />
+        </div>
+        <div>
+          <label htmlFor="lastName" className={labelStyle}>
+            lastName:
+          </label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            placeholder={userData.lastName}
             className={inputStyle}
           />
         </div>
@@ -110,8 +125,42 @@ const UpdateProfile = () => {
             id="email"
             name="email"
             placeholder={userData.email}
-            value={formData.email}
-            onChange={handleChange}
+            className={inputStyle}
+          />
+        </div>
+        <div>
+          <label htmlFor="street" className={labelStyle}>
+            Street:
+          </label>
+          <input
+            type="text"
+            id="street"
+            name="street"
+            placeholder={userData.address[0].street}
+            className={inputStyle}
+          />
+        </div>
+        <div>
+          <label htmlFor="number" className={labelStyle}>
+            Number:
+          </label>
+          <input
+            type="number"
+            id="number"
+            name="number"
+            placeholder={userData.address[0].number}
+            className={inputStyle}
+          />
+        </div>
+        <div>
+          <label htmlFor="zip" className={labelStyle}>
+            ZIP:
+          </label>
+          <input
+            type="number"
+            id="zip"
+            name="zip"
+            placeholder={userData.address[0].zip}
             className={inputStyle}
           />
         </div>
