@@ -3,7 +3,7 @@ import { GroupsContext } from "../context/groupsContext.jsx";
 // import { UserContext } from "../context/userContext.jsx";
 import { useContext, useState } from "react";
 import groupPlaceholderImg from "../assets/groupPlaceholder.jpg";
-import CreatePost from "../mainComponents/createPost-Components/CreatePost.jsx";
+import CreateGroupPost from "./CreateGroupPost.jsx";
 import { Modal } from "../mainComponents/createPost-Components/Modal.jsx";
 
 const GroupComponent = () => {
@@ -145,7 +145,7 @@ const GroupComponent = () => {
         </section>
         {isModalOpen && (
           <Modal onClose={closeModal}>
-            <CreatePost closeModal={closeModal} />
+            <CreateGroupPost closeModal={closeModal} />
           </Modal>
         )}
       </div>

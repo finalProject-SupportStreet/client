@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../context/userContext.jsx";
+import { UserContext } from "../context/userContext.jsx";
 import CurrencyInput from "react-currency-input-field";
 
 import { useNavigate } from "react-router-dom";
-import { postDate } from "../../reuseable/fetchData.jsx";
+import { postDate } from "../reuseable/fetchData.jsx";
 
 const MarketForm = () => {
   const navigate = useNavigate();
@@ -31,6 +31,7 @@ const MarketForm = () => {
     setFormData((prevObj) => ({ ...prevObj, offerType: priceInput }));
   }, [priceInput]);
 
+  // alle Input Felder
   const handleChange = (e) => {
     setErrorTitle("");
     setErrorDescription("");
@@ -43,10 +44,19 @@ const MarketForm = () => {
     }));
   };
 
+  // Preis Input
   const handlePriceChange = (value) => {
     setErrorTitle("");
     setErrorDescription("");
     setErrorTags("");
+    /* 
+    wenn man bei Preis nix angibt und Senden klickt, wird ein error unter Preis angezeigt. Wenn man jetzt einen Buchstaben klickt, verschwindet die Error Message, obwohl der PreisInput keine Buchstaben akzeptiert. Um dieses Problem zu lösen, wird erst geprüft, ob 'value' eine Zahl ist. Falls nicht, wird der Nutzer erneut aufgefordert eine Zahl einzugeben! 
+     */
+    if (isNaN(value)) {
+      setErrorPrice("Bitte gib eine Zahl ein");
+    } else {
+      setErrorPrice(""); 
+    }
     setPrice(value);
     setFormData((prevData) => ({
       ...prevData,
@@ -54,9 +64,6 @@ const MarketForm = () => {
     }));
   };
 
-  // const handleClick = () => {
-  //   setIsClicked(!isClicked);
-  // }
 
   const handleImageUpload = () => {
     // Hier  Bild-Upload-Logik hinzufügen
@@ -65,10 +72,8 @@ const MarketForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      // Check ob alle relevanten Felder ausgefüllt sind
-      // wenn unvollständig -> return, damit der Handler kein unvollständiges Formular sendet
+      // checke, ob Formular korrekt ausgefüllt wurde
       //! bug -> wenn mehrere Felder fehlen, wird nur oberstes angezeigt
       if (!formData.title) {
         setErrorTitle("Bitte gib einen Artikel ein");
@@ -84,11 +89,6 @@ const MarketForm = () => {
         return;
       }
 
-      if (!formData.tags) {
-        setErrorTags("Bitte gib eine Kategorie an");
-        return;
-      }
-
       if (priceInput === "Verkaufen" || priceInput === "Vermieten") {
         if (!formData.price) {
           setErrorPrice("Bitte gib einen Preis an");
@@ -96,8 +96,13 @@ const MarketForm = () => {
         }
       }
 
-      const data = await postDate("createMarketItem", formData);
+      if (!formData.tags) {
+        setErrorTags("Bitte gib eine Kategorie an");
+        return;
+      }
 
+
+      const data = await postDate("createMarketItem", formData);
       console.log("data in MarketForm`s handleSubmit:", data);
 
       // User.marketItems und LocalStorage aktualisieren (frontend)
@@ -113,7 +118,8 @@ const MarketForm = () => {
   };
 
   const handleDivSelector = (input) => {
-    setDivSelector((prevSelect) => (prevSelect === input ? null : input));
+    setDivSelector(input);
+    setErrorOfferType('');
   };
 
   return (
@@ -267,7 +273,7 @@ const MarketForm = () => {
               onValueChange={(value) => handlePriceChange(value)}
               allowNegativeValue={false}
               placeholder=" €"
-              suffix=" €"
+              suffix="€"
               allowDecimals={false}
               groupSeparator=" "
               defaultValue={0}
@@ -346,8 +352,8 @@ const MarketForm = () => {
               value={price}
               onValueChange={(value) => handlePriceChange(value)}
               allowNegativeValue={false}
-              placeholder=" €"
-              suffix=" €"
+              placeholder="€"
+              suffix="€"
               allowDecimals={false}
               groupSeparator=" "
               defaultValue={0}

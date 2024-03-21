@@ -176,7 +176,7 @@ const GroupOverview = () => {
 
 
             <aside className="pr-3">
-              <a href="http://localhost:5173/marketform">
+              <a href="http://localhost:5173/groupsForm">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -192,7 +192,8 @@ const GroupOverview = () => {
               </a>
             </aside>
           </div>
-        </div>
+        </div>      
+        {/* //*____________________________________ */}
 
 
           {/* RENDERING DER CARDS */}
@@ -246,7 +247,7 @@ const GroupOverview = () => {
                           (userGroup) => userGroup._id === groupData._id
                         )
                     )
-                    .map((group, index) => (
+                    .map((group) => (
                       <GroupCard key={group._id} group={group} />
                     ))}
               </ul>
