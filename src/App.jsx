@@ -4,7 +4,7 @@ import "./App.css";
 import Navbar from "./components/mainComponents/Navbar.jsx";
 import { useTheme } from "./components/context/ThemeContext.jsx";
 function App() {
-  const { darkMode, toggleDarkMode } = useTheme();
+  const { darkMode } = useTheme();
 
   /*   localStorage.removeItem("theme"); // Whenever the user explicitly chooses to respect the OS preference */
 
