@@ -3,11 +3,66 @@ import {
   buttonStyle,
   inputStyle,
   labelStyle,
+  trashButton,
 } from "../reuseable/styles/reuseableComponents.jsx";
 import { UserContext } from "../context/userContext.jsx";
 
 const UpdateProfile = () => {
   const { userData, setUserData } = useContext(UserContext);
+
+  // Trash symbol
+  const trash = (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="currentColor"
+      className="w-6 h-6"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+      />
+    </svg>
+  );
+
+
+  // Function to handle delete form field 
+const onDelete = async (fieldName) => {
+  console.log("fieldName:", fieldName);
+
+  try {
+    const res = await fetch(`http://localhost:5500/edit/${userData._id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        [fieldName]: null,
+      }),
+    });
+    const data = await res.json();
+    setUserData(data.user);
+    alert("Removed successfully!");
+  } catch (error) {
+    console.log(error);
+  }
+  
+  // window.location.reload();
+return
+
+  setUserData(prevUserData => {
+    const updatedUserData = { ...prevUserData };
+    // Delete the targeted field
+    delete updatedUserData[fieldName];
+    return updatedUserData;
+  });
+};
+
+
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
@@ -26,19 +81,16 @@ const UpdateProfile = () => {
     console.log("updatedData:", updatedData);
 
     try {
-      const res = await fetch(
-        `http://localhost:5500/edit/${userData._id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify({
-            ...updatedData,
-          }),
-        }
-      );
+      const res = await fetch(`http://localhost:5500/edit/${userData._id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          ...updatedData,
+        }),
+      });
       const data = await res.json();
       setUserData(data.user);
       alert("Profile updated successfully!");
@@ -48,8 +100,9 @@ const UpdateProfile = () => {
     }
   };
 
-  console.log("Groups:",userData.groups);
-
+  console.log("Groups:", userData.groups);
+// console.log("userData:",userData);
+// return null
   return (
     <div className="update-profile">
       <div className="flex flex-col border-2 ">
@@ -75,11 +128,14 @@ const UpdateProfile = () => {
 
           cols="23"
           rows="5"
-          placeholder= {userData.aboutMe ? userData.aboutMe : "Hier kannst du dich mit deinen eigenen Worten vorstellen."}       
-          
+          placeholder={
+            userData.aboutMe
+              ? userData.aboutMe
+              : "Hier kannst du dich mit deinen eigenen Worten vorstellen."
+          }
           className={inputStyle}
         ></textarea>
-        <div>
+        {/* <div>
           <label htmlFor="groups">Groups:</label>
           <select
             multiple
@@ -91,10 +147,13 @@ const UpdateProfile = () => {
             
             {userData.groups}
           </select>
-        </div>
-        <div>
+        </div> */}
+        <div className="relative">
           <label htmlFor="firstName" className={labelStyle}>
             firstName:
+            <button type="button" className={trashButton} onClick={ ()=> onDelete("firstName") }>
+              {trash}
+            </button>
           </label>
           <input
             type="text"
@@ -104,9 +163,12 @@ const UpdateProfile = () => {
             className={inputStyle}
           />
         </div>
-        <div>
+        <div className="relative">
           <label htmlFor="lastName" className={labelStyle}>
             lastName:
+            <button  type="button" className={trashButton} onClick={ ()=> onDelete("lastName") }>
+              {trash}
+            </button>
           </label>
           <input
             type="text"
@@ -116,9 +178,10 @@ const UpdateProfile = () => {
             className={inputStyle}
           />
         </div>
-        <div>
+        <div className="relative">
           <label htmlFor="email" className={labelStyle}>
             Email:
+        
           </label>
           <input
             type="email"
@@ -128,9 +191,12 @@ const UpdateProfile = () => {
             className={inputStyle}
           />
         </div>
-        <div>
+        <div className="relative">
           <label htmlFor="street" className={labelStyle}>
             Street:
+            <button type="button" className={trashButton} onClick={ ()=> onDelete("street") }>
+              {trash}
+            </button>
           </label>
           <input
             type="text"
@@ -140,24 +206,30 @@ const UpdateProfile = () => {
             className={inputStyle}
           />
         </div>
-        <div>
+        <div className="relative">
           <label htmlFor="number" className={labelStyle}>
             Number:
+            <button type="button" className={trashButton} onClick={ ()=> onDelete("number") }>
+              {trash}
+            </button>
           </label>
           <input
-            type="number"
+            type="text"
             id="number"
             name="number"
             placeholder={userData.address[0].number}
             className={inputStyle}
           />
         </div>
-        <div>
+        <div className="relative">
           <label htmlFor="zip" className={labelStyle}>
             ZIP:
+            <button type="button" className={trashButton} onClick={ ()=> onDelete("zip") }>
+              {trash}
+            </button>
           </label>
           <input
-            type="number"
+            type="text"
             id="zip"
             name="zip"
             placeholder={userData.address[0].zip}
