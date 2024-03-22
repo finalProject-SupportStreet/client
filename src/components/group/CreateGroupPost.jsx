@@ -91,7 +91,11 @@ const CreateGroupPost = ({ closeModal, groupPosts, setGroupPosts }) => {
   };
 
   return (
-  
+    <section className="flex justify-center items-center min-h-screen w-full">
+      <div className="reusableGlobalBackground absolute"></div>
+      <div className="reusableGlobalBackground absolute"></div>
+      <div className="reusableGlobalBackground absolute"></div>
+      <div className="reusableContainer reusableBorder mt-12 shadow-md">
         <form
           onSubmit={validateAndSubmitForm}
           className="reusableForm space-y-4"

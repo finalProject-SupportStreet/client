@@ -12,9 +12,9 @@ const GroupPostCard = ({ post }) => {
     minute: "2-digit",
   });
 
-  // Überprüfe, ob likes und comments definiert sind und setze sie auf ein leeres Array, falls nicht
-  const likes = post.likes || [];
-  const comments = Array.isArray(post.comments) ? post.comments : [];
+  // !Überprüfe, ob likes und comments definiert sind und setze sie auf ein leeres Array, falls nicht
+  /*  const likes = post.likes || [];
+  const comments = Array.isArray(post.comments) ? post.comments : []; */
 
   /******************************************************
    *    Profilpic
