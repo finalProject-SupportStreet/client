@@ -91,10 +91,7 @@ const GroupForm = () => {
   };
 
   return (
-    <section className="flex justify-center items-center min-h-screen w-full">
-      <div className="reusableGlobalBackground absolute"></div>
-      <div className="reusableGlobalBackground absolute"></div>
-      <div className="reusableGlobalBackground absolute"></div>
+   
       <div className="relative">
         <div className="reusableSquare absolute" style={{ "--i": 0 }}></div>
         <div className="reusableSquare absolute" style={{ "--i": 1 }}></div>

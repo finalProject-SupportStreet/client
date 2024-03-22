@@ -11,3 +11,6 @@ Overview nochmal mit getrenten atributen ausgeben!
 - beim Erstellen einer neuen gruppe kommt: Gruppenname bereits vergeben
 - createGroupPost Zeile 70           body: JSON.stringify(), /* formDatagroupForm ans Backend anschließen */
 
+
+
+ git merge --abort
