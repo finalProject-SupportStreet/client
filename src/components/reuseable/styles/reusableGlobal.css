@@ -1,19 +1,44 @@
+/* --------------  Buttons  ------------------ */
+/* --------------  Buttons  ------------------ */
+/* --------------  Buttons  ------------------ */
+/* --------------  Buttons  ------------------ */
+
+
+
 /* --------------  Container  ------------------ */
 .reusableContainer {
-   
+    
     background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     backdrop-filter: blur(5px);
     box-shadow: 0 25px 45px rgba(0,0,0,0.1);
-    border: 1px solid rgba(255, 255, 255, 0.5);
+   
     border-right: 1px solid rgba(255, 255, 255, 0.2);
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 20px; /* Etwas Innenabstand */
+    padding: 20px; 
 }
 
+.reusableBorder {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    transition: transform 0.3s ease-in-out, 
+}
+
+.reusableBorder:hover {
+    transform: scale(1.02);
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* --------------  Background  ------------------ */
 
 .reusableGlobalBackground {
- /*    position: absolute; */
     filter: blur(250px);
 }
 
@@ -38,6 +63,8 @@ section .reusableGlobalBackground:nth-child(3){
     height: 400px;
     background: #20b0e6;
     }
+
+    /* --------------  Animated Squares  ------------------ */
 
 .reusableSquareWrapper {
     /* position: relative; */
@@ -92,5 +119,27 @@ section .reusableGlobalBackground:nth-child(3){
     right: 330px;
     width: 150px;
     height: 150px;
-
 }
+
+  /* --------------  BARHEADERS (Gruppen erstellen, Suchen Sortieren Filter BOX)  ------------------ */
+/* --------------  bar für Groups und Market  ------------------ */
+
+.reusableHeaderBar {
+    background: rgba(255, 255, 255, 0.1); 
+    backdrop-filter: blur(10px); 
+    border-radius: 10px; 
+    border: 1px solid rgba(255, 255, 255, 0.3); 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    transition: background-color 0.3s ease, transform 0.3s ease; 
+}
+
+.reusableHeaderBar:hover {
+    transform: translateY(-2px); /* Leichtes Anheben beim Hovern */
+    background: rgba(255, 255, 255, 0.2); /* Etwas weniger Transparenz beim Hover */
+}
+
+
+
+
+
+    /* --------------  FONTS  ------------------ */

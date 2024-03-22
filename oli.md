@@ -14,3 +14,39 @@ Overview nochmal mit getrenten atributen ausgeben!
 
 
  git merge --abort
+
+ Login setLogin ist standart auf true (man ist eingeloggt beim start der seite)
+
+# ToDo in ferner Zukunft:
+- Mindestgröße & Max Größe beim GruppenBild (kleine Bilder werden in Component kleiner angezeigt)
+
+ # Roadmap fürs WE
+ 
+- Code Checken mit ChatGPT (jeder für seine Compos)
+- LandingPage uneingeloggt erstellen (wer?)
+- Startseite Eingeloggt (wer?)
+- Navigation !!! (wer?)
+- Profile: Gruppen Anzeigen, Bilder Upload (munem)
+- positionierung der komponenten (jeder für seine Componenten )
+- Styling komplett - Oli
+- Content für die DB neu anlegen - (jeder für seine Componenten )
+- Präsi Vorbereiten (powerpoint) (Alle - Dienstag!)
+    - Grundgedanken zur Projektwahl
+    - App WireFrame vorstellung
+    - Server Planung (datenfluss Diagramm)
+    - App Vorstellung
+    - eingehen auf einzelne Features
+        - Login
+        - Gruppenfunktion
+        - Markplatz
+        - Profilbereich
+        - Styling
+    - abschließende Worte
+    - offene Fragen
+- 
+
+
+UserLogin
+keine <a> -> Link
+
+login Zeile: 20-30

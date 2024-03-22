@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import "../reuseable/styles/reusableFormComponents.css";
+import "../reuseable/styles/reusableGlobal.css";
 
 const CreateGroupPost = ({ closeModal, groupPosts, setGroupPosts }) => {
   const { groupId } = useParams();
-
+  console.log(groupId);
   const [formData, setFormData] = useState({
     title: "",
     text: "",
@@ -89,28 +91,30 @@ const CreateGroupPost = ({ closeModal, groupPosts, setGroupPosts }) => {
   };
 
   return (
-    <div className="border max-w-lg mx-auto my-8">
-      <section className="border p-4">
-        <header className="flex justify-between items-center border-b pb-2">
-          <h2 className="text-xl font-semibold">Wähle eine Option: </h2>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6 cursor-pointer"
-            onClick={closeModal} // Verwende diese Funktion zum Schließen des Modal/Formular
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6 18 18 6M6 6l12 12"
-            />
-          </svg>
-        </header>
-        <section>
-          <form onSubmit={validateAndSubmitForm} className="space-y-4">
+  
+        <form
+          onSubmit={validateAndSubmitForm}
+          className="reusableForm space-y-4"
+        >
+          <header className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-semibold">Wähle eine Option:</h2>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6 cursor-pointer"
+              onClick={closeModal}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </header>
+          <div>
             <input
               type="text"
               name="title"
@@ -119,7 +123,7 @@ const CreateGroupPost = ({ closeModal, groupPosts, setGroupPosts }) => {
               onChange={handleChange}
               minLength="2"
               maxLength="50"
-              className="w-full p-2 border border-gray-300 rounded-md"
+              className="reusableInput"
             />
             <textarea
               placeholder="Deine Nachricht"
@@ -128,7 +132,7 @@ const CreateGroupPost = ({ closeModal, groupPosts, setGroupPosts }) => {
               onChange={handleChange}
               minLength="2"
               maxLength="5000"
-              className="w-full h-32 p-2 border border-gray-300 rounded-md"
+              className="reusableTextarea"
             />
             <div className="flex justify-between">
               <ul className="flex justify-between w-full space-x-2">
@@ -180,7 +184,6 @@ const CreateGroupPost = ({ closeModal, groupPosts, setGroupPosts }) => {
                 </button>
               </ul>
             </div>
-            {/* HIER NOCH ANSCHLIE?EN */}
             <div className="mb-4">
               <label
                 htmlFor="image"
@@ -197,18 +200,15 @@ const CreateGroupPost = ({ closeModal, groupPosts, setGroupPosts }) => {
               />
             </div>
             <div className="text-center">
-              <button
-                type="submit"
-                className="mt-4 px-4 py-2 border border-gray-300 rounded-md bg-blue-500 text-white hover:bg-blue-600"
-              >
+              <button type="submit" className="reusableFormBtn">
                 Absenden
               </button>
             </div>
-          </form>
+          </div>
           {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-        </section>
-      </section>
-    </div>
+        </form>
+      </div>
+    </section>
   );
 };
 

@@ -6,6 +6,7 @@ import Searchbar from "./Searchbar.jsx";
 import SearchBtnUnclick from "./SearchBtnUnclick.jsx";
 import GroupFilter from "./GroupFilter.jsx";
 import "../reuseable/styles/reusableGlobal.css";
+import "../reuseable/styles/reusableFormComponents.css";
 
 const GroupOverview = () => {
   const { userData } = useContext(UserContext);
@@ -111,20 +112,20 @@ const GroupOverview = () => {
     <section className="relative min-h-screen overflow-hidden flex justify-center items-center">
       {/* Fest positionierter Hintergrund */}
       <div className="absolute inset-0">
-        <div className="fixed reusableGlobalBackground bg-purple-500"></div>
-        <div className="fixed reusableGlobalBackground bg-blue-500"></div>
-        <div className=" fixed reusableGlobalBackground bg-lightblue-500"></div>
+        <div className="fixed reusableGlobalBackground "></div>
+        <div className="fixed reusableGlobalBackground "></div>
+        <div className=" fixed reusableGlobalBackground "></div>
       </div>
 
       {/* Scrollbarer Inhalts-Container */}
-      <div className="w-full h-full overflow-auto px-4 py-12">
+      <div className="w-full h-full overflow-auto ">
         <div className="reusableContainer mx-auto flex flex-col items-center">
           <div className="min-w-420px">
-            <div className="groupBar bg-stone-400 mt-2 border border-black">
+            <div className="reusableHeaderBar bg-stone-400 mt-2">
               <header className="p-5">
                 <h2 className="text-3xl">Gruppen</h2>
               </header>
-              <div className="groupHeaderBar flex justify-between items-center border border-black p-2">
+              <div className=" flex justify-between items-center p-2">
                 <ul className="border-black flex justify-between w-80">
                   {searchInputVisible ? (
                     <Searchbar
@@ -239,7 +240,9 @@ const GroupOverview = () => {
             ) : (
               // Standardansicht ohne Filter und Suche
               <>
-                <span>Deine Gruppen</span>
+                <h3 className="reusableH3 text-xl font-semibold mb-4 pb-2 border-b-2 w-full px-4 py-2 mt-5">
+                  Deine Gruppen
+                </h3>
                 <ul className="h-auto">
                   {userData.groups &&
                     [...userData.groups]
@@ -249,7 +252,9 @@ const GroupOverview = () => {
                       ))}
                 </ul>
 
-                <span>Andere Gruppen</span>
+                <h3 className="reusableH3 text-xl font-semibold mb-4 pb-2 border-b-2 w-full px-4 py-2 mt-5">
+                  Andere Gruppen
+                </h3>
                 <ul className="h-auto">
                   {groupsData &&
                     groupsData

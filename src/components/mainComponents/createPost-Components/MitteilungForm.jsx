@@ -1,15 +1,32 @@
 import { useState } from "react";
 
-const MitteilungForm = ({ closeModal }) => {
-  const [heading, setHeading] = useState("");
-  const [message, setMessage] = useState("");
+const MitteilungForm = ({ closeModal, groupId, setGroupPosts, groupPosts }) => {
+  const [title, setTitle] = useState("");
+  const [text, setText] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedTopic, setSelectedTopic] = useState("");
+
+  console.log(groupId);
 
   const handleTopicSelection = (topic) => {
     setSelectedTopic(topic); // Korrekt - sollte den Zustand `selectedTopic` aktualisieren
     console.log(topic); // Hilfreich für Debugging-Zwecke
   };
+
+  /******************************************************
+   *    Cloudinary
+   ******************************************************/
+
+  // Bild-Upload übernimmt jetzt handleChange
+  /* const handleImageUpload = (e) => {
+    const image = e.target.files[0];
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setUploadImg(reader.result);
+    };
+    reader.readAsDataURL(image);
+  }; */
 
   /******************************************************
    *    Senden des Forms
@@ -20,13 +37,13 @@ const MitteilungForm = ({ closeModal }) => {
     e.preventDefault(); // Verhindert das Standardverhalten des Formulars
 
     // Validierung für 'betreff'
-    if (heading.length < 2 || heading.length > 50) {
+    if (title.length < 2 || title.length > 50) {
       setErrorMessage("Der Betreff muss zwischen 2 und 50 Zeichen lang sein.");
       return;
     }
 
     // Validierung für 'message'
-    if (message.length < 2 || message.length > 5000) {
+    if (text.length < 2 || text.length > 5000) {
       setErrorMessage(
         "Die Nachricht muss zwischen 2 und 5000 Zeichen lang sein."
       );
@@ -37,20 +54,25 @@ const MitteilungForm = ({ closeModal }) => {
     setErrorMessage(""); // Bereinigt eventuelle vorherige Fehlermeldungen
 
     const formData = {
-      heading,
-      message,
+      title,
+      text,
       topic: selectedTopic,
     };
     console.log("FormData aus MitteilungForm", formData);
 
     try {
-      const response = await fetch("/api/posts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        `http://localhost:5500/createGroupPost/${groupId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+          credentials: "include",
+        }
+      );
+      console.log(response);
 
       if (response.ok) {
         console.log("Post erfolgreich gespeichert");
@@ -60,6 +82,9 @@ const MitteilungForm = ({ closeModal }) => {
         console.error("Fehler beim Speichern des Posts");
         setErrorMessage("Es gab ein Problem beim Speichern Ihres Posts.");
       }
+      const data = await response.json();
+      setGroupPosts([...groupPosts, data.post]);
+      console.log("data.post: ", data.post);
     } catch (error) {
       console.error("Fehler beim Senden der Daten", error);
       setErrorMessage("Es gab ein Problem beim Senden Ihrer Daten.");
@@ -92,16 +117,16 @@ const MitteilungForm = ({ closeModal }) => {
             <input
               type="text"
               placeholder="Betreff"
-              value={heading}
-              onChange={(e) => setHeading(e.target.value)}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               minLength="2"
               maxLength="50"
               className="w-full p-2 border border-gray-300 rounded-md"
             />
             <textarea
               placeholder="Deine Nachricht"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
+              value={text}
+              onChange={(e) => setText(e.target.value)}
               minLength="2"
               maxLength="5000"
               className="w-full h-32 p-2 border border-gray-300 rounded-md"

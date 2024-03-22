@@ -1,12 +1,7 @@
 /* ToDo : CSS für Checkbox */
 /* .inputBox ist derzeit NICHT in gebrauch */
 
-/* --------------  Buttons  ------------------ */
-/* --------------  Buttons  ------------------ */
-/* --------------  Buttons  ------------------ */
-/* --------------  Buttons  ------------------ */
-/* --------------  Buttons  ------------------ */
-/* --------------  Buttons  ------------------ */
+
 
 
 
@@ -82,3 +77,20 @@
     transform: scale(1.07);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
+
+/* --------------  H3  ------------------ */
+
+.reusableH3 {
+    background: rgba(255, 255, 255, 0.2); /* Leichte Transparenz */
+    backdrop-filter: blur(10px); /* Hintergrundunschärfe für den Glaseffekt */
+    border-radius: 10px; /* Abgerundete Ecken */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Leicht sichtbare Grenze */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtiler Schatten */
+    transition: all 0.3s ease-in-out; /* Weicher Übergang für Hover-Effekt */
+}
+
+.reusableH3:hover {
+    transform: scale(1.01); /* Leichtes Vergrößern beim Hover */
+    background: rgba(255, 255, 255, 0.25); /* Etwas weniger Transparenz beim Hover */
+}
+

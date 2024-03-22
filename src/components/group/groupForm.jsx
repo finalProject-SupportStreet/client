@@ -91,14 +91,17 @@ const GroupForm = () => {
   };
 
   return (
-   
+    <section className="flex  justify-center items-center min-h-screen w-full">
+      <div className="reusableGlobalBackground absolute"></div>
+      <div className="reusableGlobalBackground absolute"></div>
+      <div className="reusableGlobalBackground absolute"></div>
       <div className="relative">
         <div className="reusableSquare absolute" style={{ "--i": 0 }}></div>
         <div className="reusableSquare absolute" style={{ "--i": 1 }}></div>
         <div className="reusableSquare absolute" style={{ "--i": 2 }}></div>
         <div className="reusableSquare absolute" style={{ "--i": 3 }}></div>
         <div className="reusableSquare absolute" style={{ "--i": 4 }}></div>
-        <div className="reusableContainer mt-12 shadow-md">
+        <div className="reusableContainer reusableBorder mt-12 shadow-md">
           <form className="reusableForm" onSubmit={handleSubmit}>
             <h2 className="text-xl font-bold mb-4 text-gray-800">
               Erstelle eine neue Gruppe 🏘️
