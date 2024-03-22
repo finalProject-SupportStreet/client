@@ -205,7 +205,7 @@ const StyleExample = () => {
                 </select>
               </div>
               <div className="inputBox">
-                <button type="submit" className="button">
+                <button type="submit" className="buttonStyle">
                   Neue Gruppe erstellen
                 </button>
               </div>

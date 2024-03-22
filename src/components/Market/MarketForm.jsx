@@ -4,11 +4,15 @@ import CurrencyInput from "react-currency-input-field";
 
 import { useNavigate } from "react-router-dom";
 import { postDate } from "../reuseable/fetchData.jsx";
+import { handleImageUpload } from "../reuseable/imgToString.jsx";
 
 const MarketForm = () => {
+
+
+  
   const navigate = useNavigate();
   const { userData, setUserData } = useContext(UserContext);
-
+  
   const [errorTitle, setErrorTitle] = useState("");
   const [errorDescription, setErrorDescription] = useState("");
   const [errorPrice, setErrorPrice] = useState("");
@@ -17,6 +21,7 @@ const MarketForm = () => {
   const [divSelector, setDivSelector] = useState("");
   const [price, setPrice] = useState("");
   const [priceInput, setPriceInput] = useState("");
+  const [uploadImg, setUploadImg] = useState("");
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -26,11 +31,17 @@ const MarketForm = () => {
     zip: userData.address[0].zip,
     offerType: "", //~ Verkaufen, verschenken  etc
   });
-
+  
   useEffect(() => {
     setFormData((prevObj) => ({ ...prevObj, offerType: priceInput }));
   }, [priceInput]);
+  
+  useEffect(() => {
+    formData.image = uploadImg;
+    console.log(uploadImg);
+  }, [uploadImg]);
 
+  // alle Input Felder
   const handleChange = (e) => {
     setErrorTitle("");
     setErrorDescription("");
@@ -43,10 +54,19 @@ const MarketForm = () => {
     }));
   };
 
+  // Preis Input
   const handlePriceChange = (value) => {
     setErrorTitle("");
     setErrorDescription("");
     setErrorTags("");
+    /* 
+    wenn man bei Preis nix angibt und Senden klickt, wird ein error unter Preis angezeigt. Wenn man jetzt einen Buchstaben klickt, verschwindet die Error Message, obwohl der PreisInput keine Buchstaben akzeptiert. Um dieses Problem zu lösen, wird erst geprüft, ob 'value' eine Zahl ist. Falls nicht, wird der Nutzer erneut aufgefordert eine Zahl einzugeben! 
+     */
+    if (isNaN(value)) {
+      setErrorPrice("Bitte gib eine Zahl ein");
+    } else {
+      setErrorPrice(""); 
+    }
     setPrice(value);
     setFormData((prevData) => ({
       ...prevData,
@@ -54,21 +74,16 @@ const MarketForm = () => {
     }));
   };
 
-  // const handleClick = () => {
-  //   setIsClicked(!isClicked);
-  // }
 
-  const handleImageUpload = () => {
-    // Hier  Bild-Upload-Logik hinzufügen
-    console.log("Bild hochgeladen");
-  };
+  // const handleImageUpload = () => {
+  //   // Hier  Bild-Upload-Logik hinzufügen
+  //   console.log("Bild hochgeladen");
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      // Check ob alle relevanten Felder ausgefüllt sind
-      // wenn unvollständig -> return, damit der Handler kein unvollständiges Formular sendet
+      // checke, ob Formular korrekt ausgefüllt wurde
       //! bug -> wenn mehrere Felder fehlen, wird nur oberstes angezeigt
       if (!formData.title) {
         setErrorTitle("Bitte gib einen Artikel ein");
@@ -84,11 +99,6 @@ const MarketForm = () => {
         return;
       }
 
-      if (!formData.tags) {
-        setErrorTags("Bitte gib eine Kategorie an");
-        return;
-      }
-
       if (priceInput === "Verkaufen" || priceInput === "Vermieten") {
         if (!formData.price) {
           setErrorPrice("Bitte gib einen Preis an");
@@ -96,8 +106,13 @@ const MarketForm = () => {
         }
       }
 
-      const data = await postDate("createMarketItem", formData);
+      if (!formData.tags) {
+        setErrorTags("Bitte gib eine Kategorie an");
+        return;
+      }
 
+
+      const data = await postDate("createMarketItem", formData);
       console.log("data in MarketForm`s handleSubmit:", data);
 
       // User.marketItems und LocalStorage aktualisieren (frontend)
@@ -113,7 +128,8 @@ const MarketForm = () => {
   };
 
   const handleDivSelector = (input) => {
-    setDivSelector((prevSelect) => (prevSelect === input ? null : input));
+    setDivSelector(input);
+    setErrorOfferType('');
   };
 
   return (
@@ -267,7 +283,7 @@ const MarketForm = () => {
               onValueChange={(value) => handlePriceChange(value)}
               allowNegativeValue={false}
               placeholder=" €"
-              suffix=" €"
+              suffix="€"
               allowDecimals={false}
               groupSeparator=" "
               defaultValue={0}
@@ -346,8 +362,8 @@ const MarketForm = () => {
               value={price}
               onValueChange={(value) => handlePriceChange(value)}
               allowNegativeValue={false}
-              placeholder=" €"
-              suffix=" €"
+              placeholder="€"
+              suffix="€"
               allowDecimals={false}
               groupSeparator=" "
               defaultValue={0}
@@ -431,7 +447,7 @@ const MarketForm = () => {
             type="file"
             id="image"
             name="image"
-            onChange={handleImageUpload}
+            onChange={(e) => handleImageUpload(e, setUploadImg)}
             className="mt-1 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>

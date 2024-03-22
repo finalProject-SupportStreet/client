@@ -1,24 +1,49 @@
 import { Link, useParams } from "react-router-dom";
 import { GroupsContext } from "../context/groupsContext.jsx";
 // import { UserContext } from "../context/userContext.jsx";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import groupPlaceholderImg from "../assets/groupPlaceholder.jpg";
 // import CreatePost from "../mainComponents/createPost-Components/CreatePost.jsx";
 import { Modal } from "../mainComponents/createPost-Components/Modal.jsx";
 import CreateGroupPost from "./CreateGroupPost.jsx";
+import GroupPostCard from "./GroupPostCard.jsx";
+// import GroupPostCard from "./GroupPostCard.jsx";
 
 const GroupComponent = () => {
   const { groupId } = useParams();
   const [showDetails, setShowDetails] = useState(false);
-  const { groupsData } = useContext(GroupsContext);
-
-  // const { userData, setUserData } = useContext(UserContext);
+  const { groupsData, isLoading } = useContext(GroupsContext);
+  // const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  console.log(groupsData);
+  console.log(groupId);
 
+  // Die Logik zum Finden deiner Gruppe basierend auf `groupId`
   const group = groupsData.find((group) => group._id === groupId);
+  console.log("group in GroupComponent", group);
+  const [groupPosts, setGroupPosts] = useState(group.groupPosts || []); //! Browser meint hier ist der fehler
+
+  /******************************************************
+   *    useEffect für setGroupPosts
+   ******************************************************/
+
+  useEffect(() => {}, [groupPosts]);
+
+  /* *****************************************************
+   *    Gruppenkommentare laden (funzt eventuell garnicht?!)
+   ******************************************************/
+  if (isLoading) {
+    return <div>Lädt...</div>; // Zeige eine Ladeanzeige
+  }
+
+  if (!groupsData) {
+    return <div>Keine Daten verfügbar.</div>; // Fallback, falls keine Daten geladen werden konnten
+  }
+
   const {
     /* title, text, admins, mods, members, privateGroup, comments,  */ image,
   } = group;
+  console.log("group in Component", group);
 
   /******************************************************
    *    img
@@ -83,73 +108,85 @@ const GroupComponent = () => {
 
   return (
     <>
-      <div className="mt-10">
-        <div className="flex flex-col mt-8">
+      {/* Umschließender Container für alles, setzt die maximale Breite und zentriert den Inhalt */}
+      <div className="max-w-5xl mx-auto">
+        {/* Container für die Gruppeninformationen */}
+        <div className="mt-10">
           <Link to={`/groups`}>
-            <p className="pb-5">Zurück zur Gruppenübersicht</p>
+            <p className="pb-5 text-center">Zurück zur Gruppenübersicht</p>
           </Link>
-          <div className="border-solid border p-2 flex flex-col">
-            <h3 className="border-solid border p-2 mb-2">{group.title}</h3>
-            <img
-              src={groupImg()}
-              alt="Gruppenbild"
-              className="border-solid border p-2 mb-4"
-            />
-            <div className="flex flex-col mb-4">
+          <div className="border p-2">
+            <h3 className="border p-2 mb-2">{group.title}</h3>
+            <img src={groupImg()} alt="Gruppenbild" className="mb-4 mx-auto" />
+
+            {/* Details und Menü */}
+            <div className="mb-4">
               <div className="flex justify-between mb-2">
-                <aside
+                <button
                   onClick={detailsHandler}
-                  className="border-solid border p-2 cursor-pointer flex-grow"
+                  className="border p-2 cursor-pointer flex-grow"
                 >
                   {!showDetails ? "Details einblenden" : "Details ausblenden"}
-                </aside>
-                <aside className="border-solid border p-2">Menü</aside>
+                </button>
+                <button className="border p-2">Menü</button>
               </div>
+
+              {/* Weitere Details anzeigen, falls erforderlich */}
               {showDetails && (
-                <div className="flex flex-col">
-                  <article className="border-solid border p-2 mb-2">
-                    {group.text}
-                  </article>
-                  <article className="border-solid border p-2 mb-2">
-                    {/* Admins: {modsAdminsVornamen()} */}
+                <div>
+                  <p className="border p-2 mb-2">{group.text}</p>
+                  <p className="border p-2 mb-2">
                     Admins: {formatNamesList(group.admins)}
-                  </article>
-                  <article className="border-solid border p-2 mb-2">
-                    {/* Mods: {modsAdminsVornamen()} */}
-                    Mods: {formatNamesList(group.mods)},
-                  </article>
-                  <article className="border-solid border p-2 mb-2">
-                    {/* Mitglieder - Je nach Datenstruktur ggf. anpassen */}
+                  </p>
+                  <p className="border p-2 mb-2">
+                    Mods: {formatNamesList(group.mods)}
+                  </p>
+                  <p className="border p-2 mb-2">
                     Mitglieder: {formatNamesList(group.members)}
-                  </article>
+                  </p>
                 </div>
               )}
             </div>
-            <aside className="border-solid border p-2 flex justify-between">
-              <span> {isPrivate()}</span>
+
+            {/* Tags und Privatsphäre-Status */}
+            <div className="border p-2 flex justify-between">
+              <span>{isPrivate()}</span>
               <span>{group.tags}</span>
-            </aside>
+            </div>
           </div>
+
+          {/* Sektion für neue Nachricht */}
+          <section onClick={openModal} className="border p-2 my-4">
+            <div className="flex items-center">
+              <img
+                src="#"
+                alt="Profilbild Nutzer"
+                className="border p-2 w-1/5"
+              />
+              <input
+                type="text"
+                className="flex-auto ml-2 border p-2"
+                placeholder="Deine Nachricht..."
+              />
+            </div>
+          </section>
+          {isModalOpen && (
+            <Modal onClose={closeModal}>
+              <CreateGroupPost
+                closeModal={closeModal}
+                setGroupPosts={setGroupPosts}
+                groupPosts={groupPosts}
+              />
+            </Modal>
+          )}
         </div>
-        <section onClick={openModal} className="border-solid border p-2 my-4">
-          <div className="flex items-center">
-            <img
-              src="#"
-              alt="Profilbild Nutzer"
-              className="border-solid border p-2 w-1/5"
-            />
-            <input
-              type="text"
-              className="flex-auto ml-2 border-solid border p-2"
-              placeholder="Deine Nachricht..."
-            />
-          </div>
-        </section>
-        {isModalOpen && (
-          <Modal onClose={closeModal}>
-            <CreateGroupPost closeModal={closeModal} />
-          </Modal>
-        )}
+        {/* vor map muss  leeres array gibt null  group */}
+        {/* Container für die Post-Karten  */}
+        <div className="mt-4 px-4 md:px-0">
+          {groupPosts.map((post) => (
+            <GroupPostCard key={post._id} post={post} />
+          ))}
+        </div>
       </div>
     </>
   );

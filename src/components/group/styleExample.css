@@ -157,7 +157,7 @@ section .color:nth-child(3){
     box-shadow: 0 5px 15px rgba(0,0,0,0.15);
 }
 
-.button{
+.buttonStyle{
     width: 100%;
     background: #fff;
     border: none;

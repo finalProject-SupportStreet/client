@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
-const CreateGroupPost = ({ closeModal }) => {
+const CreateGroupPost = ({ closeModal, groupPosts, setGroupPosts }) => {
   const { groupId } = useParams();
 
   const [formData, setFormData] = useState({
     title: "",
     text: "",
     topic: "",
+    comments: "",
+    likes: "",
   });
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -65,7 +67,7 @@ const CreateGroupPost = ({ closeModal }) => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify() /* formDatagroupForm ans Backend anschließen */,
           credentials: "include",
         }
       );
@@ -77,6 +79,9 @@ const CreateGroupPost = ({ closeModal }) => {
         console.error("Fehler beim Speichern des Posts");
         setErrorMessage("Es gab ein Problem beim Speichern Ihres Posts.");
       }
+      const data = await response.json();
+      setGroupPosts([...groupPosts, data.post]);
+      console.log("data.post: ", data.post);
     } catch (error) {
       console.error("Fehler beim Senden der Daten", error);
       setErrorMessage("Es gab ein Problem beim Senden Ihrer Daten.");
@@ -129,6 +134,11 @@ const CreateGroupPost = ({ closeModal }) => {
               <ul className="flex justify-between w-full space-x-2">
                 <button
                   type="button"
+                  className={`${
+                    formData.topic === "Allgemein"
+                      ? "bg-blue-500 text-white"
+                      : "bg-white text-black"
+                  } p-2 rounded-md transition-colors`}
                   onClick={() =>
                     setFormData({ ...formData, topic: "Allgemein" })
                   }
@@ -137,18 +147,33 @@ const CreateGroupPost = ({ closeModal }) => {
                 </button>
                 <button
                   type="button"
+                  className={`${
+                    formData.topic === "Frage"
+                      ? "bg-blue-500 text-white"
+                      : "bg-white text-black"
+                  } p-2 rounded-md transition-colors`}
                   onClick={() => setFormData({ ...formData, topic: "Frage" })}
                 >
                   Frage
                 </button>
                 <button
                   type="button"
+                  className={`${
+                    formData.topic === "Aufruf"
+                      ? "bg-blue-500 text-white"
+                      : "bg-white text-black"
+                  } p-2 rounded-md transition-colors`}
                   onClick={() => setFormData({ ...formData, topic: "Aufruf" })}
                 >
                   Aufruf
                 </button>
                 <button
                   type="button"
+                  className={`${
+                    formData.topic === "Hinweis"
+                      ? "bg-blue-500 text-white"
+                      : "bg-white text-black"
+                  } p-2 rounded-md transition-colors`}
                   onClick={() => setFormData({ ...formData, topic: "Hinweis" })}
                 >
                   Hinweis
