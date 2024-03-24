@@ -5,14 +5,11 @@ import "../../reuseable/styles/reusableGlobal.css";
 const MitteilungForm = ({ closeModal, groupId, setGroupPosts, groupPosts }) => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
-  const [setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [selectedTopic, setSelectedTopic] = useState("");
 
-  console.log(groupId);
-
   const handleTopicSelection = (topic) => {
-    setSelectedTopic(topic); // Korrekt - sollte den Zustand `selectedTopic` aktualisieren
-    console.log(topic); // Hilfreich für Debugging-Zwecke
+    setSelectedTopic(topic);
   };
 
   /******************************************************

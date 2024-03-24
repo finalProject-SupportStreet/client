@@ -3,12 +3,12 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./components/mainComponents/Home.jsx";
+
 import UserRegister from "./components/user/UserRegister.jsx";
 import UserLogin from "./components/user/UserLogin.jsx";
 import UserLogout from "./components/user/UserLogout.jsx";
 import Neighbours from "./components/Neighbours.jsx";
-import StyleExample from "../src/components/group/StyleExample.jsx";
+import Home from "./components/landingpage/Home.jsx";
 import { UserProvider } from "./components/context/userContext.jsx";
 import { ThemeProvider } from "./components/context/ThemeContext.jsx";
 import Profile from "./components/user/Profile.jsx";
@@ -75,10 +75,6 @@ const router = createBrowserRouter([
       {
         path: "marketform",
         element: <MarketForm />,
-      },
-      {
-        path: "styles",
-        element: <StyleExample />,
       },
     ],
   },

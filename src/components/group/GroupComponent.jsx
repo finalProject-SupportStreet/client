@@ -20,11 +20,16 @@ const GroupComponent = () => {
   // Die Logik zum Finden deiner Gruppe basierend auf `groupId`
   const group = groupsData.find((group) => group._id === groupId);
   console.log("group in GroupComponent", group);
-  const [groupPosts, setGroupPosts] = useState(group.groupPosts || []); //! Browser meint hier ist der fehler
+  const [groupPosts, setGroupPosts] = useState([]);
+
+  useEffect(() => {
+    if (group && group.groupPosts) {
+      setGroupPosts(group.groupPosts);
+    }
+  }, [group]);
 
   //userdaten für das ProfilBild
   const user = JSON.parse(localStorage.getItem("userData"));
-  console.log(user.image);
 
   /******************************************************
    *    damit beim Betreten der Gruppe oben angezeigt wird und nicht irgendwo die mitte
@@ -233,9 +238,11 @@ const GroupComponent = () => {
 
         {/* Container für die Post-Karten (Kommentare) innerhalb des gleichen scrollbaren Containers */}
         <div className="mt-4 px-4 md:px-0 max-w-3xl mx-auto">
-          {groupPosts &&
-            groupPosts.map((post) => (
-              <GroupPostCard key={post._id} post={post} />
+          {groupPosts
+            .slice()
+            .reverse()
+            .map((post, index) => (
+              <GroupPostCard key={post._id || index} post={post} />
             ))}
         </div>
       </div>

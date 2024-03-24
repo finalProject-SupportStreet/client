@@ -61,6 +61,9 @@ const CreateGroupPost = ({ closeModal, groupPosts, setGroupPosts }) => {
 
     console.log("Absendendes FormData", formData);
 
+    /******************************************************
+     *   Fetch
+     ******************************************************/
     try {
       const response = await fetch(
         `http://localhost:5500/createGroupPost/${groupId}`,
