@@ -4,13 +4,15 @@ export const MarketContext = createContext();
 
 
 export const MarketProvider = ({ children }) => {
-  // Beim Laden aus dem localStorage die Daten parsen
+
   const savedMarketItems = JSON.parse(localStorage.getItem("marketData"));
+
+  console.log('saveDDDmarketItem$$$ ->', savedMarketItems); // -> null
 
   const [marketData, setMarketData] = useState(savedMarketItems || null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  console.log("marketData:", marketData);
+  console.log("marketData in conteXXXt:", marketData);// -> null
 
   useEffect(() => {
     if (marketData !== null) {

@@ -17,12 +17,13 @@ const Market = () => {
   
   const {marketData, setMarketData} = useContext(MarketContext);
 
-  console.log("FЯ!ΞdℇM4ภภ");
-
-
+  
+  //! BUG WARUM wird USEFFECT nicht ausgelöst
   useEffect(() => {
+    console.log("FЯ!ΞdℇM4ภภ");
     const getMarketItems = async () => {
       try {
+        console.log('TEST TEST TEST TES TESTTT');
         //todo Nach dem fetchen aller Market items, filtern nach PLZ oder Stadt (zB. alle PLZs von Berlin) fehlen
         //todo Alternativ -> Umkreissuche -> Artikel in 100m/250m/500m etc 
         const response = await fetch(
@@ -32,6 +33,7 @@ const Market = () => {
           }
         );
         const data = await response.json();
+        console.log('DATA DATA DATA IN MARKET ->>>', data);
         setMarketData(data);
         
       } catch (err) {
@@ -215,7 +217,7 @@ const Market = () => {
             wenn ja, filter durch Tags und mappe/render alle passenden
             wenn nein, mappe alle Artikel und render alle Artikel
         */}
-        {marketData[0] &&
+        {marketData &&
           (searchValue
             ? marketData
               .filter((marketItem) => marketItem.title.toLowerCase().includes(searchValue.toLowerCase()))

@@ -3,12 +3,16 @@ import { UserContext } from "../context/userContext.jsx";
 import CurrencyInput from "react-currency-input-field";
 
 import { useNavigate } from "react-router-dom";
-import { postDate } from "../reuseable/fetchData.jsx";
+// import { postDate } from "../reuseable/fetchData.jsx";
+import { handleImageUpload } from "../reuseable/imgToString.jsx";
 
 const MarketForm = () => {
+
+
+  
   const navigate = useNavigate();
   const { userData, setUserData } = useContext(UserContext);
-
+  
   const [errorTitle, setErrorTitle] = useState("");
   const [errorDescription, setErrorDescription] = useState("");
   const [errorPrice, setErrorPrice] = useState("");
@@ -17,6 +21,7 @@ const MarketForm = () => {
   const [divSelector, setDivSelector] = useState("");
   const [price, setPrice] = useState("");
   const [priceInput, setPriceInput] = useState("");
+  const [uploadImg, setUploadImg] = useState("");
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -26,10 +31,16 @@ const MarketForm = () => {
     zip: userData.address[0].zip,
     offerType: "", //~ Verkaufen, verschenken  etc
   });
-
+  
   useEffect(() => {
     setFormData((prevObj) => ({ ...prevObj, offerType: priceInput }));
   }, [priceInput]);
+  
+  //! Cloudinary
+  useEffect(() => {
+    formData.image = uploadImg;
+    console.log(uploadImg);
+  }, [uploadImg]);
 
   // alle Input Felder
   const handleChange = (e) => {
@@ -65,10 +76,10 @@ const MarketForm = () => {
   };
 
 
-  const handleImageUpload = () => {
-    // Hier  Bild-Upload-Logik hinzufügen
-    console.log("Bild hochgeladen");
-  };
+  // const handleImageUpload = () => {
+  //   // Hier  Bild-Upload-Logik hinzufügen
+  //   console.log("Bild hochgeladen");
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -101,15 +112,23 @@ const MarketForm = () => {
         return;
       }
 
+      const response = await fetch('http://localhost:5500/createMarketItem',{
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(formData),
+      });
 
-      const data = await postDate("createMarketItem", formData);
-      console.log("data in MarketForm`s handleSubmit:", data);
+
+      const data = await response.json();
+
+      console.log("dATA in MarketForm handleSubmit:", data);
 
       // User.marketItems und LocalStorage aktualisieren (frontend)
-      setUserData({
-        ...userData,
-        marketItems: [{ ...userData.marketItems }, formData],
-      });
+      setUserData(
+        {...userData, marketItems: [{ ...userData.marketItems }, formData]});
 
       navigate("/market");
     } catch (error) {
@@ -327,7 +346,7 @@ const MarketForm = () => {
               onValueChange={(value) => handlePriceChange(value)}
               allowNegativeValue={false}
               placeholder=" €"
-              suffix=" €"
+              suffix="€"
               allowDecimals={false}
               defaultValue={0}
               disabled
@@ -352,7 +371,7 @@ const MarketForm = () => {
               value={price}
               onValueChange={(value) => handlePriceChange(value)}
               allowNegativeValue={false}
-              placeholder="€"
+              placeholder=" €"
               suffix="€"
               allowDecimals={false}
               groupSeparator=" "
@@ -437,7 +456,7 @@ const MarketForm = () => {
             type="file"
             id="image"
             name="image"
-            onChange={handleImageUpload}
+            onChange={(e) => handleImageUpload(e, setUploadImg)}
             className="mt-1 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>

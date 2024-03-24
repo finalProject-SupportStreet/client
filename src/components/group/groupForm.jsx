@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/userContext.jsx";
 import { useNavigate } from "react-router-dom";
+import { handleImageUpload } from "../reuseable/imgToString.jsx";
 
 const GroupForm = () => {
   const { userData, setUserData } = useContext(UserContext);
@@ -41,19 +42,20 @@ const GroupForm = () => {
   };
 
   //! Hier fehlt noch die Logik für das Bild-Upload
-  const handleImageUpload = (e) => {
-    const image = e.target.files[0];
+  // const handleImageUpload = (e) => {
+  //   const image = e.target.files[0];
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setUploadImg(reader.result);
-    };
-    reader.readAsDataURL(image);
-  };
+  //   const reader = new FileReader();
+  //   reader.onloadend = () => {
+  //     setUploadImg(reader.result);
+  //   };
+  //   reader.readAsDataURL(image);
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("FormData GroupFom", formData);
+    // console.log("FormData GroupFom", formData);
+    
     try {
       const response = await fetch("http://localhost:5500/createGroup", {
         method: "POST",
@@ -150,7 +152,7 @@ const GroupForm = () => {
             type="file"
             id="image"
             name="image"
-            onChange={handleImageUpload}
+            onChange={(e) => handleImageUpload(e, setUploadImg)}
             className="mt-1 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>
