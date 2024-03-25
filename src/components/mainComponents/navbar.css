@@ -1,0 +1,70 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.nav-items {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Erzeugt einen gleichmäßigen Abstand zwischen den Elementen */
+}
+
+.burger-menu {
+  margin-left: auto; /* Schiebt das Burger-Menü an das rechte Ende der Nav-Leiste */
+}
+
+.dark-mode {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.logo-and-title {
+  display: flex;
+  align-items: center;
+}
+
+.logo-placeholder {
+  width: 40px;
+  height: 40px;
+  background: gray;
+  margin-right: 10px;
+  /* Füge hier dein Logo als Hintergrundbild ein */
+}
+
+.nav-items button {
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 10px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-menu a {
+  padding: 10px 0;
+}
+
+/* Passt den dunklen Modus der Dropdown-Menüs an */
+.dark-mode .dropdown-menu {
+  background: rgba(0, 0, 0, 0.9);
+}
+

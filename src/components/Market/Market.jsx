@@ -1,88 +1,88 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/userContext.jsx";
-import GroupCard from "./GroupCard.jsx";
-import { GroupsContext } from "../context/groupsContext.jsx";
+import { MarketContext } from "../context/marketContext.jsx";
 import Searchbar from "./Searchbar.jsx";
 import SearchBtnUnclick from "./SearchBtnUnclick.jsx";
-import GroupFilter from "./GroupFilter.jsx";
+import MarketFilter from "./MarketFilter.jsx";
+import MarketCard from "./MarketCard.jsx";
 import "../reuseable/styles/reusableGlobal.css";
 import "../reuseable/styles/reusableFormComponents.css";
 import { Link } from "react-router-dom";
 
-const GroupOverview = () => {
-  const { userData } = useContext(UserContext);
-  const { groupsData, setGroupsData } = useContext(GroupsContext);
+const Market = () => {
+  // eslint-disable-next-line no-unused-vars
+  const { userData } = useContext(UserContext); //todo -> Profil des Anbieters Bild, Link
   const [searchInputVisible, setSearchInputVisible] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [dropDFilterIsOpen, setDropDFilterIsOpen] = useState(false);
   const [selectedTag, setSelectedTag] = useState("");
 
-  console.log("Userdata Groups in overwiev:", userData.groups);
+  const { marketData, setMarketData } = useContext(MarketContext);
 
-  /******************************************************
-   *    Groupsfetch und daten in den Context laden
-   ******************************************************/
-  //^ am ende mal schauen ob der GruppenContext notwendig ist
-
+  //! BUG WARUM wird USEFFECT nicht ausgelöst
   useEffect(() => {
-    const fetchGroupsData = async () => {
+    console.log("FЯ!ΞdℇM4ภภ");
+    const getMarketItems = async () => {
       try {
-        const response = await fetch("http://localhost:5500/getAllGroups");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
+        console.log("TEST TEST TEST TES TESTTT");
+        //todo Nach dem fetchen aller Market items, filtern nach PLZ oder Stadt (zB. alle PLZs von Berlin) fehlen
+        //todo Alternativ -> Umkreissuche -> Artikel in 100m/250m/500m etc
+        const response = await fetch(
+          `http://localhost:5500/getAllMarketItems`,
+          {
+            credentials: "include",
+          }
+        );
         const data = await response.json();
-        console.log("data overview", data);
-        setGroupsData(data);
-      } catch (error) {
-        console.error("Error fetching group data:", error);
+        console.log("DATA DATA DATA IN MARKET ->>>", data);
+        setMarketData(data);
+      } catch (err) {
+        console.log("Error fetching market items:", err);
       }
     };
-
-    fetchGroupsData();
+    getMarketItems();
   }, []);
+
+  useEffect(() => {
+    console.log("marketItems in Market.jsx:", marketData);
+    console.log("searchResults:", searchResults);
+  }, [marketData, searchResults]);
 
   /******************************************************
    *    SuchFunktion
    ******************************************************/
 
-  useEffect(() => {
-    console.log(searchResults);
-  }, [searchResults]);
-
   // Funktion zum Umschalten der Sichtbarkeit des Suchfelds
   const toggleSearchInput = () => {
     setSearchInputVisible(!searchInputVisible);
+    setSearchValue("");
   };
 
-  // Funktion zum Ausführen der Suche
   const handleSearch = async (e) => {
     e.preventDefault();
     try {
+      // suche
       const response = await fetch(
-        `http://localhost:5500/getSearchGroups/${searchValue}`,
+        `http://localhost:5500/getMarketItemByName/${searchValue}`,
         {
           credentials: "include",
         }
       );
-
-      const responseData = await response.json(); // in JSON umgewandeln
 
       //! Error Message durch Userverständliche MSG ersetzten
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
 
-      setSearchResults(responseData); // Suchergebnisse basierend auf den JSON-Daten setzten
-
-      console.log("SEARCH-FETCH (searchResults) ERGEBNIS: ", searchResults);
+      const data = await response.json(); // in JSON umgewandeln
+      setSearchResults(data);
     } catch (error) {
       console.error("Error searching groups:", error);
     }
     // Sichtbarkeit des Suchfelds zurück setzen
     setSearchInputVisible(false);
-    setSearchValue("");
+    // setSearchValue("");
   };
 
   /******************************************************
@@ -102,13 +102,16 @@ const GroupOverview = () => {
     console.log("Aktualisierter selectedTag: ", selectedTag);
   }, [selectedTag]);
 
-  // Filtere gruppenliste nach Tag
-  let filteredGroups = groupsData;
+  // // Filtere gruppenliste nach Tag
+  let filteredMarketItems = marketData;
   if (selectedTag) {
-    filteredGroups = groupsData.filter((group) => group.tags === selectedTag);
-    console.log(filteredGroups);
+    filteredMarketItems = marketData.filter(
+      (item) => item.tags === selectedTag
+    );
+    console.log(filteredMarketItems);
   }
 
+  // if(marketItems.length !== 0) {
   return (
     <section className="relative min-h-screen overflow-hidden flex justify-center items-center">
       {/* Fest positionierter Hintergrund */}
@@ -117,14 +120,13 @@ const GroupOverview = () => {
         <div className="fixed reusableGlobalBackground "></div>
         <div className=" fixed reusableGlobalBackground "></div>
       </div>
-
       {/* Scrollbarer Inhalts-Container */}
       <div className="w-full h-full overflow-auto ">
         <div className="reusableContainer mx-auto flex flex-col items-center">
           <div className="min-w-420px">
             <div className="reusableHeaderBar bg-stone-400 mt-2">
               <header className="p-5">
-                <h2 className="text-3xl">Gruppen</h2>
+                <h2 className="text-3xl">Marktplatz</h2>
               </header>
               <div className=" flex justify-between items-center p-2">
                 <ul className="border-black flex justify-between w-80">
@@ -161,13 +163,14 @@ const GroupOverview = () => {
                         Filter
                       </li>
                       {dropDFilterIsOpen && (
-                        <GroupFilter
+                        <MarketFilter
                           selectedTag={selectedTag}
                           onChange={handleFilterChange}
                         />
                       )}
                     </>
                   )}
+
                   {!dropDFilterIsOpen && (
                     <li className="flex items-center">
                       <svg
@@ -190,7 +193,7 @@ const GroupOverview = () => {
                 </ul>
 
                 <aside className="pr-3">
-                  <Link to="/groupsForm">
+                  <Link to="/marketForm">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -207,75 +210,56 @@ const GroupOverview = () => {
                 </aside>
               </div>
             </div>
+            {/* //*____________________________________ */}
 
-            {/* RENDERING DER CARDS */}
-            {searchResults.length > 0 ? (
-              // Suchergebnisse vorhanden
+            <div>
+              <h3 className="reusableH3 text-xl font-semibold mb-4 pb-2 border-b-2 w-full px-4 py-2 mt-5">
+                WILLKOMMEN AUF DEM MARKTPLATZ
+              </h3>
 
-              <>
-                <span>gefundene Suchergebnisse</span>
-                <button
-                  className="border border-solid ml-5"
-                  onClick={() => setSearchResults([])}
-                >
-                  Zurück
-                </button>
-                <ul className="h-auto">
-                  {searchResults.map((group, index) => (
-                    <GroupCard key={index} group={group} />
-                  ))}
-                </ul>
-              </>
-            ) : selectedTag ? (
-              // Filter ist aktiv, zeige gefilterte Gruppen
-              <>
-                {/* Gefilterte Gruppen basierend auf selectedTag anzeigen */}
-                <ul className="h-auto">
-                  {groupsData
-                    .filter((group) => group.tags.includes(selectedTag))
-                    .map((group, index) => (
-                      <GroupCard key={index} group={group} />
-                    ))}
-                </ul>
-              </>
-            ) : (
-              // Standardansicht ohne Filter und Suche
-              <>
-                <h3 className="reusableH3 text-xl font-semibold mb-4 pb-2 border-b-2 w-full px-4 py-2 mt-5">
-                  Deine Gruppen
-                </h3>
-                <ul className="h-auto">
-                  {userData.groups &&
-                    [...userData.groups]
-                      .reverse()
-                      .map((group, index) => (
-                        <GroupCard key={index} group={group} />
-                      ))}
-                </ul>
-
-                <h3 className="reusableH3 text-xl font-semibold mb-4 pb-2 border-b-2 w-full px-4 py-2 mt-5">
-                  Andere Gruppen
-                </h3>
-                <ul className="h-auto">
-                  {groupsData &&
-                    groupsData
-                      .filter(
-                        (groupData) =>
-                          !userData.groups.some(
-                            (userGroup) => userGroup._id === groupData._id
-                          )
+              {/* //! BUG -> Ergebnisse erst anzeigen, wenn btn geklickt wird */}
+              {/* 
+            Prüfe, ob marketData kein leeres Array ist 
+            prüfe, ob etwas im Input eingegeben wurde (searchValue)
+              wenn ja, filter durch Titel und mappe/render alle passenden
+              wenn nein ->
+            prüfe on selectedTag ausgewählt wurde (Kategorie)
+              wenn ja, filter durch Tags und mappe/render alle passenden
+              wenn nein, mappe alle Artikel und render alle Artikel
+          */}
+              {marketData &&
+                (searchValue
+                  ? marketData
+                      .filter((marketItem) =>
+                        marketItem.title
+                          .toLowerCase()
+                          .includes(searchValue.toLowerCase())
                       )
-                      .map((group) => (
-                        <GroupCard key={group._id} group={group} />
-                      ))}
-                </ul>
-              </>
-            )}
+                      .map((item, i) => <MarketCard key={i} item={item} />)
+                  : selectedTag
+                  ? marketData
+                      .filter((marketItem) =>
+                        marketItem.tags.includes(selectedTag)
+                      )
+                      .map((item, i) => <MarketCard key={i} item={item} />)
+                  : marketData.map((item, i) => (
+                      <MarketCard key={i} item={item} />
+                    )))}
+            </div>
           </div>
         </div>
       </div>
     </section>
   );
 };
+export default Market;
 
-export default GroupOverview;
+/* 
+wenn searchValue kein empty String -> map durch items -> includes?
+
+{searchValue && 
+  marketData.map(item, i) => {
+    item.title.includes(searchValue) ? <MarketCard key={i} /> : <Oops />
+  }
+}
+*/
