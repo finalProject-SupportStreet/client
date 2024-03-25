@@ -94,14 +94,14 @@ function Navbar() {
                 <NavLink to="/login" onClick={toggleMenu}>
                   Log In
                 </NavLink>
-              </>
-            )}
             <button
               className="dark:text-4xl top-3 right-3 fixed font-bold opacity-70 hover:opacity-100 duration-300"
               onClick={toggleDarkMode}
             >
               {darkMode ? "☀️" : "🌙"}
             </button>
+              </>
+            )}
           </div>
         )}
       </div>
@@ -128,12 +128,12 @@ function Navbar() {
         </div>
       ) : (
         // Display these navigation links if the user is not logged in
-        <div>
+        <div className="desktop:desktopNav border-2 mobile:hidden ">
           <NavLink to="/register">Register</NavLink>
           <NavLink to="/login">Log In</NavLink>
-          {/* <NavLink to="/logout">Log Out</NavLink> */}
+          
           <button
-            className="dark: px-2 opacity-70 hover:opacity-100 duration-300"
+            className="relative right-4 border-2 dark: px-2 opacity-70 hover:opacity-100 duration-300"
             onClick={toggleDarkMode}
           >
             {darkMode ? "☀️" : "🌙"}
