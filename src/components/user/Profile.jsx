@@ -81,12 +81,12 @@ const UpdateProfile = () => {
     // window.location.reload();
     return;
 
-    /* setUserData((prevUserData) => {
+    setUserData((prevUserData) => {
       const updatedUserData = { ...prevUserData };
       // Delete the targeted field
       delete updatedUserData[fieldName];
       return updatedUserData;
-    }); */
+    });
   };
 
   // Function to handle form submission

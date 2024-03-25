@@ -5,5 +5,4 @@ export const buttonStyle =
 export const labelStyle = "text-slate-700 dark:text-gray-200 block font-sm ";
 export const linkStyle = "text-slate-700 dark:text-gray-200  font-sm p-1 ";
 
-export const trashButton =
-  "bg-slate-50 absolute top-7 right-1 rounded-md p-0.5 opacity-40 hover:opacity-100";
+export const trashButton = "bg-slate-50 absolute top-7 right-1 rounded-md p-0.5 opacity-40 hover:opacity-100"
