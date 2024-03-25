@@ -9,6 +9,34 @@ import { UserContext } from "../context/userContext.jsx";
 
 const UpdateProfile = () => {
   const { userData, setUserData } = useContext(UserContext);
+  const [uploadImg, setUploadImg] = useState(null);
+
+  // image Upload
+  function handleImageUpload(event) {
+    const file = event.target.files[0]; // Get the selected file
+    const reader = new FileReader(); // Create a file reader object
+
+    // Define a callback function to be executed when file reading is complete
+    reader.onloadend = () => {
+      // Convert the image file to a base64 string
+      const imageData = reader.result;
+      // Update the state with the base64 string representing the uploaded image
+      setUploadImg(imageData);
+    };
+
+    if (file) {
+      // Start reading the file as a data URL
+      reader.readAsDataURL(file);
+    }
+  }
+  function handleButtonClick() {
+    // Trigger the file input click event programmatically
+    document.getElementById("image").click();
+  }
+  function handleDeleteImage() {
+    // Reset the uploaded image state
+    setUploadImg(null);
+  }
 
   // Trash symbol
   const trash = (
@@ -28,41 +56,38 @@ const UpdateProfile = () => {
     </svg>
   );
 
+  // Function to handle delete form field
+  const onDelete = async (fieldName) => {
+    console.log("fieldName:", fieldName);
 
-  // Function to handle delete form field 
-const onDelete = async (fieldName) => {
-  console.log("fieldName:", fieldName);
+    try {
+      const res = await fetch(`http://localhost:5500/edit/${userData._id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          [fieldName]: null,
+        }),
+      });
+      const data = await res.json();
+      setUserData(data.user);
+      alert("Removed successfully!");
+    } catch (error) {
+      console.log(error);
+    }
 
-  try {
-    const res = await fetch(`http://localhost:5500/edit/${userData._id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({
-        [fieldName]: null,
-      }),
+    // window.location.reload();
+    return;
+
+    setUserData((prevUserData) => {
+      const updatedUserData = { ...prevUserData };
+      // Delete the targeted field
+      delete updatedUserData[fieldName];
+      return updatedUserData;
     });
-    const data = await res.json();
-    setUserData(data.user);
-    alert("Removed successfully!");
-  } catch (error) {
-    console.log(error);
-  }
-  
-  // window.location.reload();
-return
-
-  setUserData(prevUserData => {
-    const updatedUserData = { ...prevUserData };
-    // Delete the targeted field
-    delete updatedUserData[fieldName];
-    return updatedUserData;
-  });
-};
-
-
+  };
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
@@ -101,23 +126,53 @@ return
   };
 
   console.log("Groups:", userData.groups);
-// console.log("userData:",userData);
-// return null
+  // console.log("userData:",userData);
+  // return null
   return (
     <div className="update-profile">
-      <div className="flex flex-col border-2 ">
-        <img
-          src="../avatar-icon.jpg"
-          alt=""
-          className="h-40 pb-2 object-contain"
-        />
+      <div className="flex flex-col border-2 relative">
+        {/* Display the uploaded image */}
+        {uploadImg && (
+          <div className="relative">
+            <img src={uploadImg} alt="" className="h-40 pb-2 object-contain" />
+            {/* Trash symbol */}
+            <button
+              className="absolute top-2 -right-4 p-1 opacity-70 rounded-full border-2 bg-red-500 text-white hover:bg-red-600 transition duration-300 hover:opacity-100"
+              onClick={handleDeleteImage}
+            >
+              🗑️
+            </button>
+          </div>
+        )}
+        {!uploadImg && (
+          <img
+            src="../avatar-icon.jpg"
+            alt=""
+            className="h-40 pb-2 object-contain"
+          />
+        )}
         <div className="relative bottom-8 left-20">
-          <button className="p-1 rounded-2xl border-2 bg-slate-50">+</button>
+          {/* Button for image upload */}
+          <button
+            className="p-1 rounded-2xl border-2 bg-slate-50"
+            onClick={handleButtonClick}
+          >
+            +
+          </button>
           <h2 className="border-2 right-20 top-2 relative text-center">
             {" "}
             {userData.firstName}{" "}
           </h2>
         </div>
+
+        {/* Hidden file input */}
+        <input
+          type="file"
+          id="image"
+          name="image"
+          onChange={handleImageUpload}
+          className="hidden"
+        />
       </div>
 
       <form onSubmit={(e) => handleSubmit(e)}>
@@ -151,7 +206,11 @@ return
         <div className="relative">
           <label htmlFor="firstName" className={labelStyle}>
             firstName:
-            <button type="button" className={trashButton} onClick={ ()=> onDelete("firstName") }>
+            <button
+              type="button"
+              className={trashButton}
+              onClick={() => onDelete("firstName")}
+            >
               {trash}
             </button>
           </label>
@@ -166,7 +225,11 @@ return
         <div className="relative">
           <label htmlFor="lastName" className={labelStyle}>
             lastName:
-            <button  type="button" className={trashButton} onClick={ ()=> onDelete("lastName") }>
+            <button
+              type="button"
+              className={trashButton}
+              onClick={() => onDelete("lastName")}
+            >
               {trash}
             </button>
           </label>
@@ -181,7 +244,6 @@ return
         <div className="relative">
           <label htmlFor="email" className={labelStyle}>
             Email:
-        
           </label>
           <input
             type="email"
@@ -194,7 +256,11 @@ return
         <div className="relative">
           <label htmlFor="street" className={labelStyle}>
             Street:
-            <button type="button" className={trashButton} onClick={ ()=> onDelete("street") }>
+            <button
+              type="button"
+              className={trashButton}
+              onClick={() => onDelete("street")}
+            >
               {trash}
             </button>
           </label>
@@ -209,7 +275,11 @@ return
         <div className="relative">
           <label htmlFor="number" className={labelStyle}>
             Number:
-            <button type="button" className={trashButton} onClick={ ()=> onDelete("number") }>
+            <button
+              type="button"
+              className={trashButton}
+              onClick={() => onDelete("number")}
+            >
               {trash}
             </button>
           </label>
@@ -224,7 +294,11 @@ return
         <div className="relative">
           <label htmlFor="zip" className={labelStyle}>
             ZIP:
-            <button type="button" className={trashButton} onClick={ ()=> onDelete("zip") }>
+            <button
+              type="button"
+              className={trashButton}
+              onClick={() => onDelete("zip")}
+            >
               {trash}
             </button>
           </label>
