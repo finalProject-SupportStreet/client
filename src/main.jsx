@@ -3,24 +3,25 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./components/mainComponents/Home.jsx";
+
 import UserRegister from "./components/user/UserRegister.jsx";
 import UserLogin from "./components/user/UserLogin.jsx";
 import UserLogout from "./components/user/UserLogout.jsx";
 import Neighbours from "./components/Neighbours.jsx";
-import StyleExample from "../src/components/group/StyleExample.jsx";
+import Home from "./components/landingpage/Home.jsx";
 import { UserProvider } from "./components/context/userContext.jsx";
 import { ThemeProvider } from "./components/context/ThemeContext.jsx";
 import Profile from "./components/user/Profile.jsx";
 import GroupForm from "./components/group/groupForm.jsx";
 import GroupOverview from "./components/group/GroupOverview.jsx";
 import { GroupsProvider } from "./components/context/groupsContext.jsx";
-
 import GroupComponent from "./components/group/GroupComponent.jsx";
 import Market from "./components/Market/Market.jsx";
-import Dashboard from "./components/Dashboard.jsx";
-// import MarketTest from "./components/Market/MarketTest.jsx";
 
+import MarketForm from "./components/Market/MarketForm.jsx";
+import Dashboard from "./components/dashboard/Dashboard.jsx";
+import { MarketProvider } from "./components/context/marketContext.jsx";
+// import MarketTest from "./components/Market/MarketTest.jsx";
 
 const router = createBrowserRouter([
   {
@@ -34,7 +35,6 @@ const router = createBrowserRouter([
       {
         path: "dashboard",
         element: <Dashboard />,
-
       },
       {
         path: "register",
@@ -75,8 +75,8 @@ const router = createBrowserRouter([
         element: <Market />,
       },
       {
-        path: "styles",
-        element: <StyleExample />,
+        path: "marketform",
+        element: <MarketForm />,
       },
     ],
   },
@@ -87,7 +87,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <ThemeProvider>
       <UserProvider>
         <GroupsProvider>
-          <RouterProvider router={router} />
+          <MarketProvider>
+            <RouterProvider router={router} />
+          </MarketProvider>
         </GroupsProvider>
       </UserProvider>
     </ThemeProvider>

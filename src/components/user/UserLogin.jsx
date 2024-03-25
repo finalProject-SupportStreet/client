@@ -1,18 +1,15 @@
 import { useNavigate } from "react-router-dom";
-
 import { postDate } from "../reuseable/fetchData.jsx";
-import {
-  buttonStyle,
-  inputStyle,
-  labelStyle,
-  linkStyle,
-} from "../reuseable/styles/reuseableComponents.jsx";
-import { useContext } from "react";
+import "../reuseable/styles/reusableFormComponents.css";
+import "../reuseable/styles/reusableGlobal.css";
+import { useContext, useState } from "react";
 import { UserContext } from "../context/userContext.jsx";
 
 const UserLogin = () => {
   const { setIsLoggedIn, setUserData } = useContext(UserContext);
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const login = async (event) => {
     event.preventDefault();
@@ -34,46 +31,78 @@ const UserLogin = () => {
     }
   };
   return (
-    <form
-      className="h-96 flex flex-col justify-center gap-3 bg-white dark:bg-slate-800 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl "
-      onSubmit={login}
-    >
-      <div className="p-2 bg-slate-500/15 shadow-lg rounded w-full gap-2">
-        <label htmlFor="email" className={labelStyle}>
-          E-Mail:{" "}
-        </label>
-        <input type="email" name="email" id="email" className={inputStyle} />
-        {/* <label htmlFor="username" className={labelStyle}>
-          Username:{" "}
-        </label>
-        <input
-          type="text"
-          name="username"
-          id="username"
-          className={inputStyle}
-        /> */}
-        <p className="text-red-500">This field is required</p>
-        <label htmlFor="password" className={labelStyle}>
-          Password:{" "}
-        </label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          className={inputStyle}
-        />
+    <section className="flex  justify-center mt-64  items-center  w-full">
+      <div className="reusableGlobalBackground absolute"></div>
+      <div className="reusableGlobalBackground absolute"></div>
+      <div className="reusableGlobalBackground absolute"></div>
+      <div className="relative">
+        <div className="reusableSquare absolute" style={{ "--i": 0 }}></div>
+        <div className="reusableSquare absolute" style={{ "--i": 1 }}></div>
+        <div className="reusableSquare absolute" style={{ "--i": 2 }}></div>
+        <div className="reusableSquare absolute" style={{ "--i": 3 }}></div>
+        <div className="reusableSquare absolute" style={{ "--i": 4 }}></div>
+        <div className="reusableContainer reusableBorder">
+          <form className="reusableForm" onSubmit={login}>
+            <div>
+              <h2 className="mb-6 text-3xl font-bold text-center text-gray-800 dark:text-white">
+                Login
+              </h2>
+              <div className="mb-4">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+                >
+                  E-Mail:
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-3 py-2 mt-1 text-gray-700 border rounded-md focus:ring-blue-500 focus:border-blue-500 dark:text-gray-300 dark:border-gray-600 dark:bg-gray-800"
+                />
+              </div>
+              <div className="mb-6">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+                >
+                  Passwort:
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-3 py-2 mt-1 text-gray-700 border rounded-md focus:ring-blue-500 focus:border-blue-500 dark:text-gray-300 dark:border-gray-600 dark:bg-gray-800"
+                />
+              </div>
+              <button type="submit" className="reusableFormBtn ">
+                Einloggen
+              </button>
+              <div className="mt-4 text-center">
+                <a
+                  href="/forgot-password"
+                  className="text-sm text-blue-600 hover:underline dark:text-blue-400"
+                >
+                  Passwort vergessen?
+                </a>
+              </div>
+              <div className="mt-2 text-center">
+                <a
+                  href="/register"
+                  className="text-sm text-blue-600 hover:underline dark:text-blue-400"
+                >
+                  Noch kein Konto? Registrieren
+                </a>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
-      {/*  <h3 class="text-slate-900 dark:text-white mt-5 text-base font-medium tracking-tight">Writes Upside-Down</h3> */}
-      <button className={buttonStyle}>Login</button>
-      <div className="text-center">
-        <a href="/register" className={linkStyle}>
-          Forgot password?
-        </a>
-        <a href="/register" className={linkStyle}>
-          Sign up
-        </a>
-      </div>
-    </form>
+    </section>
   );
 };
 

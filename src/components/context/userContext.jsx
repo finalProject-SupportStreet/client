@@ -27,6 +27,10 @@ export const UserProvider = ({ children }) => {
     console.log("useEffect löst aus");
     if (userData !== null) {
       localStorage.setItem("userData", JSON.stringify(userData));
+      setIsLoggedIn(true);
+    } else {
+      localStorage.removeItem("userData"); // Entferne userData aus localStorage, wenn userData null ist
+      setIsLoggedIn(false); // Setze isLoggedIn auf false, wenn userData null ist
     }
   }, [userData]);
 

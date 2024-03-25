@@ -5,7 +5,6 @@ import UserLogout from "../user/UserLogout.jsx";
 
 // import { buttonStyle } from "../reuseable/styles/reuseableComponents.jsx";
 
-
 export const DropDownProfile = () => {
   const [hideProfile, setHideProfile] = useState(true);
 
@@ -62,17 +61,28 @@ export const DropDownProfile = () => {
       </button>
 
       {hideProfile ? (
-        <div className="absolute w-fit top-4 right-14 lightThemeColor dark:darkThemeColor"></div>
+        <div className="absolute w-fit top-12 right-0 bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden">
+          {/* Invisible placeholder to keep space */}
+        </div>
       ) : (
-        <div className="flex flex-col dropDownProfile" ref={profileRef}>
-          <ul className="flex flex-col gap-4">
-            <NavLink to="/profile">Profile</NavLink>
-            <li>Settings</li>
-            <NavLink to="/logout" onClick={UserLogout}>
-              Logout
-            </NavLink>
-            {/*  <li className="hide-profile" onClick={()=>setHideProfile(true)}>Close Dropdown</li> */}
-            {/*  <button onClick={UserLogout} className={buttonStyle}>Log Out</button> */}
+        <div
+          className="absolute w-48 top-12 right-0 bg-white dark:bg-gray-800 shadow-lg rounded-lg py-2"
+          ref={profileRef}
+        >
+          <ul className="flex flex-col">
+            <li className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">
+              <NavLink to="/profile" className="block">
+                Profile
+              </NavLink>
+            </li>
+            <li className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">
+              Settings
+            </li>
+            <li className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">
+              <NavLink to="/logout" onClick={UserLogout} className="block">
+                Logout
+              </NavLink>
+            </li>
           </ul>
         </div>
       )}

@@ -1,4 +1,3 @@
-
 export const postDate = async (path, data) => {
   const response = await fetch(`http://localhost:5500/${path}`, {
     method: "POST",

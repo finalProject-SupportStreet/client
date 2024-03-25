@@ -1,23 +1,65 @@
 import { Link, useParams } from "react-router-dom";
 import { GroupsContext } from "../context/groupsContext.jsx";
-// import { UserContext } from "../context/userContext.jsx";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import groupPlaceholderImg from "../assets/groupPlaceholder.jpg";
-import CreatePost from "../mainComponents/createPost-Components/CreatePost.jsx";
 import { Modal } from "../mainComponents/createPost-Components/Modal.jsx";
+import GroupPostCard from "./GroupPostCard.jsx";
+import "../reuseable/styles/reusableGlobal.css";
+import "../reuseable/styles/reusableFormComponents.css";
+import MitteilungForm from "../mainComponents/createPost-Components/MitteilungForm.jsx";
+import Avatar from "../../../public/avatar-placeholder.png";
 
 const GroupComponent = () => {
   const { groupId } = useParams();
   const [showDetails, setShowDetails] = useState(false);
-  const { groupsData } = useContext(GroupsContext);
-
-  // const { userData, setUserData } = useContext(UserContext);
+  const { groupsData, isLoading } = useContext(GroupsContext);
+  // const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  console.log(groupsData);
 
+  // Die Logik zum Finden deiner Gruppe basierend auf `groupId`
   const group = groupsData.find((group) => group._id === groupId);
+  console.log("group in GroupComponent", group);
+  const [groupPosts, setGroupPosts] = useState([]);
+
+  useEffect(() => {
+    if (group && group.groupPosts) {
+      setGroupPosts(group.groupPosts);
+    }
+  }, [group]);
+
+  //userdaten für das ProfilBild
+  const user = JSON.parse(localStorage.getItem("userData"));
+
+  /******************************************************
+   *    damit beim Betreten der Gruppe oben angezeigt wird und nicht irgendwo die mitte
+   ******************************************************/
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  /******************************************************
+   *    useEffect für setGroupPosts
+   ******************************************************/
+
+  useEffect(() => {}, [groupPosts]);
+
+  /* *****************************************************
+   *    Gruppenkommentare laden (funzt eventuell garnicht?!)
+   ******************************************************/
+  if (isLoading) {
+    return <div>Lädt...</div>; // Zeige eine Ladeanzeige
+  }
+
+  if (!groupsData) {
+    return <div>Keine Daten verfügbar.</div>; // Fallback, falls keine Daten geladen werden konnten
+  }
+
   const {
     /* title, text, admins, mods, members, privateGroup, comments,  */ image,
   } = group;
+  console.log("group in Component", group);
+
   /******************************************************
    *    img
    ******************************************************/
@@ -79,77 +121,132 @@ const GroupComponent = () => {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  /******************************************************
+   *    Profilpic
+   ******************************************************/
+  const profilImg = () => {
+    if (user.image === undefined || null) {
+      return Avatar;
+    } else {
+      return user.image;
+    }
+  };
+
   return (
-    <>
-      <div className="mt-10">
-        <div className="flex flex-col mt-8">
+    <section className="relative flex flex-col min-h-screen  ">
+      {/* Fest positionierter Hintergrund */}
+      <div className="absolute inset-0">
+        <div className="fixed reusableGlobalBackground "></div>
+        <div className="fixed reusableGlobalBackground "></div>
+        <div className="fixed reusableGlobalBackground "></div>
+      </div>
+
+      {/* Scrollbarer Inhalts-Container */}
+      <div className="reusableBlur w-full h-full overflow-auto min-h-screen">
+        {/* Container für die gesamte Gruppenansicht, einschließlich Gruppeninfos und Kommentaren */}
+        <div className="mx-auto flex flex-col items-center">
           <Link to={`/groups`}>
-            <p className="pb-5">Zurück zur Gruppenübersicht</p>
+            <p className="reusableFormBtn mb-4 text-center">
+              Zurück zur Gruppenübersicht
+            </p>
           </Link>
-          <div className="border-solid border p-2 flex flex-col">
-            <h3 className="border-solid border p-2 mb-2">{group.title}</h3>
+
+          {/* Verwendung der reusableContainer Klasse für den Glassmorphismus-Stil */}
+          <div className="reusableContainer  max-w-4xl ">
+            <h3 className="reusableH3 text-xl font-semibold mb-4 pb-2 border-b-2 w-full px-4 py-2 mt-5">
+              {group.title}
+            </h3>
             <img
               src={groupImg()}
               alt="Gruppenbild"
-              className="border-solid border p-2 mb-4"
+              className="object-cover mx-auto mb-4"
+              style={{
+                maxWidth: "800px",
+                maxHeight: "600px",
+                width: "100%",
+                height: "auto",
+              }}
             />
-            <div className="flex flex-col mb-4">
-              <div className="flex justify-between mb-2">
-                <aside
-                  onClick={detailsHandler}
-                  className="border-solid border p-2 cursor-pointer flex-grow"
-                >
-                  {!showDetails ? "Details einblenden" : "Details ausblenden"}
-                </aside>
-                <aside className="border-solid border p-2">Menü</aside>
-              </div>
-              {showDetails && (
-                <div className="flex flex-col">
-                  <article className="border-solid border p-2 mb-2">
-                    {group.text}
-                  </article>
-                  <article className="border-solid border p-2 mb-2">
-                    {/* Admins: {modsAdminsVornamen()} */}
-                    Admins: {formatNamesList(group.admins)}
-                  </article>
-                  <article className="border-solid border p-2 mb-2">
-                    {/* Mods: {modsAdminsVornamen()} */}
-                    Mods: {formatNamesList(group.mods)},
-                  </article>
-                  <article className="border-solid border p-2 mb-2">
-                    {/* Mitglieder - Je nach Datenstruktur ggf. anpassen */}
-                    Mitglieder: {formatNamesList(group.members)}
-                  </article>
-                </div>
-              )}
+
+            <div className="flex justify-between mb-4">
+              <button
+                onClick={detailsHandler}
+                className="reusableFormBtn h-10 mr-3"
+              >
+                {!showDetails ? "Details einblenden" : "Details ausblenden"}
+              </button>
+              <button className="reusableFormBtn h-10 ml-3">Menü</button>
             </div>
-            <aside className="border-solid border p-2 flex justify-between">
-              <span> {isPrivate()}</span>
+
+            {showDetails && (
+              <div className="space-y-2">
+                <p className="bg-white bg-opacity-50 text-center  p-4 rounded-lg shadow-lg">
+                  {group.text}
+                </p>
+
+                {showDetails && (
+                  <div className="space-y-4 mt-4">
+                    <div className="bg-white bg-opacity-10 p-1 rounded-lg shadow">
+                      <h4 className="text-lg font-semibold mb-1">Admins</h4>
+                      <p>{formatNamesList(group.admins)}</p>
+                    </div>
+                    <div className="bg-white bg-opacity-10 p-1 rounded-lg shadow">
+                      <h4 className="text-lg font-semibold mb-1">Mods</h4>
+                      <p>{formatNamesList(group.mods)}</p>
+                    </div>
+                    <div className="bg-white bg-opacity-10 p-1 rounded-lg shadow">
+                      <h4 className="text-lg font-semibold mb-1">Mitglieder</h4>
+                      <p>{formatNamesList(group.members)}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+            {/* Tags und Privatsphäre-Status */}
+            <div className="p-2 flex justify-between">
+              <span>{isPrivate()}</span>
               <span>{group.tags}</span>
-            </aside>
+            </div>
           </div>
         </div>
-        <section onClick={openModal} className="border-solid border p-2 my-4">
-          <div className="flex items-center">
+
+        {/* Sektion für neue Nachricht */}
+        <section onClick={openModal} className=" my-4">
+          <div className="reusableHeaderBar mx-auto max-w-3xl p-4 bg-white bg-opacity-10 backdrop-blur-lg rounded-lg shadow-lg flex items-center space-x-4">
             <img
-              src="#"
+              src={profilImg()}
               alt="Profilbild Nutzer"
-              className="border-solid border p-2 w-1/5"
+              className="rounded-full w-14 h-14 object-cover"
             />
             <input
               type="text"
-              className="flex-auto ml-2 border-solid border p-2"
-              placeholder="Deine Nachricht..."
+              className="flex-grow  border border-white-500 p-2 rounded-lg focus:ring-2"
+              placeholder="Schreib ein Kommentar..."
             />
           </div>
         </section>
         {isModalOpen && (
           <Modal onClose={closeModal}>
-            <CreatePost closeModal={closeModal} />
+            <MitteilungForm
+              closeModal={closeModal}
+              groupId={groupId}
+              setGroupPosts={setGroupPosts}
+              groupPosts={groupPosts}
+            />
           </Modal>
         )}
+
+        {/* Container für die Post-Karten (Kommentare) innerhalb des gleichen scrollbaren Containers */}
+        <div className="mt-4 px-4 md:px-0 max-w-3xl mx-auto">
+          {groupPosts
+            .slice()
+            .reverse()
+            .map((post, index) => (
+              <GroupPostCard key={post._id || index} post={post} />
+            ))}
+        </div>
       </div>
-    </>
+    </section>
   );
 };
 

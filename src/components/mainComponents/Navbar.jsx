@@ -1,145 +1,65 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { useTheme } from "../context/ThemeContext.jsx";
+import { useTheme } from "../context/ThemeContext";
 import { UserContext } from "../context/userContext.jsx";
-import { DropDownProfile } from "./DropDownProfile.jsx";
+import { DropDownProfile } from "./DropDownProfile";
+import "./navbar.css";
+import Logo from "../assets/SupportStreetLogo.png";
 
-function Navbar() {
+const Navbar = () => {
   const { darkMode, toggleDarkMode } = useTheme();
-  const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
+  const { isLoggedIn } = useContext(UserContext);
+  const [menuVisible, setMenuVisible] = useState(false);
 
-  // ToggleMenu
-  const [menuVisible, setMenuVisible] = useState(true);
-
-  useEffect(() => {
-
-    const checkLoggedIn = () => {
-      const userCookie = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("userToken="));
-      if (userCookie) {
-        setIsLoggedIn(true);
-      } else {
-        setIsLoggedIn(false);
-      }
-    };
-    checkLoggedIn();
-
-  }, [setIsLoggedIn]);
-
-  function toggleMenu() {
-    setMenuVisible(!menuVisible);
-  }
-
-  //! HAB DAS LOGO ERSTMAL AUSGEBLENDET! Zeile 109
+  const toggleMenu = () => setMenuVisible(!menuVisible);
 
   return (
-    <nav
-      className={`fixed h-12 w-full top-0 right-0 px-2 py-2 ${
-        darkMode ? "bg-gray-700 text-white" : "bg-white text-gray-900"
-      }`}
-    >
-      {/* Mobile-Ansicht */}
-      <div className="mobile:mobileNav desktop:hidden">
-        <div>
-          {menuVisible ? (
-            <button
-              className="text-slate-400 text-4xl font-bold opacity-70 fixed right-2 hover:opacity-100 duration-300"
-              onClick={toggleMenu}
-            >
-              &#9776;
-            </button>
-          ) : (
-            <button
-              className="text-slate-400 text-4xl font-bold opacity-70 hover:opacity-200 dark:hover:text-slate-100"
-              onClick={toggleMenu}
-            >
-              &times;
-            </button>
-          )}
-          <DropDownProfile />
-        </div>
-
-        {!menuVisible && (
-          <div className="mobileNavLi">
-            <NavLink to="/" onClick={toggleMenu}>
-              Home
-            </NavLink>
-            {isLoggedIn ? (
-              <>
-                <NavLink to="/dashboard" onClick={toggleMenu}>
-                  Mein Kiez
-                </NavLink>
-                <NavLink to="/groups" onClick={toggleMenu}>
-                  Gruppen
-                </NavLink>
-                <NavLink to="/market" onClick={toggleMenu}>
-                  Marktplatz
-                </NavLink>
-                <NavLink to="/neighbours" onClick={toggleMenu}>
-                  Meine Nachbarschaft
-                </NavLink>
-                <NavLink to="/styles" onClick={toggleMenu}>
-                  Meine Styles
-                </NavLink>
-              </>
-            ) : (
-              <>
-                <NavLink to="/register" onClick={toggleMenu}>
-                  Register
-                </NavLink>
-                <NavLink to="/login" onClick={toggleMenu}>
-                  Log In
-                </NavLink>
-              </>
-            )}
-            <button
-              className="dark:text-4xl top-3 right-3 fixed font-bold opacity-70 hover:opacity-100 duration-300"
-              onClick={toggleDarkMode}
-            >
-              {darkMode ? "☀️" : "🌙"}
-            </button>
-          </div>
-        )}
+    <nav className={`navbar ${darkMode ? "dark-mode" : ""}`}>
+      <div className="logo-and-title">
+        {/* Platzhalter für ein Logo */}
+        <img src={Logo} className="h-12 w-12" alt="logo" />
+        <span>Support Street</span>
       </div>
-
-      {/* Desktop-Ansicht */}
-      <div className="desktop:desktopNav mobile:hidden">
-        <div className="desktopNavLi">
-          {/* <h1 className="underline absolute py-2 px-2 text-slate-700">Logo</h1> */}
-          <NavLink to="/">Home</NavLink>
-          {isLoggedIn && (
+      <div className="nav-items ">
+        <button onClick={toggleDarkMode}>{darkMode ? "☀️" : "🌙"}</button>
+        {isLoggedIn && <DropDownProfile />}{" "}
+        {/* Nur anzeigen, wenn eingeloggt */}
+        <button className="burger-menu m-4" onClick={toggleMenu}>
+          &#9776;
+        </button>
+      </div>
+      {menuVisible && (
+        <div className="dropdown-menu">
+          {isLoggedIn ? (
             <>
-              <NavLink to="/dashboard" onClick={toggleMenu}>
-                Mein Kiez
+              <NavLink to="/" onClick={toggleMenu}>
+                Home
               </NavLink>
               <NavLink to="/groups" onClick={toggleMenu}>
                 Gruppen
               </NavLink>
+
               <NavLink to="/market" onClick={toggleMenu}>
-                Marktplatz
+                market
               </NavLink>
               <NavLink to="/neighbours" onClick={toggleMenu}>
-                Meine Nachbarschaft
+                neighbours
               </NavLink>
-              <NavLink to="/styles" onClick={toggleMenu}>
-                Meine Styles
+            </>
+          ) : (
+            <>
+              <NavLink to="/register" onClick={toggleMenu}>
+                Register
+              </NavLink>
+              <NavLink to="/login" onClick={toggleMenu}>
+                Log In
               </NavLink>
             </>
           )}
-          <DropDownProfile />
-          <button
-
-            className="dark:text-4xl top-3 right-3 fixed font-bold opacity-70 hover:opacity-100 duration-300"
-            onClick={toggleDarkMode}
-          >
-            {darkMode ? "☀️" : "🌙"}
-          </button>
-
         </div>
-      </div>
+      )}
     </nav>
   );
-}
+};
 
 export default Navbar;
