@@ -1,37 +1,36 @@
-
-
-const MarketCard = ( {item} ) => {
-
-
+const MarketCard = ({ item }) => {
   const showPriceSpaces = (num) => {
     let strNumber = num.toString();
     return strNumber.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   };
 
-
   return (
-    <div
-      className="w-1/2 m-1 p-2 flex flex-col justify-center align-center border-2 border-indigo-200 hover:border-indigo-500  hover:bg-sky-100 transition ease-in-out delay-50 "
-    >
-      <p className="m-2 text-xl underline">Angebot: {item.title}</p>
-      <p className="m-2">Beschreibung: {item.description}</p>
-
-      <img className="w-full" src={`${item.image}`} alt="pic not found" />
-
-      {/* wenn es keinen Preis gibt -> 'gratis' rendern */}
-      {item.price ? (
-        <p className="m-2 text-xl text-red-500">{showPriceSpaces(item.price)} €
+    <div className=" reusableBorder reusableBlur w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-4 flex flex-col justify-between items-center bg-blue-50 hover:bg-blue-100 transition duration-150 ease-in-out border border-blue-200 hover:border-blue-400 rounded-lg shadow-md">
+      <div className="text-center">
+        <p className="text-xl font-semibold mb-2 underline decoration-solid">
+          Angebot: {item.title}
         </p>
-      ) : (
-        <p className="m-2 text-xl text-green-600">Gratis</p>
-      )}
-      <div className="m-2">
-        Kategorie:
-        <span className="p-1.5 border-2 border-sky-600 rounded-full bg-sky-200 ">
-          {item.offerType}
-        </span>
+        <p className="mb-4">Beschreibung: {item.description}</p>
+        <img
+          className="w-full h-48 object-cover rounded-md mb-4"
+          src={item.image}
+          alt="Produktbild"
+        />
+        {item.price ? (
+          <p className="text-lg font-bold text-red-500">
+            {showPriceSpaces(item.price)} €
+          </p>
+        ) : (
+          <p className="text-lg font-bold text-green-500">Gratis</p>
+        )}
+        <div className="flex items-center justify-center mt-4">
+          Kategorie:
+          <span className="ml-2 px-3 py-1 border border-blue-500 text-blue-500 rounded-full bg-blue-100">
+            {item.offerType}
+          </span>
+        </div>
+        <p className="mt-4">Id des Erstellers: {item.creator}</p>
       </div>
-      <p className="m-2">Id des Erstellers: {item.creator}</p>
     </div>
   );
 };

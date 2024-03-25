@@ -7,6 +7,7 @@ import SearchBtnUnclick from "./SearchBtnUnclick.jsx";
 import GroupFilter from "./GroupFilter.jsx";
 import "../reuseable/styles/reusableGlobal.css";
 import "../reuseable/styles/reusableFormComponents.css";
+import { Link } from "react-router-dom";
 
 const GroupOverview = () => {
   const { userData } = useContext(UserContext);
@@ -189,7 +190,7 @@ const GroupOverview = () => {
                 </ul>
 
                 <aside className="pr-3">
-                  <a href="http://localhost:5173/groupsForm">
+                  <Link to="/groupsForm">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -202,7 +203,7 @@ const GroupOverview = () => {
                         clipRule="evenodd"
                       />
                     </svg>
-                  </a>
+                  </Link>
                 </aside>
               </div>
             </div>

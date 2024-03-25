@@ -1,75 +1,8 @@
-// import { useContext, useState } from "react";
-// import { UserContext } from "../context/userContext.jsx";
 import "./home.css";
 import Carousel from "./Carousel.jsx";
 import { Link } from "react-router-dom";
 
-const StyleExample = () => {
-  // const { userData, setUserData } = useContext(UserContext);
-  // const [errorMessage, setErrorMessage] = useState("");
-
-  /*  const [formData, setFormData] = useState({
-    title: "",
-    text: "",
-    image: "",
-    tags: "",
-    privateGroup: false,
-  }); */
-
-  /* const handleChange = (e) => {
-    setErrorMessage("");
-    const { name, value, type, checked, files } = e.target;
-    const newValue =
-      type === "checkbox" ? checked : type === "file" ? files[0] : value;
-
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: newValue,
-    }));
-  }; */
-
-  /* const handleTogglePrivate = () => {
-    setFormData((prevData) => ({
-      ...prevData,
-      privateGroup: !prevData.privateGroup,
-    }));
-  }; */
-
-  //! Hier fehlt noch die Logik für das Bild-Upload
-  /* const handleImageUpload = () => {
-    // Hier  Bild-Upload-Logik hinzufügen
-    console.log("Bild hochgeladen");
-  }; */
-
-  /*   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch("http://localhost:5500/createGroup", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-      console.log("Server response:", data);
-
-      // User.groups und LocalStorage aktualisieren (frontend)
-      setUserData({ ...userData, groups: [...userData.groups, formData] });
-
-      // Überprüfen, ob die Gruppe(Title) bereits existiert
-      if (response.status === 409) {
-        const errorMessage = await response.json();
-        setErrorMessage(errorMessage.message);
-      }
-    } catch (error) {
-      console.error("Error sending data to server:", error);
-      setErrorMessage("Gruppenname bereits vergeben.");
-    }
-  }; */
-
+const Home = () => {
   return (
     <>
       <section className="relative z-10">
@@ -117,4 +50,4 @@ const StyleExample = () => {
   );
 };
 
-export default StyleExample;
+export default Home;

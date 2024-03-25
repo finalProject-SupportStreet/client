@@ -133,7 +133,7 @@ const GroupComponent = () => {
   };
 
   return (
-    <section className="relative min-h-screen  flex justify-center ">
+    <section className="relative flex flex-col min-h-screen  ">
       {/* Fest positionierter Hintergrund */}
       <div className="absolute inset-0">
         <div className="fixed reusableGlobalBackground "></div>
@@ -142,7 +142,7 @@ const GroupComponent = () => {
       </div>
 
       {/* Scrollbarer Inhalts-Container */}
-      <div className="reusableContainer w-full h-full overflow-auto">
+      <div className="reusableBlur w-full h-full overflow-auto min-h-screen">
         {/* Container für die gesamte Gruppenansicht, einschließlich Gruppeninfos und Kommentaren */}
         <div className="mx-auto flex flex-col items-center">
           <Link to={`/groups`}>

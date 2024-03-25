@@ -101,7 +101,7 @@ const MitteilungForm = ({ closeModal, groupId, setGroupPosts, groupPosts }) => {
         <div className="reusableSquare absolute" style={{ "--i": 2 }}></div>
         <div className="reusableSquare absolute" style={{ "--i": 3 }}></div>
         <div className="reusableSquare absolute" style={{ "--i": 4 }}></div>
-        <div className="reusableContainer reusableBorder mt-12 shadow-md">
+        <div className="reusableContainer  reusableBorder mt-12 shadow-md">
           <form
             onSubmit={validateAndSubmitForm}
             className="reusableForm space-y-4"

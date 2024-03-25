@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import "../reuseable/styles/reusableFormComponents.css";
 import "../reuseable/styles/reusableGlobal.css";
 
-const CreateGroupPost = ({ closeModal, groupPosts, setGroupPosts }) => {
+/* const CreateGroupPost = ({ closeModal, groupPosts, setGroupPosts }) => {
   const { groupId } = useParams();
   console.log(groupId);
   const [formData, setFormData] = useState({
@@ -14,7 +14,7 @@ const CreateGroupPost = ({ closeModal, groupPosts, setGroupPosts }) => {
     likes: "",
   });
 
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); */
 
   /******************************************************
    *    handleChange
