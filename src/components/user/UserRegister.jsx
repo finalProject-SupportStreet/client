@@ -1,13 +1,5 @@
-/* // vlt. auslagern in extra datei
-export const inputStyle = "w-full border-2 rounded focus:outline-none text-black"
-
-export const buttonStyle = "bg-green-200  text-slate-700 p-2 rounded w-full dark:text-slate-600 mt-2  font-light hover:font-medium" */
-
-import {
-  buttonStyle,
-  inputStyle,
-  labelStyle,
-} from "../reuseable/styles/reuseableComponents.jsx";
+import "../reuseable/styles/reusableFormComponents.css";
+import "../reuseable/styles/reusableGlobal.css";
 
 const UserRegister = () => {
   const submitHandler = async (event) => {
@@ -86,84 +78,139 @@ const UserRegister = () => {
   };
 
   return (
-    <form
-      className="h-fit flex flex-col justify-center gap-3 bg-white dark:bg-slate-800 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl "
-      onSubmit={submitHandler}
-    >
-      <div className="p-2 bg-slate-500/15 shadow-lg rounded w-full gap-2">
-        <div>
-          <label htmlFor="firstName" className={labelStyle}>
-            Vorname:
-          </label>
-          <input
-            type="text"
-            name="firstName"
-            id="firstName"
-            className={inputStyle}
-          />
-        </div>
-        <div className="pt-3">
-          <label htmlFor="lastName" className={labelStyle}>
-            Nachname:
-          </label>
-          <input
-            type="text"
-            name="lastName"
-            id="lastName"
-            className={inputStyle}
-          />
-        </div>
-        <div className="pt-3">
-          <label htmlFor="street" className={labelStyle}>
-            Straße:
-          </label>
-          <input type="text" name="street" id="street" className={inputStyle} />
-        </div>
-        <div className="pt-3">
-          <label htmlFor="number" className={labelStyle}>
-            Haus-Nr:
-          </label>
-          <input type="text" name="number" id="number" className={inputStyle} />
-        </div>
+    <section className="flex  justify-center items-center mt-32 w-full">
+      <div className="reusableGlobalBackground absolute"></div>
+      <div className="reusableGlobalBackground absolute"></div>
+      <div className="reusableGlobalBackground absolute"></div>
+      <div className="relative">
+        <div className="reusableSquare absolute" style={{ "--i": 0 }}></div>
+        <div className="reusableSquare absolute" style={{ "--i": 1 }}></div>
+        <div className="reusableSquare absolute" style={{ "--i": 2 }}></div>
+        <div className="reusableSquare absolute" style={{ "--i": 3 }}></div>
+        <div className="reusableSquare absolute" style={{ "--i": 4 }}></div>
+        <div className="reusableContainer reusableBorder mt-12 shadow-md">
+          <form className="reusableForm" onSubmit={submitHandler}>
+            <div>
+              <div>
+                <label
+                  htmlFor="firstName"
+                  className="block text-sm font-medium text-gray-800"
+                >
+                  Vorname:
+                </label>
+                <input
+                  type="text"
+                  name="firstName"
+                  id="firstName"
+                  className="reusableInput mt-1  p-2 text-gray-800 block w-full border-gray-500 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                />
+              </div>
+              <div className="pt-3">
+                <label
+                  htmlFor="lastName"
+                  className="block text-sm font-medium text-gray-800"
+                >
+                  Nachname:
+                </label>
+                <input
+                  type="text"
+                  name="lastName"
+                  id="lastName"
+                  className="reusableInput mt-1  p-2 text-gray-800 block w-full border-gray-500 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                />
+              </div>
+              <div className="pt-3">
+                <label
+                  htmlFor="street"
+                  className="block text-sm font-medium text-gray-800"
+                >
+                  Straße:
+                </label>
+                <input
+                  type="text"
+                  name="street"
+                  id="street"
+                  className="reusableInput mt-1  p-2 text-gray-800 block w-full border-gray-500 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                />
+              </div>
+              <div className="pt-3">
+                <label
+                  htmlFor="number"
+                  className="block text-sm font-medium text-gray-800"
+                >
+                  Haus-Nr:
+                </label>
+                <input
+                  type="text"
+                  name="number"
+                  id="number"
+                  className="reusableInput mt-1  p-2 text-gray-800 block w-full border-gray-500 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                />
+              </div>
 
-        <div className="pt-3">
-          <label htmlFor="zip" className={labelStyle}>
-            PLZ:
-          </label>
-          <input type="text" name="zip" id="zip" className={inputStyle} />
-        </div>
-        <div className="pt-3">
-          <label htmlFor="email" className={labelStyle}>
-            E-Mail:
-          </label>
-          <input type="email" name="email" id="email" className={inputStyle} />
-        </div>
-        <div className="pt-3">
-          <label htmlFor="password" className={labelStyle}>
-            Passwort:
-          </label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            className={inputStyle}
-          />
-        </div>
-        <div className="pt-3">
-          <label htmlFor="confirmPassword" className={labelStyle}>
-            Passwort bestätigen:
-          </label>
-          <input
-            type="password"
-            name="confirmPassword"
-            id="confirmPassword"
-            className={inputStyle}
-          />
+              <div className="pt-3">
+                <label
+                  htmlFor="zip"
+                  className="block text-sm font-medium text-gray-800"
+                >
+                  PLZ:
+                </label>
+                <input
+                  type="text"
+                  name="zip"
+                  id="zip"
+                  className="reusableInput mt-1  p-2 text-gray-800 block w-full border-gray-500 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                />
+              </div>
+              <div className="pt-3">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-800"
+                >
+                  E-Mail:
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  className="reusableInput mt-1  p-2 text-gray-800 block w-full border-gray-500 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                />
+              </div>
+              <div className="pt-3">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-800"
+                >
+                  Passwort:
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  className="reusableInput mt-1  p-2 text-gray-800 block w-full border-gray-500 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                />
+              </div>
+              <div className="pt-3">
+                <label
+                  htmlFor="confirmPassword"
+                  className="block text-sm font-medium text-gray-800"
+                >
+                  Passwort bestätigen:
+                </label>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  id="confirmPassword"
+                  className="reusableInput mt-1  p-2 text-gray-800 block w-full border-gray-500 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                />
+              </div>
+            </div>
+
+            <button className="reusableFormBtn ">Abschicken</button>
+          </form>
         </div>
       </div>
-
-      <button className={buttonStyle}>Abschicken</button>
-    </form>
+    </section>
   );
 };
 

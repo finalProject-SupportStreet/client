@@ -12,13 +12,13 @@ function App() {
     /* <div className={`h-full  px-0 box-content ${darkMode ? 'dark' : ''}`}> */
   }
   return (
-    <div>
+    <div
+      className={`flex pt-14 flex-col min-h-screen ${
+        darkMode ? "dark darkThemeColor" : ""
+      }`}
+    >
       <Navbar />
-      <div
-        className={`flex items-center justify-center px-4 w-full ${
-          darkMode ? "dark darkThemeColor" : ""
-        }`}
-      >
+      <div className="flex-grow flex-col min-h-screen">
         <Outlet />
       </div>
     </div>

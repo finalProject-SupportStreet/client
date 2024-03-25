@@ -5,14 +5,14 @@ box-sizing: border-box;
 }
 
 
-
+.custom-text-shadow {
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+  }
 
 .style-test {
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
+    }
 
 section .color {
     position: absolute;
@@ -67,7 +67,7 @@ section .color:nth-child(3){
 }
 
 .box .square:nth-child(1){
-    top: -80px;
+    top: 50px;
     right: -100px;
     width: 250px;
     height: 250px;
@@ -82,8 +82,8 @@ section .color:nth-child(3){
 }
 
 .box .square:nth-child(3){
-    top: 250px;
-    right: -220px;
+    top: 590px;
+    right: -100px;
     width: 180px;
     height: 180px;
     z-index: 2;
@@ -157,7 +157,7 @@ section .color:nth-child(3){
     box-shadow: 0 5px 15px rgba(0,0,0,0.15);
 }
 
-.button{
+.buttonStyle{
     width: 100%;
     background: #fff;
     border: none;

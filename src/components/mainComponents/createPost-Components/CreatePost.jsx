@@ -1,6 +1,6 @@
 import { useState } from "react";
 import MitteilungForm from "./MitteilungForm.jsx";
-import MarketForm from "./MarketForm.jsx";
+import MarketForm from "../../Market/MarketForm.jsx";
 
 const CreatePost = ({ closeModal }) => {
   // const [showForm, setShowForm] = useState(false);
