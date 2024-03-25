@@ -77,16 +77,6 @@ const UpdateProfile = () => {
     } catch (error) {
       console.log(error);
     }
-
-    // window.location.reload();
-    return;
-
-    /* setUserData((prevUserData) => {
-      const updatedUserData = { ...prevUserData };
-      // Delete the targeted field
-      delete updatedUserData[fieldName];
-      return updatedUserData;
-    }); */
   };
 
   // Function to handle form submission

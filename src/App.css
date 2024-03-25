@@ -10,12 +10,12 @@
 
 
 .darkThemeColor,
-.desktopNavLi a{
+.dropdown-menu a{
     background-color: #334155;
     color:#e5e7eb ;
 }
 .lightThemeColor,
-.desktopNavLi a{
+.dropdown-menu a{
     background-color: #e5e7eb;
     color: #334155;
 }
@@ -143,3 +143,4 @@
     /* margin-top: 5rem; */
     padding: 2rem;
 }
+
