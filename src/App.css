@@ -1,5 +1,6 @@
 *{
     color: black;
+    font-family: "Roboto"
 }
 
 @media (min-width: 768px) {
@@ -10,12 +11,13 @@
 
 
 .darkThemeColor,
-.desktopNavLi a{
+.dropdown-menu a{
     background-color: #334155;
     color:#e5e7eb ;
+    background-attachment: fixed;
 }
 .lightThemeColor,
-.desktopNavLi a{
+.dropdown-menu a{
     background-color: #e5e7eb;
     color: #334155;
 }
@@ -89,7 +91,7 @@
         color: #334155;
 }
 
-.dropDownProfile{
+/* .dropDownProfile{
     position: absolute;
     top: 4rem;
     right: 1.5rem;
@@ -109,7 +111,7 @@
     transform: rotate(45deg);
     border-left: 1px solid gray;
     border-top: 1px solid gray;
-}
+} */
 
 /* HEADER DROPDOWN PROFILE */
 /* .hide-profile{
@@ -122,9 +124,9 @@
 
 .btn-profile{
     display: flex;
-    position: absolute;
-    top: .34rem;
-    right: 1.2rem;
+    position: relative;
+    
+    
 }
 
 /* update-profile */

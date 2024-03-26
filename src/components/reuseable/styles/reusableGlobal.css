@@ -47,7 +47,7 @@
 /* --------------  Background  ------------------ */
 
 .reusableGlobalBackground {
-    filter: blur(250px);
+    filter: blur(200px);
 }
 
 section .reusableGlobalBackground:nth-child(1){
@@ -60,8 +60,8 @@ section .reusableGlobalBackground:nth-child(2){
     bottom: -150px;
     left: 100px;
     width: 300px;
-    height: 600px;
-    background: #2027e6;
+    height: 300px;
+    background: #181fe7;
 }
 
 section .reusableGlobalBackground:nth-child(3){
@@ -69,9 +69,15 @@ section .reusableGlobalBackground:nth-child(3){
     right: 100px;
     width: 600px;
     height: 400px;
-    background: #20b0e6;
+    background: #f3b712;
     }
-
+    section .reusableGlobalBackground:nth-child(4){
+        top: 150px;
+        right: 100px;
+        width: 600px;
+        height: 400px;
+        background: #12b7f3;
+        }
 /* --------------  Background  ------------------ */
 
 .reusableGlobalBackground2 {
@@ -172,14 +178,14 @@ section .reusableGlobalBackground2:nth-child(3) {
     background: rgba(255, 255, 255, 0.1); 
     backdrop-filter: blur(10px); 
     border-radius: 10px; 
-    border: 1px solid rgba(255, 255, 255, 0.3); 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    border: 1px solid rgba(253, 248, 248, 0.466); 
+    box-shadow: 1px 4px 16px rgb(0, 0, 0); 
     transition: background-color 0.3s ease, transform 0.3s ease; 
 }
 
 .reusableHeaderBar:hover {
     transform: translateY(-2px); /* Leichtes Anheben beim Hovern */
-    background: rgba(255, 255, 255, 0.2); /* Etwas weniger Transparenz beim Hover */
+    background: rgba(255, 255, 255, 0.3); /* Etwas weniger Transparenz beim Hover */
 }
 
 
