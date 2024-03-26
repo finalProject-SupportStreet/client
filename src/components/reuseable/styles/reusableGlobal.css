@@ -2,11 +2,7 @@
 
 
 /* --------------  Buttons  ------------------ */
-.reusableBox {
-    
-  
 
-}
 
 
 
@@ -109,9 +105,6 @@ section .reusableGlobalBackground2:nth-child(3) {
 
     /* --------------  Animated Squares  ------------------ */
 
-.reusableSquareWrapper {
-    /* position: relative; */
-   }
 
 .reusableSquare{
    /*  position: absolute; */
