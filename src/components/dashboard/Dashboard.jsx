@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Carousel from "../landingpage/Carousel.jsx";
 import "./DashboardStyle.css";
+import Logo from "../assets/SupportStreetLogo.png";
 
 const Dashboard = () => {
   return (
@@ -8,10 +9,7 @@ const Dashboard = () => {
       <section className="relative z-10">
         <Carousel />
       </section>
-      <section className="flex  justify-center  w-full">
-        <div className="reusableGlobalBackground absolute"></div>
-        <div className="reusableGlobalBackground absolute"></div>
-        <div className="reusableGlobalBackground absolute"></div>
+      <section className="flex  justify-center h-full  w-full">
         <div className="relative">
           <Link
             to="/groups"
@@ -61,6 +59,7 @@ const Dashboard = () => {
             <h2 className="text-3xl font-bold mb-4  text-gray-800">
               Herzlich Willkommen bei Support Street!
             </h2>
+            <img src={Logo} alt="logo" />
           </div>
         </div>
       </section>

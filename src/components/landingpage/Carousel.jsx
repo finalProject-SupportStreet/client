@@ -36,20 +36,19 @@ const Carousel = () => {
       setIndex((prevIndex) =>
         prevIndex === images.length - 1 ? 0 : prevIndex + 1
       );
-    }, 3500);
+    }, 5500);
 
     // bei manueller Navigation
     return () => clearInterval(intervalId);
   }, [index, images.length]);
 
   return (
-    <section className="w-full relative">
-      <div className="relative max-w-full h-64 overflow-hidden">
+    <section className="custom-carousel w-full relative">
+      <div className="carousel-container relative max-w-full h-64 overflow-hidden">
         <div
-          className="absolute z-20 top-0 left-0 w-15 h-full bg-black bg-opacity-30 cursor-pointer flex items-center justify-center"
+          className="carousel-prev absolute z-20 top-0 left-0 w-15 h-full bg-black bg-opacity-30 cursor-pointer flex items-center justify-center"
           onClick={handlePrevClick}
         >
-          {/* Hier wird SVG oder ein anderes Icon für den Pfeil nach links verwendet */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -65,11 +64,11 @@ const Carousel = () => {
             />
           </svg>
         </div>
-        <ul className="w-full h-full">
+        <ul className="carousel-images w-full h-full">
           {images.map((image, i) => (
             <li
               key={i}
-              className={`absolute top-0 left-0 w-full h-full transition-opacity duration-500 ease-in-out ${
+              className={`carousel-image absolute top-0 left-0 w-full h-full transition-opacity duration-500 ease-in-out ${
                 i === index ? "opacity-100" : "opacity-0"
               }`}
             >
@@ -82,10 +81,9 @@ const Carousel = () => {
           ))}
         </ul>
         <div
-          className="absolute z-20 top-0 right-0 w-15 h-full bg-black bg-opacity-30 cursor-pointer flex items-center justify-center"
+          className="carousel-next absolute z-20 top-0 right-0 w-15 h-full bg-black bg-opacity-30 cursor-pointer flex items-center justify-center"
           onClick={handleNextClick}
         >
-          {/* Hier wird SVG oder ein anderes Icon für den Pfeil nach rechts verwendet */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

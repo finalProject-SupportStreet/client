@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import {
-  buttonStyle,
   inputStyle,
   labelStyle,
   trashButton,
@@ -29,14 +28,15 @@ const UpdateProfile = () => {
       reader.readAsDataURL(file);
     }
   }
-  function handleButtonClick() {
+
+  /* function handleButtonClick() {
     // Trigger the file input click event programmatically
     document.getElementById("image").click();
   }
   function handleDeleteImage() {
     // Reset the uploaded image state
     setUploadImg(null);
-  }
+  } */
 
   // Trash symbol
   const trash = (
@@ -115,197 +115,192 @@ const UpdateProfile = () => {
     }
   };
 
-  console.log("Groups:", userData.groups);
-  // console.log("userData:",userData);
-  // return null
   return (
-    <div className="update-profile">
-      <div className="flex flex-col border-2 relative">
-        {/* Display the uploaded image */}
-        {uploadImg && (
-          <div className="relative">
-            <img src={uploadImg} alt="" className="h-40 pb-2 object-contain" />
-            {/* Trash symbol */}
-            <button
-              className="absolute top-2 -right-4 p-1 opacity-70 rounded-full border-2 bg-red-500 text-white hover:bg-red-600 transition duration-300 hover:opacity-100"
-              onClick={handleDeleteImage}
+    <section className="flex justify-center  min-h-screen w-full">
+      <div className="relative">
+        <div className="reusableSquare absolute" style={{ "--i": 0 }}></div>
+        <div className="reusableSquare absolute" style={{ "--i": 1 }}></div>
+        <div className="reusableSquare absolute" style={{ "--i": 2 }}></div>
+        {/*  <div className="reusableSquare absolute" style={{ "--i": 3 }}></div> */}
+        {/* <div className="reusableSquare absolute" style={{ "--i": 4 }}></div> */}
+        <div className="reusableContainer  mt-12 shadow-md">
+          <form className="reusableForm" onSubmit={handleSubmit}>
+            <div className="profile-image-upload ">
+              {uploadImg ? (
+                <div className="image-preview flex justify-center ">
+                  <img
+                    src={uploadImg}
+                    alt="Profile "
+                    className="w-[200px] h-[200px] object-cover rounded-full mx-auto"
+                  />
+                  <button
+                    onClick={handleDeleteImage}
+                    className="delete-image-button"
+                  >
+                    🗑️
+                  </button>
+                </div>
+              ) : (
+                <div className="image-placeholder ">
+                  <img
+                    src="../avatar-icon.jpg"
+                    alt="Placeholder"
+                    className="w-[200px] h-[200px] object-cover rounded-full mx-auto"
+                  />
+                </div>
+              )}
+              <label
+                htmlFor="image"
+                className="file-input-label block text-center mt-4"
+              >
+                <input
+                  type="file"
+                  id="image"
+                  name="image"
+                  onChange={handleImageUpload}
+                  className="file-input hidden"
+                />
+                <span className="reusableFormBtn mt-2">Bild wählen</span>
+              </label>
+            </div>
+            <h3 className="reusableH3 m-2 ">Hi {userData.firstName},</h3>
+            <textarea
+              name="aboutMe"
+              id="aboutMe"
+              cols="30"
+              rows="5"
+              placeholder="Hier kannst du dich mit deinen eigenen Worten vorstellen."
+              defaultValue={userData.aboutMe || ""}
+              className="about-me-textarea"
+            ></textarea>
+            {/* <div>
+            <label htmlFor="groups">Groups:</label>
+            <select
+              multiple
+              value={userData.groups}
+              // onChange={handleSelectChange}
+              id="groups"
+              name="groups"
             >
-              🗑️
+              
+              {userData.groups}
+            </select>
+          </div> */}
+            <div className="relative">
+              <label htmlFor="firstName" className={labelStyle}>
+                firstName:
+                <button
+                  type="button"
+                  className={trashButton}
+                  onClick={() => onDelete("firstName")}
+                >
+                  {trash}
+                </button>
+              </label>
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                placeholder={userData.firstName}
+                className={inputStyle}
+              />
+            </div>
+            <div className="relative">
+              <label htmlFor="lastName" className={labelStyle}>
+                lastName:
+                <button
+                  type="button"
+                  className={trashButton}
+                  onClick={() => onDelete("lastName")}
+                >
+                  {trash}
+                </button>
+              </label>
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                placeholder={userData.lastName}
+                className={inputStyle}
+              />
+            </div>
+            <div className="relative">
+              <label htmlFor="email" className={labelStyle}>
+                Email:
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder={userData.email}
+                className={inputStyle}
+              />
+            </div>
+            <div className="relative">
+              <label htmlFor="street" className={labelStyle}>
+                Street:
+                <button
+                  type="button"
+                  className={trashButton}
+                  onClick={() => onDelete("street")}
+                >
+                  {trash}
+                </button>
+              </label>
+              <input
+                type="text"
+                id="street"
+                name="street"
+                placeholder={userData.address[0].street}
+                className={inputStyle}
+              />
+            </div>
+            <div className="relative">
+              <label htmlFor="number" className={labelStyle}>
+                Number:
+                <button
+                  type="button"
+                  className={trashButton}
+                  onClick={() => onDelete("number")}
+                >
+                  {trash}
+                </button>
+              </label>
+              <input
+                type="text"
+                id="number"
+                name="number"
+                placeholder={userData.address[0].number}
+                className={inputStyle}
+              />
+            </div>
+            <div className="relative">
+              <label htmlFor="zip" className={labelStyle}>
+                ZIP:
+                <button
+                  type="button"
+                  className={trashButton}
+                  onClick={() => onDelete("zip")}
+                >
+                  {trash}
+                </button>
+              </label>
+              <input
+                type="text"
+                id="zip"
+                name="zip"
+                placeholder={userData.address[0].zip}
+                className={inputStyle}
+              />
+            </div>
+            {/* Add other form fields as needed */}
+            <button type="submit" className="reusableFormBtn mt-2">
+              Update Profile
             </button>
-          </div>
-        )}
-        {!uploadImg && (
-          <img
-            src="../avatar-icon.jpg"
-            alt=""
-            className="h-40 pb-2 object-contain"
-          />
-        )}
-        <div className="relative bottom-8 left-20">
-          {/* Button for image upload */}
-          <button
-            className="p-1 rounded-2xl border-2 bg-slate-50"
-            onClick={handleButtonClick}
-          >
-            +
-          </button>
-          <h2 className="border-2 right-20 top-2 relative text-center">
-            {" "}
-            {userData.firstName}{" "}
-          </h2>
+          </form>
         </div>
-
-        {/* Hidden file input */}
-        <input
-          type="file"
-          id="image"
-          name="image"
-          onChange={handleImageUpload}
-          className="hidden"
-        />
       </div>
-
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <textarea
-          name="aboutMe"
-          id="aboutMe"
-          // value={userData.groups}
-
-          cols="23"
-          rows="5"
-          placeholder={
-            userData.aboutMe
-              ? userData.aboutMe
-              : "Hier kannst du dich mit deinen eigenen Worten vorstellen."
-          }
-          className={inputStyle}
-        ></textarea>
-        {/* <div>
-          <label htmlFor="groups">Groups:</label>
-          <select
-            multiple
-            value={userData.groups}
-            // onChange={handleSelectChange}
-            id="groups"
-            name="groups"
-          >
-            
-            {userData.groups}
-          </select>
-        </div> */}
-        <div className="relative">
-          <label htmlFor="firstName" className={labelStyle}>
-            firstName:
-            <button
-              type="button"
-              className={trashButton}
-              onClick={() => onDelete("firstName")}
-            >
-              {trash}
-            </button>
-          </label>
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            placeholder={userData.firstName}
-            className={inputStyle}
-          />
-        </div>
-        <div className="relative">
-          <label htmlFor="lastName" className={labelStyle}>
-            lastName:
-            <button
-              type="button"
-              className={trashButton}
-              onClick={() => onDelete("lastName")}
-            >
-              {trash}
-            </button>
-          </label>
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            placeholder={userData.lastName}
-            className={inputStyle}
-          />
-        </div>
-        <div className="relative">
-          <label htmlFor="email" className={labelStyle}>
-            Email:
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder={userData.email}
-            className={inputStyle}
-          />
-        </div>
-        <div className="relative">
-          <label htmlFor="street" className={labelStyle}>
-            Street:
-            <button
-              type="button"
-              className={trashButton}
-              onClick={() => onDelete("street")}
-            >
-              {trash}
-            </button>
-          </label>
-          <input
-            type="text"
-            id="street"
-            name="street"
-            placeholder={userData.address[0].street}
-            className={inputStyle}
-          />
-        </div>
-        <div className="relative">
-          <label htmlFor="number" className={labelStyle}>
-            Number:
-            <button
-              type="button"
-              className={trashButton}
-              onClick={() => onDelete("number")}
-            >
-              {trash}
-            </button>
-          </label>
-          <input
-            type="text"
-            id="number"
-            name="number"
-            placeholder={userData.address[0].number}
-            className={inputStyle}
-          />
-        </div>
-        <div className="relative">
-          <label htmlFor="zip" className={labelStyle}>
-            ZIP:
-            <button
-              type="button"
-              className={trashButton}
-              onClick={() => onDelete("zip")}
-            >
-              {trash}
-            </button>
-          </label>
-          <input
-            type="text"
-            id="zip"
-            name="zip"
-            placeholder={userData.address[0].zip}
-            className={inputStyle}
-          />
-        </div>
-        {/* Add other form fields as needed */}
-        <button type="submit" className={buttonStyle}>
-          Update Profile
-        </button>
-      </form>
-    </div>
+    </section>
   );
 };
 
