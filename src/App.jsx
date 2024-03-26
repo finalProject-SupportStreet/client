@@ -1,28 +1,31 @@
 import { Outlet } from "react-router-dom";
-
+import "../src/components/reuseable/styles/reusableFormComponents.css";
+import "../src/components/reuseable/styles/reusableGlobal.css";
 import "./App.css";
 import Navbar from "./components/mainComponents/Navbar.jsx";
-import { useTheme } from "./components/context/ThemeContext.jsx";
-function App() {
-  const { darkMode } = useTheme();
+import { ThemeContext } from "./components/context/ThemeContext.jsx";
+import { useContext } from "react";
 
-  /*   localStorage.removeItem("theme"); // Whenever the user explicitly chooses to respect the OS preference */
+const App = () => {
+  const { darkMode } = useContext(ThemeContext);
 
-  {
-    /* <div className={`h-full  px-0 box-content ${darkMode ? 'dark' : ''}`}> */
-  }
   return (
-    <div
-      className={`flex pt-14 flex-col min-h-screen ${
-        darkMode ? "dark darkThemeColor" : ""
-      }`}
-    >
+    <div className={`min-h-screen ${darkMode ? "dark darkThemeColor" : ""}`}>
       <Navbar />
-      <div className="flex-grow flex-col min-h-screen">
-        <Outlet />
-      </div>
+      <section className="flex justify-center  w-full">
+        <div className="absolute inset-0">
+          <div className="fixed reusableGlobalBackground "></div>
+          <div className="fixed reusableGlobalBackground "></div>
+          <div className=" fixed reusableGlobalBackground "></div>
+          <div className=" fixed reusableGlobalBackground "></div>
+        </div>
+
+        <div className={`pt-14 flex flex-col w-full relative`}>
+          <Outlet />
+        </div>
+      </section>
     </div>
   );
-}
+};
 
 export default App;
