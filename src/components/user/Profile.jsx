@@ -77,7 +77,7 @@ const UpdateProfile = () => {
     } catch (error) {
       console.log(error);
     }
-
+/* 
     // window.location.reload();
     return;
 
@@ -85,8 +85,8 @@ const UpdateProfile = () => {
       const updatedUserData = { ...prevUserData };
       // Delete the targeted field
       delete updatedUserData[fieldName];
-      return updatedUserData;
-    });
+      return updatedUserData; */
+    };
   };
 
   // Function to handle form submission
@@ -123,7 +123,7 @@ const UpdateProfile = () => {
     } catch (error) {
       console.log(error);
     }
-  };
+  
 
   console.log("Groups:", userData.groups);
   // console.log("userData:",userData);

@@ -4,7 +4,7 @@
   align-items: center;
   padding: 0 20px;
   height: 60px;
-  background: rgba(255, 255, 255, 0.5);
+  background: hsla(0, 0%, 100%, 0.5);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   position: fixed;
@@ -61,10 +61,12 @@
 
 .dropdown-menu a {
   padding: 10px 0;
+  color:#fff;
 }
 
 /* Passt den dunklen Modus der Dropdown-Menüs an */
 .dark-mode .dropdown-menu {
   background: rgba(0, 0, 0, 0.9);
+
 }
 
