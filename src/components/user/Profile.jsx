@@ -9,12 +9,10 @@ import { UserContext } from "../context/userContext.jsx";
 const UpdateProfile = () => {
   const { userData, setUserData } = useContext(UserContext);
   const [uploadImg, setUploadImg] = useState(null);
-
   // image Upload
   function handleImageUpload(event) {
     const file = event.target.files[0]; // Get the selected file
     const reader = new FileReader(); // Create a file reader object
-
     // Define a callback function to be executed when file reading is complete
     reader.onloadend = () => {
       // Convert the image file to a base64 string
@@ -22,22 +20,19 @@ const UpdateProfile = () => {
       // Update the state with the base64 string representing the uploaded image
       setUploadImg(imageData);
     };
-
     if (file) {
       // Start reading the file as a data URL
       reader.readAsDataURL(file);
     }
   }
-
-  /* function handleButtonClick() {
+/*   function handleButtonClick() {
     // Trigger the file input click event programmatically
     document.getElementById("image").click();
-  }
+  } */
   function handleDeleteImage() {
     // Reset the uploaded image state
     setUploadImg(null);
-  } */
-
+  }
   // Trash symbol
   const trash = (
     <svg
@@ -55,11 +50,9 @@ const UpdateProfile = () => {
       />
     </svg>
   );
-
   // Function to handle delete form field
   const onDelete = async (fieldName) => {
     console.log("fieldName:", fieldName);
-
     try {
       const res = await fetch(`http://localhost:5500/edit/${userData._id}`, {
         method: "PATCH",
@@ -77,9 +70,19 @@ const UpdateProfile = () => {
     } catch (error) {
       console.log(error);
     }
+    // window.location.reload();
+    return;
+
+    setUserData((prevUserData) => {
+      const updatedUserData = { ...prevUserData };
+      // Delete the targeted field
+      delete updatedUserData[fieldName];
+      return updatedUserData;
+    });
   };
 
   // Function to handle form submission
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -92,9 +95,7 @@ const UpdateProfile = () => {
         updatedData[nameAttr] = formDataProps[nameAttr];
       }
     }
-
     console.log("updatedData:", updatedData);
-
     try {
       const res = await fetch(`http://localhost:5500/edit/${userData._id}`, {
         method: "PATCH",
@@ -115,6 +116,44 @@ const UpdateProfile = () => {
     }
   };
 
+  
+/* // Function to handle form submission
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const updatedData = {};
+
+  // Iterate over each form field
+  formData.forEach((value, key) => {
+    // Exclude email and image fields
+    if (key !== 'email' && key !== 'image') {
+      updatedData[key] = value;
+    }
+  });
+
+  console.log("updatedData:", updatedData);
+
+  try {
+    const res = await fetch(`http://localhost:5500/edit/${userData._id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        ...updatedData,
+      }),
+    });
+    const data = await res.json();
+    setUserData(data.user);
+    alert("Profile updated successfully!");
+    window.location.reload();
+  } catch (error) {
+    console.log(error);
+  }
+}; */
+
+
   return (
     <section className="flex justify-center  min-h-screen w-full">
       <div className="relative">
@@ -124,7 +163,7 @@ const UpdateProfile = () => {
         {/*  <div className="reusableSquare absolute" style={{ "--i": 3 }}></div> */}
         {/* <div className="reusableSquare absolute" style={{ "--i": 4 }}></div> */}
         <div className="reusableContainer  mt-12 shadow-md">
-          <form className="reusableForm" onSubmit={handleSubmit}>
+          <form className="reusableForm" onSubmit={(e) => handleSubmit(e)}>
             <div className="profile-image-upload ">
               {uploadImg ? (
                 <div className="image-preview flex justify-center ">
@@ -186,6 +225,18 @@ const UpdateProfile = () => {
               {userData.groups}
             </select>
           </div> */}
+          <div className="relative">
+              <label htmlFor="email" className={labelStyle}>
+                Email:
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder={userData.email}
+                className={inputStyle}
+              />
+            </div>
             <div className="relative">
               <label htmlFor="firstName" className={labelStyle}>
                 firstName:
@@ -224,18 +275,7 @@ const UpdateProfile = () => {
                 className={inputStyle}
               />
             </div>
-            <div className="relative">
-              <label htmlFor="email" className={labelStyle}>
-                Email:
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder={userData.email}
-                className={inputStyle}
-              />
-            </div>
+            
             <div className="relative">
               <label htmlFor="street" className={labelStyle}>
                 Street:
